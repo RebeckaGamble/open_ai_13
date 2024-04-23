@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <main>
        <Hero />
+       <h1>hello world</h1>
       
        <AiInputSection />
        <RecipeOutput />
