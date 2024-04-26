@@ -1,59 +1,48 @@
-'use client'
-import React, { useState } from "react";
-import Link from "next/link";
+"use client";
+import { useState } from "react";
+export default function CreateUser() {
+  const [users, setUsers] = useState([]);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-export default function CreateForm() {
-  const [created, setCreated] = useState(false);
-  const [error, setError] = useState(null); 
-
+  async function handleCreateUser() {
+    const id = Math.floor(Math.random() * 1000) + 1;
+    const newUser = { id, username, password };
+    setUsers([...users, newUser]);
+    try {
+      const response = await fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+      const data = await response.json();
+      console.log(data);
+      alert("User created successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    setUsername("");
+    setPassword("");
+  }
 
   return (
     <div>
-        <div className="px-4">
-          <div className="pt-10 xl:pt-40 flex flex-col mx-auto">
-            <h3 className="font-semibold pb-6 text-center text-xl">
-              Create new user account
-            </h3>
-            <form className="flex flex-col mx-auto">
-              <label htmlFor="username" className="">
-                Username:
-              </label>
-              <input
-                id="username"
-                type="text"
-                className="max-w-[300px] border bordre-slate-300 px-2 py-0.5 mb-2"
-              />
-
-              <label htmlFor="password" className="">
-                Password:
-              </label>
-              <input
-                id="password"
-                type="password"
-                className="max-w-[300px] border bordre-slate-300 px-2 py-0.5"
-              />
-              <div className="max-w-[300px] mt-4 flex justify-end">
-                <button
-                  type="submit"
-                  className="max-w-fit px-4 py-1 bg-[blue] text-white"
-                >
-                  Create account
-                </button>
-              </div>
-            </form>
-            {created && <div className="">User account created!</div>}
-            {error && <div className="text-red-500">{error}</div>}
-            <div className="pt-4 text-center"></div>
-          </div>
-        </div>
-        <div className="pt-4 text-center">
-          <p>
-            Already have an account? Go to{" "}
-            <Link href="/login" className="underline text-blue-700">
-              Login
-            </Link>
-          </p>
-        </div>
+      <h2>Create User</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleCreateUser}>Create User</button>
     </div>
   );
 }
