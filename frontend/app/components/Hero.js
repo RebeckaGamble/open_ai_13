@@ -16,9 +16,14 @@ export default function Hero() {
           making it a fascinating experience to explore the interplay between
           taste and mood.
         </p>
-        <h3 className="font-semibold pt-6">Today, what combination of flavor and mood do you feel drawn to?</h3>
+        <h3 className="font-semibold pt-6 text-2xl">
+          Today, what combination of flavor and mood do you feel drawn to?
+        </h3>
         <div className="flex flex-row gap-6 py-8">
-          <Link href={"/login"} className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] font-semibold text-[#250D01] text-[32px] hover:scale-105">
+          <Link
+            href={"/login"}
+            className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] font-semibold text-[#250D01] text-[32px] hover:scale-105"
+          >
             Login
           </Link>
           <button className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] text-[#250D01] font-semibold text-[32px] hover:scale-105">
