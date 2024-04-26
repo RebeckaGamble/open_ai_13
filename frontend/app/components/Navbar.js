@@ -4,8 +4,8 @@ import { FaUser } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <nav className="w-full h-10 bg-slate-100 flex flex-row">
-      <ul className="w-full flex items-center justify-between">
+    <nav className="w-full h-[60px] bg-[#CA4502] text-[#F8E8C0] flex flex-row">
+      <ul className="w-full max-w-[90rem] mx-auto flex items-center justify-between">
         <li>
           <Link href={"/"}>Logo</Link>
         </li>

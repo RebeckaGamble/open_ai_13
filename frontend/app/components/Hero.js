@@ -3,10 +3,9 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <div className="w-full h-[600px] bg-indigo-100">
-      <div className="flex flex-col h-full justify-center items-center">
-        <h3 className="font-semibold text-[20px]">Hero comp</h3>
-        <div className="w-[300px] h-[200px] bg-green-300">Image</div>
+    <div className="w-full h-[964px] bg-gradient-to-t from-[#642201] to-[#CA4502]">
+      <div className="flex flex-col h-full justify-center items-center text-[#F8E8C0]">
+        <h3 className="font-semibold uppercase text-[87.4px]">ChefMate</h3>
         <p className="max-w-[800px]">
           "Flavors combined with mood" is like a culinary symphony where taste
           buds dance to the rhythm of emotions. When you're happy, perhaps a
@@ -18,11 +17,11 @@ export default function Hero() {
           taste and mood.
         </p>
         <h3 className="font-semibold pt-6">Today, what combination of flavor and mood do you feel drawn to?</h3>
-        <div className="flex flex-row gap-10 py-10">
-          <Link href={"/login"} className="px-6 py-0.5 border uppercase border-slate-50 bg-white rounded-sm hover:scale-105">
+        <div className="flex flex-row gap-6 py-8">
+          <Link href={"/login"} className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] font-semibold text-[#250D01] text-[32px] hover:scale-105">
             Login
           </Link>
-          <button className="px-6 py-0.5 border uppercase border-slate-50 bg-white rounded-sm hover:scale-105">
+          <button className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] text-[#250D01] font-semibold text-[32px] hover:scale-105">
             Start
           </button>
         </div>

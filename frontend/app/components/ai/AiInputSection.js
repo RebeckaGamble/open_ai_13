@@ -4,8 +4,7 @@ import AiInputForm from "./AiInputForm";
 export default function AiInputSection() {
   return (
     <>
-      <div className="bg-pink-50 h-[400px]">
-        <h3 className="font-semibold text-center text-[20px]">AI Form fields:</h3>
+      <div className="bg-[#F8E8C0] h-[834px] flex flex-col items-center">
         <div>
           <AiInputForm />
         </div>

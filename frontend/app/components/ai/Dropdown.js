@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as RadixDropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
+import { IoIosArrowDown } from "react-icons/io";
 
 let DropdownContext = createContext();
 export default function Dropdown({ children }) {
@@ -18,8 +19,10 @@ export default function Dropdown({ children }) {
 
 function DropdownButton({ children }) {
   return (
-    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-white border-slate-600 rounded px-6 py-1 text-md hover:bg-orange-200/50 focus-visible:outline-none data-[state=open]:bg-orange-400/75">
-      {children}
+    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#A83301] uppercase border-none rounded-[10px] w-[241px] lg:w-[550px] px-6 py-1 text-md text-[#F8E8C0] focus-visible:outline-none data-[state=open]:bg-[#A83301]">
+      <p className="flex flex-row items-center justify-between">
+        <span className="pr-1"> {children} </span> <IoIosArrowDown />
+      </p>
     </RadixDropdownMenu.Trigger>
   );
 }
@@ -50,7 +53,7 @@ function DropdownMenu({ children }) {
             <RadixDropdownMenu.Content
               align="start"
               asChild
-              className="mt-1 overflow-hidden rounded bg-white/75 p-2 text-left shadow backdrop-blur"
+              className="mt-1 overflow-hidden rounded-[10px] w-[241px] lg:w-[550px] bg-[#A83301] text-[#F8E8C0] p-2 text-left shadow backdrop-blur"
             >
               <motion.div
                 initial="closed"
@@ -90,12 +93,12 @@ function DropdownMenuItem({ children, onSelect = () => {} }) {
 
         await controls.start({
           backgroundColor: "#fff",
-          color: "#000",
+          color: "#F8E8C0",
           transition: { duration: 0.04 },
         });
         await controls.start({
           backgroundColor: "orange",
-          color: "#fff",
+          color: "#F8E8C0",
           transition: { duration: 0.04 },
         });
         await sleep(0.075);
@@ -103,7 +106,7 @@ function DropdownMenuItem({ children, onSelect = () => {} }) {
         await closeMenu();
         onSelect();
       }}
-      className="w-40 select-none rounded px-2 py-1.5 text-gray-700 data-[highlighted]:bg-green-400 data-[highlighted]:text-white data-[highlighted]:focus:outline-none"
+      className="w-full select-none rounded px-2 py-1.5 text-[#F8E8C0] data-[highlighted]:bg-[#c8a395] data-[highlighted]:text-[#F8E8C0] data-[highlighted]:focus:outline-none"
       asChild
     >
       <motion.div animate={controls}>{children}</motion.div>
