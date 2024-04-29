@@ -3,6 +3,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import * as RadixDropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";
 
 let DropdownContext = createContext();
 export default function Dropdown({ children }) {
@@ -18,10 +20,12 @@ export default function Dropdown({ children }) {
 }
 
 function DropdownButton({ children }) {
+  const { open } = useContext(DropdownContext);
+
   return (
-    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#A83301] uppercase border-none rounded-[10px] w-[241px] lg:w-[550px] px-6 py-1 text-md text-[#F8E8C0] focus-visible:outline-none data-[state=open]:bg-[#A83301]">
+    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#A83301] uppercase border-none rounded-[10px] w-[241px] sm:w-[550px] lg:w-[550px] px-6 py-1 text-md text-[#F8E8C0] focus-visible:outline-none data-[state=open]:bg-[#A83301]">
       <p className="flex flex-row items-center justify-between">
-        <span className="pr-1"> {children} </span> <IoIosArrowDown />
+        <span className="pr-1"> {children} </span> {open ? <TiArrowSortedUp /> : <TiArrowSortedDown />  }
       </p>
     </RadixDropdownMenu.Trigger>
   );
@@ -53,7 +57,7 @@ function DropdownMenu({ children }) {
             <RadixDropdownMenu.Content
               align="start"
               asChild
-              className="mt-1 overflow-hidden rounded-[10px] w-[241px] lg:w-[550px] bg-[#A83301] text-[#F8E8C0] p-2 text-left shadow backdrop-blur"
+              className="mt-1 overflow-hidden rounded-[10px] w-[241px] sm:w-[550px] bg-[#A83301] text-[#F8E8C0] p-2 text-left shadow backdrop-blur"
             >
               <motion.div
                 initial="closed"

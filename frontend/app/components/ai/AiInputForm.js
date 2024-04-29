@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import { IoIosArrowDown } from "react-icons/io";
-//import DropdownWithCheck from "./DropdownWithCheck";
 import {
   moodOptions,
   mustContain,
   timeOptions,
   countryOptions,
+  dontContain
 } from "./dropdownOptions";
+import Checkbox from "./Checkbox";
 
 export default function AiInputForm() {
   const [todaysMood, setTodaysMood] = useState("");
@@ -21,11 +21,30 @@ export default function AiInputForm() {
   const [selectedCountry, setSelectedCountry] = useState("")
   const [selectedPref, setSelectedPref] = useState("");
 
+  const [selectedChecks, setSelectedChecks] = useState([]);
+
   const [response, setResponse] = useState("");
 
+  const handleSelect = (label, isChecked) => {
+    console.log("Checkbox selected:", label);
+    console.log("Is checked:", isChecked);
+
+    if (isChecked) {
+        setSelectedChecks((prevSelected) => [...prevSelected, label]);
+    } else {
+        setSelectedChecks((prevSelected) =>
+            prevSelected.filter((item) => item !== label)
+        );
+    }
+};
+
   const handleSubmit = async () => {
+    const checkedItems = dontContain
+    .filter(item => selectedChecks.includes(item))
+    .join(", ");
+
     // Send selected values to the backend
-    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain.. I would prefer food thats ${preferences} from ${country}. Can you give me some different recipes based on this?`;
+    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me some different recipes based on this?`;
     console.log(prompt);
     setResponse(prompt);
     /*
@@ -53,19 +72,20 @@ export default function AiInputForm() {
     <div className="w-full">
       <div className="flex flex-col text-center ">
         <h3 className="text-center text-[75px]">Make your choices</h3>
-        <p className="max-w-[838px] mx-auto">
+        <p className="max-w-[838px] mx-auto pb-4 px-4">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum
           architecto eveniet expedita vel, ea quisquam quis? Voluptate fuga
           consequatur dolore? Repellat nobis itaque veniam aliquid consequuntur
           possimus, reprehenderit assumenda cupiditate.
         </p>
       </div>
-      <div className="w-full max-w-[1199px] mx-auto  flex flex-col items-center justify-center">
-        <div className="flex flex-row flex-wrap gap-6 w-full justify-center ">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="w-full flex flex-col items-center justify-center mx-auto">
+        <div className="flex flex-col justify-betweeen ">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
+            <div className="flex flex-col ">
             <Dropdown>
               <Dropdown.Button>
-                {selectedMood ? selectedMood : "Todays mood"}
+                {selectedMood ? "Todays mood: " + selectedMood : "Todays mood"}
               </Dropdown.Button>
               <Dropdown.Menu>
                 {moodOptions.map((mood, index) => (
@@ -87,7 +107,7 @@ export default function AiInputForm() {
           {/*pref */}
           <Dropdown>
             <Dropdown.Button>
-              {selectedPref ? selectedPref : "Prefereneces"}
+              {selectedPref ? "Prefereneces: " + selectedPref : "Prefereneces(include)"}
             </Dropdown.Button>
             <Dropdown.Menu>
               {mustContain.map((pref, index) => (
@@ -107,7 +127,7 @@ export default function AiInputForm() {
           {/*time */}
           <Dropdown>
             <Dropdown.Button>
-            {selectedTime ? selectedTime : "Time to spend"}
+            {selectedTime ? "Time to spend:  " + selectedTime : "  Time to spend"}
             </Dropdown.Button>
             <Dropdown.Menu>
               {timeOptions.map((time, index) => (
@@ -126,7 +146,7 @@ export default function AiInputForm() {
           {/*from */}
           <Dropdown>
             <Dropdown.Button>
-            {selectedCountry ? selectedCountry : "Preferably from"}
+            {selectedCountry ? "Preferably from: " + selectedCountry : "Preferably from"}
 
             </Dropdown.Button>
             <Dropdown.Menu>
@@ -143,6 +163,28 @@ export default function AiInputForm() {
               ))}
             </Dropdown.Menu>
           </Dropdown>
+          </div>
+        </div>
+        {/*checkboxes */}
+        <div className="w-full max-w-[90rem] flex flex-col py-10">
+          <h3 className="text-center text-xl pb-4">Don't include: </h3>
+          <form action="" className="flex justify-between mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6 items-center mx-auto justify-center ">
+              {dontContain.map((dont, index) => (
+                <div key={index} 
+                className="flex w-[241px]  sm:w-[264px] mb-[-15px] rounded-[10px] h-[32px] items-center justify-between bg-[#A83301]"
+                >
+                  <Checkbox
+                    //key={index}
+                    checked={selectedChecks.includes(dont)} 
+                    onCheckedChange={(isChecked) => handleSelect(dont, isChecked)} 
+                    id={index}
+                    label={dont}
+                  />
+                </div>
+              ))}
+            </div>
+          </form>
         </div>
         <div className="py-10">
           <button
