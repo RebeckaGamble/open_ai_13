@@ -187,12 +187,13 @@ export default function AiInputForm() {
           </form>
         </div>
         <div className="py-10">
-          <button
-            onClick={handleSubmit}
-            className="px-6 py-0.5 border uppercase border-slate-50 bg-white rounded-sm hover:scale-105"
-          >
-            Button
-          </button>
+        <button
+  onClick={handleSubmit}
+  className="px-8 py-2 border uppercase border-slate-50 bg-[#ec7d46] rounded-full text-lg font-semibold hover:scale-105"
+>
+  Search
+</button>
+
         </div>
 
         {response && (
