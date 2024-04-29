@@ -7,8 +7,10 @@ export const metadata = {
 
 export default function page() {
   return (
-    <>
-      <CreateForm />
-    </>
+    <div className="flex w-full h-[800px] bg-[#F8E8C0] relative">
+      <div className="">
+        <CreateForm />
+      </div>
+    </div>
   );
 }
