@@ -31,9 +31,11 @@ export default function CreateUser() {
     setPassword("");
   }
 
-  function handleCheckboxChange() {}
+  function handleCheckboxChange() {
+    setIsChecked(!isChecked);
+  }
   return (
-    <div className="flex flex-col justify-top p-5 items-left w-[772.82px] h-[755.82px] justify-between top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
+    <div className="flex flex-col justify-evenly p-5 items-left w-[772.82px] h-[755.82px] top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
       <div classname="flex flex-col ">
         <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
           Welcome to ChefMate
@@ -43,7 +45,7 @@ export default function CreateUser() {
           Already have an account? <a href="">Log in</a>
         </p>
       </div>
-      <div className="flex flex-col space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">
+      <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">
         <div className="flex-col flex mb-1 space-y-1">
           <label className="text-[#F8E8C0] ">Email</label>
           <input
@@ -55,8 +57,8 @@ export default function CreateUser() {
             required
           />
         </div>
-        <div className="flex-col flex mb-1 space-y-1">
-          <label className="text-[#F8E8C0] ">Username</label>
+        <div className="flex-col flex mb-1 space-y-1 ">
+          <label className="text-[#F8E8C0]">Username</label>
           <input
             className="bg-[#8A2F02] border-[1px] border-white pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]"
             type="text"
@@ -92,7 +94,7 @@ export default function CreateUser() {
         <label className="inline-flex items-center text">
           <input
             type="checkbox"
-            className="appearance-none rounded-md bg-[#8A2F02] border-2 border-[#F8E8C0] checked:bg-[#8A2F02] checked:border-transparent h-6 w-6"
+            className="appearance-none rounded-md bg-[#8A2F02] border-2 border-[#F8E8C0] checked:bg-[#F8E8C0] h-6 w-6"
             checked={isChecked}
             onChange={handleCheckboxChange}
           />
