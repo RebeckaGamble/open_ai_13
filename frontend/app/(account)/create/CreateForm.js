@@ -33,7 +33,7 @@ export default function CreateUser() {
 
   function handleCheckboxChange() {}
   return (
-    <div className="flex flex-col justify-top p-5 items-left w-[772.82px] h-[755.82px] justify-between top-[10%] left-[33%] font-sans rounded-xl bg-[#8A2F02] absolute">
+    <div className="flex flex-col justify-top p-5 items-left w-[772.82px] h-[755.82px] justify-between top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
       <div classname="flex flex-col ">
         <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
           Welcome to ChefMate
@@ -49,7 +49,7 @@ export default function CreateUser() {
           <input
             className="bg-[#8A2F02] border-[1px] border-white pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]"
             type="email"
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -92,7 +92,7 @@ export default function CreateUser() {
         <label className="inline-flex items-center text">
           <input
             type="checkbox"
-            className="form-checkbox rounded-md bg-[#8A2F02] checked:bg-[#8A2F02] checked:border-transparent h-6 w-6 "
+            className="appearance-none rounded-md bg-[#8A2F02] border-2 border-[#F8E8C0] checked:bg-[#8A2F02] checked:border-transparent h-6 w-6"
             checked={isChecked}
             onChange={handleCheckboxChange}
           />
