@@ -114,6 +114,7 @@ export default function CreateUser() {
             checked={isChecked}
             iconSize={"text-[40px]"}
             checkbg={"[#8A2F02]"}
+            borderColor={"[F5B25E]"}
           />
           <span className="ml-2 text-[#F8E8C0] text-[12px]">
             I want to receive emails about the product, feature updates, events,
