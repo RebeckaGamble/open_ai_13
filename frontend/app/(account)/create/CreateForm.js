@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { IoEye } from "react-icons/io5";
+import { IoEye, IoEyeOff } from "react-icons/io5"; 
 
 export default function CreateUser() {
   const [users, setUsers] = useState([]);
@@ -8,6 +8,7 @@ export default function CreateUser() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Tillståndsvariabel för att visa/dölja lösenordet
 
   async function handleCreateUser() {
     const id = Math.floor(Math.random() * 1000) + 1;
@@ -34,13 +35,18 @@ export default function CreateUser() {
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
   }
+
+  // Funktion för att visa/dölja lösenordet
+  function togglePasswordVisibility() {
+    setShowPassword(!showPassword);
+  }
+
   return (
     <div className="flex flex-col justify-evenly p-5 items-left w-[772.82px] h-[755.82px] top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
-      <div classname="flex flex-col ">
+      <div className="flex flex-col ">
         <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
           Welcome to ChefMate
         </h2>
-
         <p className="text-[#F8E8C0] font-[20px] mb-5">
           Already have an account? <a href="">Log in</a>
         </p>
@@ -72,12 +78,22 @@ export default function CreateUser() {
           <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
             <input
               className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] "
-              type="password"
+              type={showPassword ? "text" : "password"} // Visa lösenordet om showPassword är true, annars dolt
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <IoEye className="color-[#F8E8C0] mr-2" />
+            {showPassword ? (
+              <IoEyeOff
+                className="color-[#F8E8C0] mr-2 cursor-pointer" // Använd IoEyeOff när lösenordet är synligt
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <IoEye
+                className="color-[#F8E8C0] mr-2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              />
+            )}
           </div>
         </div>
       </div>
