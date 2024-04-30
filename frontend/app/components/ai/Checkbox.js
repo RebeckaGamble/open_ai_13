@@ -1,9 +1,12 @@
 import React from "react";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
+//[#F8E8C0]
 
-const Checkbox = ({ id, label, checked, onCheckedChange }) => {
+const Checkbox = ({ id, label, checked, onCheckedChange, borderColor, checkBg, iconSize }) => {
   const [isChecked, setIsChecked] = React.useState(checked);
+  console.log('checkBg:', checkBg);
+  console.log('iconSize:', iconSize);
 
   const handleCheckedChange = (isChecked) => {
     setIsChecked(isChecked);
@@ -19,12 +22,12 @@ const Checkbox = ({ id, label, checked, onCheckedChange }) => {
         {label}
       </label>
       <RadixCheckbox.Root
-        className=" mr-2 flex h-[20px] w-[20px] appearance-none items-center justify-center rounded-[4px] bg-[#F8E8C0] shadow-[0_1px_1px] outline-none focus:shadow-[0_0_0_0.5px_black]"
+        className={`mr-2 flex h-[24px] w-[24px] border border-${borderColor} appearance-none items-center justify-center text-[#F8E8C0] rounded-[4px] bg-${checkBg} outline-none `}
         id={id}
         onCheckedChange={handleCheckedChange}
         checked={isChecked}
       >
-        <RadixCheckbox.Indicator className="text-violet11">
+        <RadixCheckbox.Indicator >
           <CheckIcon />
         </RadixCheckbox.Indicator>
       </RadixCheckbox.Root>

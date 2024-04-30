@@ -6,7 +6,7 @@ import {
   mustContain,
   timeOptions,
   countryOptions,
-  dontContain
+  dontContain,
 } from "./dropdownOptions";
 import Checkbox from "./Checkbox";
 
@@ -18,7 +18,7 @@ export default function AiInputForm() {
 
   const [selectedMood, setSelectedMood] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("")
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedPref, setSelectedPref] = useState("");
 
   const [selectedChecks, setSelectedChecks] = useState([]);
@@ -30,18 +30,18 @@ export default function AiInputForm() {
     console.log("Is checked:", isChecked);
 
     if (isChecked) {
-        setSelectedChecks((prevSelected) => [...prevSelected, label]);
+      setSelectedChecks((prevSelected) => [...prevSelected, label]);
     } else {
-        setSelectedChecks((prevSelected) =>
-            prevSelected.filter((item) => item !== label)
-        );
+      setSelectedChecks((prevSelected) =>
+        prevSelected.filter((item) => item !== label)
+      );
     }
-};
+  };
 
   const handleSubmit = async () => {
     const checkedItems = dontContain
-    .filter(item => selectedChecks.includes(item))
-    .join(", ");
+      .filter((item) => selectedChecks.includes(item))
+      .join(", ");
 
     // Send selected values to the backend
     const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me some different recipes based on this?`;
@@ -83,103 +83,115 @@ export default function AiInputForm() {
         <div className="flex flex-col justify-betweeen ">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
             <div className="flex flex-col ">
+              <Dropdown>
+                <Dropdown.Button>
+                  {selectedMood
+                    ? "Todays mood: " + selectedMood
+                    : "Todays mood"}
+                </Dropdown.Button>
+                <Dropdown.Menu>
+                  {moodOptions.map((mood, index) => (
+                    <Dropdown.MenuItem
+                      key={index}
+                      //  onSelect={() => setTodaysMood(mood)}
+                      onSelect={() => {
+                        setTodaysMood(mood);
+                        setSelectedMood(mood);
+                      }}
+                    >
+                      {mood}
+                    </Dropdown.MenuItem>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+
+            {/*pref */}
             <Dropdown>
               <Dropdown.Button>
-                {selectedMood ? "Todays mood: " + selectedMood : "Todays mood"}
+                {selectedPref
+                  ? "Prefereneces: " + selectedPref
+                  : "Prefereneces(include)"}
               </Dropdown.Button>
               <Dropdown.Menu>
-                {moodOptions.map((mood, index) => (
+                {mustContain.map((pref, index) => (
                   <Dropdown.MenuItem
                     key={index}
-                    //  onSelect={() => setTodaysMood(mood)}
                     onSelect={() => {
-                      setTodaysMood(mood);
-                      setSelectedMood(mood);
+                      setPreferences(pref);
+                      setSelectedPref(pref);
                     }}
                   >
-                    {mood}
+                    {pref}
                   </Dropdown.MenuItem>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-          </div>
 
-          {/*pref */}
-          <Dropdown>
-            <Dropdown.Button>
-              {selectedPref ? "Prefereneces: " + selectedPref : "Prefereneces(include)"}
-            </Dropdown.Button>
-            <Dropdown.Menu>
-              {mustContain.map((pref, index) => (
-                <Dropdown.MenuItem
-                  key={index}
-                  onSelect={() => {
-                    setPreferences(pref);
-                    setSelectedPref(pref);
-                  }}
-                >
-                  {pref}
-                </Dropdown.MenuItem>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-
-          {/*time */}
-          <Dropdown>
-            <Dropdown.Button>
-            {selectedTime ? "Time to spend:  " + selectedTime : "  Time to spend"}
-            </Dropdown.Button>
-            <Dropdown.Menu>
-              {timeOptions.map((time, index) => (
-                <Dropdown.MenuItem
-                  key={index}
-                  onSelect={() => {
-                    setTimeToSpend(time);
-                    setSelectedTime(time);
-                  }}
-                >
-                  {time}
-                </Dropdown.MenuItem>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          {/*from */}
-          <Dropdown>
-            <Dropdown.Button>
-            {selectedCountry ? "Preferably from: " + selectedCountry : "Preferably from"}
-
-            </Dropdown.Button>
-            <Dropdown.Menu>
-              {countryOptions.map((from, index) => (
-                <Dropdown.MenuItem
-                  key={index}
-                  onSelect={() => {
-                    setCountry(from)
-                    setSelectedCountry(from);
-                  }}
-                >
-                  {from}
-                </Dropdown.MenuItem>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+            {/*time */}
+            <Dropdown>
+              <Dropdown.Button>
+                {selectedTime
+                  ? "Time to spend:  " + selectedTime
+                  : "  Time to spend"}
+              </Dropdown.Button>
+              <Dropdown.Menu>
+                {timeOptions.map((time, index) => (
+                  <Dropdown.MenuItem
+                    key={index}
+                    onSelect={() => {
+                      setTimeToSpend(time);
+                      setSelectedTime(time);
+                    }}
+                  >
+                    {time}
+                  </Dropdown.MenuItem>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            {/*from */}
+            <Dropdown>
+              <Dropdown.Button>
+                {selectedCountry
+                  ? "Preferably from: " + selectedCountry
+                  : "Preferably from"}
+              </Dropdown.Button>
+              <Dropdown.Menu>
+                {countryOptions.map((from, index) => (
+                  <Dropdown.MenuItem
+                    key={index}
+                    onSelect={() => {
+                      setCountry(from);
+                      setSelectedCountry(from);
+                    }}
+                  >
+                    {from}
+                  </Dropdown.MenuItem>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         {/*checkboxes */}
         <div className="w-full max-w-[90rem] flex flex-col py-10">
           <h3 className="text-center text-xl pb-4">Don't include: </h3>
           <form action="" className="flex justify-between mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6 items-center mx-auto justify-center ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6 items-center mx-auto justify-center ">
               {dontContain.map((dont, index) => (
-                <div key={index} 
-                className="flex w-[241px]  sm:w-[264px] mb-[-15px] rounded-[10px] h-[32px] items-center justify-between bg-[#A83301]"
+                <div
+                  key={index}
+                  className="flex w-[241px] sm:w-[264px] mb-[-15px] rounded-[10px] h-[32px] items-center justify-between bg-[#A83301]"
                 >
                   <Checkbox
                     //key={index}
-                    checked={selectedChecks.includes(dont)} 
-                    onCheckedChange={(isChecked) => handleSelect(dont, isChecked)} 
+                    checked={selectedChecks.includes(dont)}
+                    onCheckedChange={(isChecked) =>
+                      handleSelect(dont, isChecked)
+                    }
                     id={index}
                     label={dont}
+                    checkBg={"[#8A2F02]"}
+                    borderColor={"[#F8E8C0]"}
                   />
                 </div>
               ))}
@@ -187,13 +199,12 @@ export default function AiInputForm() {
           </form>
         </div>
         <div className="py-10">
-        <button
-  onClick={handleSubmit}
-  className="px-8 py-2 border uppercase border-slate-50 bg-[#ec7d46] rounded-full text-lg font-semibold hover:scale-105"
->
-  Search
-</button>
-
+          <button
+            onClick={handleSubmit}
+            className="px-8 py-2 border uppercase border-slate-50 bg-[#ec7d46] rounded-full text-lg font-semibold hover:scale-105"
+          >
+            Search
+          </button>
         </div>
 
         {response && (
