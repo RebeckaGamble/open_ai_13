@@ -97,8 +97,6 @@ export default function CreateUser() {
           />
         </div>
         <div className="flex-col flex mb-1 space-y-1">
-          <label className="text-[#F8E8C0] mb-0">Password</label>
-          <div className="flex-col flex mb-1 space-y-1">
         <label className="text-[#F8E8C0] mb-0">Password</label>
         <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
           <input
@@ -132,7 +130,6 @@ export default function CreateUser() {
             ></span>
           ))}
         </div>
-      </div>
           <div className="text-[12px]">
             <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
               <li>Use 8 or more characters</li>
