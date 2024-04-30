@@ -10,6 +10,8 @@ export default function CreateUser() {
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // Tillståndsvariabel för att visa/dölja lösenordet
+  const [passwordStrength, setPasswordStrength] = useState(0); // Lösenordsstyrka
+
 
   async function handleCreateUser() {
     const id = Math.floor(Math.random() * 1000) + 1;
@@ -41,6 +43,26 @@ export default function CreateUser() {
   function togglePasswordVisibility() {
     setShowPassword(!showPassword);
   }
+
+   // Funktion för att bedöma lösenordsstyrka
+   function checkPasswordStrength(password) {
+    let strength = 0;
+    // lösenord förstärkelse, Bokstav, Siffra och täcken/mönster
+    if (password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+    return strength;
+  }
+
+  function handleChangePassword(e) {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    const strength = checkPasswordStrength(newPassword);
+    setPasswordStrength(strength);
+  }
+
 
   return (
     <div className="flex flex-col justify-evenly p-5 items-left w-[772.82px] h-[755.82px] top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
@@ -76,26 +98,41 @@ export default function CreateUser() {
         </div>
         <div className="flex-col flex mb-1 space-y-1">
           <label className="text-[#F8E8C0] mb-0">Password</label>
-          <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
-            <input
-              className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] "
-              type={showPassword ? "text" : "password"} // Visa lösenordet om showPassword är true, annars dolt
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+          <div className="flex-col flex mb-1 space-y-1">
+        <label className="text-[#F8E8C0] mb-0">Password</label>
+        <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
+          <input
+            className="bg-[#8A2F02] outline-none placeholder-[#F5B25E]"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={handleChangePassword} // Uppdaterad eventhanterare
+          />
+          {showPassword ? (
+            <IoEyeOff
+              className="color-[#F8E8C0] mr-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
             />
-            {showPassword ? (
-              <IoEyeOff
-                className="color-[#F8E8C0] mr-2 cursor-pointer" // Använd IoEyeOff när lösenordet är synligt
-                onClick={togglePasswordVisibility}
-              />
-            ) : (
-              <IoEye
-                className="color-[#F8E8C0] mr-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              />
-            )}
-          </div>
+          ) : (
+            <IoEye
+              className="color-[#F8E8C0] mr-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            />
+          )}
+        </div>
+        {/* Lösenordsstyrkeindikator */}
+        <div className="text-[12px] mt-1">
+          <span className="text-[#F8E8C0]">Password Strength: </span>
+          {[...Array(5)].map((_, index) => (
+            <span
+              key={index}
+              className={`inline-block h-2 w-2 rounded-full mx-1 ${
+                index < passwordStrength ? "bg-green-500" : "bg-gray-300"
+              }`}
+            ></span>
+          ))}
+        </div>
+      </div>
           <div className="text-[12px]">
             <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
               <li>Use 8 or more characters</li>
