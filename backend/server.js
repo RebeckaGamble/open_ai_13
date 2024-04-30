@@ -32,15 +32,15 @@ async function query(sql, params) {
 
 //skapa användare
 app.post("/users", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, username, password } = req.body;
   // kryptera lösenordet innan det hamnar i DB
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   console.log("hashedPassword", hashedPassword);
   try {
     const result = await query(
-      "INSERT INTO users (username, password) VALUES (?, ?)",
-      [username, hashedPassword]
+      "INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
+      [email, username, hashedPassword]
     );
     res.status(201).json({ message: "User created" });
   } catch (error) {
