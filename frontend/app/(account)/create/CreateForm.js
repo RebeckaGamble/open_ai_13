@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { IoEye, IoEyeOff } from "react-icons/io5"; 
+import { IoEye, IoEyeOff } from "react-icons/io5";
+import Checkbox from "@/app/components/ai/Checkbox";
 
 export default function CreateUser() {
   const [users, setUsers] = useState([]);
@@ -95,24 +96,24 @@ export default function CreateUser() {
               />
             )}
           </div>
+          <div className="text-[12px]">
+            <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
+              <li>Use 8 or more characters</li>
+              <li>One Uppercase character</li>
+              <li>One lowercase character</li>
+              <li>One special character</li>
+              <li>One number</li>
+            </ol>
+          </div>
         </div>
-      </div>
-      <div className="text-[12px]">
-        <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
-          <li>Use 8 or more characters</li>
-          <li>One Uppercase character</li>
-          <li>One lowercase character</li>
-          <li>One special character</li>
-          <li>One number</li>
-        </ol>
       </div>
       <div>
         <label className="inline-flex items-center text">
-          <input
-            type="checkbox"
-            className="appearance-none rounded-md bg-[#8A2F02] border-2 border-[#F8E8C0] checked:bg-[#F8E8C0] h-6 w-6"
+          <Checkbox
+            onCheckedChange={handleCheckboxChange}
             checked={isChecked}
-            onChange={handleCheckboxChange}
+            iconSize={"text-[40px]"}
+            checkbg={"[#8A2F02]"}
           />
           <span className="ml-2 text-[#F8E8C0] text-[12px]">
             I want to receive emails about the product, feature updates, events,
