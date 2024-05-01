@@ -67,13 +67,13 @@ export default function CreateUser() {
   }
 
   return (
-    <div className="flex flex-col justify-evenly p-5 items-left w-[772.82px] h-[755.82px] top-[10%] left-[33%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
+    <div className="flex flex-col justify-evenly p-5 w-[772.82px] h-[755.82px] top-[10%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
       <form
         onSubmit={handleCreateUser}
-        className="flex flex-col justify-top p-5 items-left w-[500px] h-[600px] top-[10%] left-[33%] font-sans rounded-xl bg-[#8A2F02] absolute"
+        className="flex flex-col justify-top p-5 items-left w-[100%] h-[600px] justify-between font-sans rounded-xl bg-[#8A2F02]"
       >
-        <div className="flex flex-col ">
-          <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
+        <div className="flex flex-col top-5">
+          <h2 className="text-[#F8E8C0]  text-[32px] font-semibold font-sans">
             Welcome to ChefMate
           </h2>
           <p className="text-[#F8E8C0] font-[20px] mb-5">
@@ -147,8 +147,8 @@ export default function CreateUser() {
             </div>
           </div>
         </div>
-        <div>
-          <label className="inline-flex items-center text">
+        <div className="pt-5">
+          <label className="inline-flex items-center">
             <Checkbox
               onCheckedChange={handleCheckboxChange}
               checked={isChecked}
