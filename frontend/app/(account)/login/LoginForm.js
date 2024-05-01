@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FaGoogle, FaFacebook} from "react-icons/fa";
+import Checkbox from "@/app/components/ai/Checkbox";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -35,55 +37,98 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="px-4">
-        <div className="pt-10 xl:pt-40 flex flex-col mx-auto">
-          <h3 className="font-semibold pb-6 text-center text-xl">
-            Login to your user account
-          </h3>
-          <form action="" className="flex flex-col mx-auto">
-            <label htmlFor="" className="">
-              Username:{" "}
-            </label>
-            <input
-              type="text"
-              value={username}
-              required
-              onChange={(e) => setUsername(e.target.value)}
-              className="max-w-[300px] border bordre-slate-300 px-2 py-0.5 mb-2"
-            />
-            <label htmlFor="" className="">
-              Password:{" "}
-            </label>
-            <input
-              type="password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              className="max-w-[300px] border bordre-slate-300 px-2 py-0.5"
-            />
+      <div className="px-4 bg-[#F5B25E]">
+        <div className="pt-5 flex flex-col mx-auto">
+        <form
+          action=""
+          className="flex flex-col mx-auto 
+          rounded-lg bg-[#8A2F02] p-4 mb-5">
 
-            {error && <p className="text-red-500 text-center">{error}</p>}
-            <div className="max-w-[300px] mt-4 flex justify-end">
-              <Link href={"/"}>
-                <button
-                  onClick={handleSubmit}
-                  className="max-w-fit bg-blue-700 px-4 py-1 text-white"
-                >
-                  Log in
-                </button>
-              </Link>
-            </div>
-          </form>
+          <h3 className="font-semibold pb-6 text-center text-3xl text-[#F8E8C0]">
+            Login
+          </h3>
+
           <div className="pt-4 text-center">
             <p>
-              Don't have an account? Go to{" "}
+            <span style={{ color: '#F8E8C0' }}>Don't have an account? </span>
               <Link href="/create" className="underline text-blue-700">
-                Create account
+                Register
               </Link>
             </p>
           </div>
-        </div>
+
+      <div className="mb-6">
+      <a
+        href='https://www.facebook.com/?locale=sv_SE'
+        target='_blank'
+        rel='noreferrer'
+        className='m-2 flex items-center justify-center  bg-[#F8E8C0] rounded-full shadow-lg shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300'
+        style={{ width: '300px', height: '40px' }}
+      >
+        <FaFacebook size={24} />
+        <span className="ml-3">Login With Facebook</span>
+      </a>
+
+      <a
+        href='https://myaccount.google.com/'
+        target='_blank'
+        rel='noreferrer'
+        className='m-2 flex items-center justify-center bg-[#F8E8C0] rounded-full shadow-lg shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300'
+        style={{ width: '300px', height: '40px' }}
+      >
+        <FaGoogle size={24}  />
+        <span className="ml-3">Login With Google</span>
+      </a>
+
+    </div>
+
+    <div className="flex justify-center items-center mb-4">
+      <div className="border-b  w-2/6"></div>
+      <h3 className="text-center mx-4 text-[#F8E8C0]">OR</h3>
+      <div className="border-b  w-2/6"></div>
+    </div>
+
+      <label htmlFor="" className="text-[#F8E8C0]">
+        Username:{" "}
+      </label>
+      <input
+        type="text"
+        value={username}
+        required
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter your username"
+        className="bg-[#8A2F02] border-[1px] border-white pl-3 
+        rounded-md px-4 py-2 placeholder-[#F5B25E]"
+      />
+      <label htmlFor="" className="text-[#F8E8C0]">
+        Password:{" "}
+      </label>
+      <input
+        type="password"
+        value={password}
+        required
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter your password"
+        className="bg-[#8A2F02] border-[1px] border-white 
+        pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]"
+      />
+
+      {error && <p className="text-red-500 text-center">{error}</p>}
+      <div className="max-w-[300px] mt-4 flex justify-center items-center">
+        <Link href={"/"}>
+          <button
+            onClick={handleSubmit}
+            className="bg-[#F8E8C0] text-black 
+            w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
+          >
+            Log in
+          </button>
+        </Link>
       </div>
+    </form>
+  </div>
+</div>
     </>
   );
 }
+
