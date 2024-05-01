@@ -93,26 +93,39 @@ app.post("/login", async (req, res) => {
 //! img - vilken modell
 //? insert - få tbx id, bildgenerering - svar - koppla bild till id
 app.post("/recipes", async (req, res) => {
-  // const { todaysMood, timeToSpend, country } = req.body;
   const { prompt } = req.body;
   try {
     const completion = await openai.chat.completions.create({
       messages: [
         {
-          role: "user", //system info på förhand
+          role: "user",
           content: prompt,
         },
       ],
       model: "gpt-3.5-turbo",
     });
-    //    res.status(200).json([title, varor, do);
 
     const result = completion.choices[0].message.content;
     console.log("result:", result);
-    console.log("completion:", completion);
 
-    // res.json({ result });
-    res.send(result);
+    // Omvandla svaret till ett JavaScript-objekt
+    const recipeObject = {
+      title: "", // Titel från svaret
+      ingredients: [], // Lägg till ingredienser här från svaret
+      steps: [], // Lägg till steg här från svaret
+      historical_description: "", // Lägg till historisk beskrivning här från svaret
+    };
+
+    // Exempel på hur du kan extrahera information från svaret och uppdatera receptobjektet
+    const parsedResult = JSON.parse(result); // Om result är en JSON-sträng, annars använd result direkt
+
+    recipeObject.title = parsedResult.title; // Uppdatera titeln
+    recipeObject.ingredients = parsedResult.ingredients; // Uppdatera ingredienser
+    recipeObject.steps = parsedResult.steps; // Uppdatera steg
+    recipeObject.historical_description = parsedResult.historical_description;
+
+    // Skicka det omvandlade receptobjektet till klienten
+    res.json(recipeObject);
   } catch (error) {
     console.error("Error generating recepies:", error);
     res.status(500).json({ error: "Error generating recepies" });

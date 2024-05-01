@@ -10,6 +10,8 @@ import {
 } from "./dropdownOptions";
 import Checkbox from "./Checkbox";
 
+import RecipeCards from "../recipes/RecipeCards";
+
 export default function AiInputForm() {
   const [todaysMood, setTodaysMood] = useState("");
   const [timeToSpend, setTimeToSpend] = useState("");
@@ -24,6 +26,7 @@ export default function AiInputForm() {
   const [selectedChecks, setSelectedChecks] = useState([]);
 
   const [response, setResponse] = useState("");
+  const [showRecipe, setShowRecipe] = useState(false); // Tillstånd för att visa RecipeCards
 
   const handleSelect = (label, isChecked) => {
     console.log("Checkbox selected:", label);
@@ -45,9 +48,10 @@ export default function AiInputForm() {
 
     // Send selected values to the backend
 
-    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me some different recipes based on this?`;
+    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me one recipe based on this? it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.`;
     console.log(prompt);
     setResponse(prompt);
+    setShowRecipe(true); // Visa RecipeCards-komponenten när användaren klickar på sökknappen
 
     // skicka objekt med states
 
@@ -206,12 +210,8 @@ export default function AiInputForm() {
           </button>
         </div>
 
-        {response && (
-          <div className="px-6 py-8 text-right">
-            <h2>Response from API:</h2>
-            <p>{response}</p>
-          </div>
-        )}
+        {/* Visa RecipeCards om showRecipe är true */}
+        {showRecipe && <RecipeCards />}
       </div>
     </div>
   );
