@@ -69,6 +69,20 @@ app.post("/login", async (req, res) => {
   res.status(200).json({ message: "login successful" });
 });
 
+//Test av Nitijs variant{
+// const promt = [];
+// promt.push("Give the answer in a json format? with a title  ");
+// promt.push("Can you give me one recipe based on the following steps?`");
+// promt.push(`Can you mirror the recepie to my mood, which is ${todaysMood}`);
+// promt.push(`My preferences are ${preferences}. meat should not include fish`);
+// promt.push(`This cuisine should take ${timeToSpend} to cook.`);
+// promt.push(`This dish should be influenced from this area ${country}`);
+// promt.push(`This dish should not include ${checkedItems}`);
+// prompt.push(
+//   "Please provide a detailed recipe, including steps for preparation and cooking."
+// );
+// }
+
 //let prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food on. I would prefer food from ${country}. Can you give me some different recipes based on this?`
 //bygg prompt - skicka inte hela strängen varje gång
 //todo: app post promt
@@ -78,25 +92,31 @@ app.post("/login", async (req, res) => {
 //! kategorisera datan som kommer tbx, markdown format - array med steg - map li - formatera text
 //! img - vilken modell
 //? insert - få tbx id, bildgenerering - svar - koppla bild till id
-app.get("/recipes", async (req, res) => {
+app.post("/recipes", async (req, res) => {
   // const { todaysMood, timeToSpend, country } = req.body;
+  const { prompt } = req.body;
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "user", //system info på förhand
+          content: prompt,
+        },
+      ],
+      model: "gpt-3.5-turbo",
+    });
+    //    res.status(200).json([title, varor, do);
 
-  const completion = await openai.chat.completions.create({
-    messages: [
-      {
-        role: "user", //system info på förhand
-        content: prompt,
-      },
-    ],
-    model: "gpt-3.5-turbo",
-  });
-  //    res.status(200).json([title, varor, do);
+    const result = completion.choices[0].message.content;
+    console.log("result:", result);
+    console.log("completion:", completion);
 
-  const result = completion.choices.message[0].content;
-  console.log("result:", result);
-  console.log("completion:", completion);
-
-  res.send(result);
+    // res.json({ result });
+    res.send(result);
+  } catch (error) {
+    console.error("Error generating recepies:", error);
+    res.status(500).json({ error: "Error generating recepies" });
+  }
 });
 
 /*

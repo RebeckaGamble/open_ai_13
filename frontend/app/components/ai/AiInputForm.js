@@ -44,16 +44,15 @@ export default function AiInputForm() {
       .join(", ");
 
     // Send selected values to the backend
+
     const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me some different recipes based on this?`;
     console.log(prompt);
     setResponse(prompt);
-    /*
-    setResponse(prompt);
-    */
-    //skicka objekt med states
-    /*
+
+    // skicka objekt med states
+
     try {
-      const response = await fetch("http://localhost:3008/recipes", {
+      const response = await fetch("http://localhost:4000/recipes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,10 +61,10 @@ export default function AiInputForm() {
       });
 
       const data = await response.json();
-      setResponse(data);
+      // setResponse(data);
     } catch (error) {
       console.error("Error:", error);
-    }*/
+    }
   };
 
   return (
