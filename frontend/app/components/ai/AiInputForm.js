@@ -22,6 +22,44 @@ export default function AiInputForm() {
   const [selectedChecks, setSelectedChecks] = useState([]);
   const [recipe, setRecipe] = useState(null);
   const [showRecipe, setShowRecipe] = useState(false); // Tillstånd för att visa RecipeCards
+  const [loading, setLoading] = useState(false);
+
+  //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
+  const jsonFormAi = {
+    result: {
+      title: "Lasagna",
+      servings: 2,
+    },
+    ingredients: [
+      {
+        ingredient: "Lasagna plates",
+        amount: "250g",
+      },
+      {
+        ingredient: "Onion",
+        amount: "1",
+      },
+      {
+        ingredient: "Egg",
+        amount: "1",
+      },
+      {
+        ingredient: "Lean ground beef",
+        amount: "500g",
+      },
+      {
+        ingredient: "crushed tomatoes",
+        amount: "",
+      },
+    ],
+    steps: [
+      "chop the onion",
+      "fry the minced meat and the onion",
+      "place the lasagna plates in a form and alternate with the minced meat mixture"
+    ],
+    history: "Lasagna has its roots in ancient Rome, although the dish we know today has evolved over the centuries. The name 'lasagna' originally referred to the wide, flat pasta sheets used in the dish rather than the assembled dish itself."
+  };
+
   const handleSelect = (label, isChecked) => {
     console.log("Checkbox selected:", label);
     console.log("Is checked:", isChecked);
@@ -33,12 +71,16 @@ export default function AiInputForm() {
       );
     }
   };
+
   const handleSubmit = async () => {
+    setLoading(true);
     const checkedItems = dontContain
       .filter((item) => selectedChecks.includes(item))
       .join(", ");
     // Send selected values to the backend
-    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me one recipe based on this? it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.`;
+    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me one recipe based on this?  
+    Arrange the answer in a json format and make sure to always include a title, ingredients, steps and historic_overview.
+    `;
     console.log(prompt);
     // setResponse(prompt);
     setShowRecipe(true); // Visa RecipeCards-komponenten när användaren klickar på sökknappen
@@ -52,11 +94,13 @@ export default function AiInputForm() {
         body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
+      setLoading(false);
       setRecipe(data);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   return (
     <div className="w-full">
       <div className="flex flex-col text-center ">
@@ -193,15 +237,18 @@ export default function AiInputForm() {
             Search
           </button>
         </div>
-        {recipe && (
-          // <>
-          //   <div>{recipe.title}</div>
-          //   <div>{recipe.ingredients}</div>
-          // </>
-          <div className="bg-[#8A2F02]">
-            <RecipeCards recipe={recipe} />
-          </div>
-        )}
+        <div>
+          {loading && <div>Loading...</div>}
+          {recipe && (
+            // <>
+            //   <div>{recipe.title}</div>
+            //   <div>{recipe.ingredients}</div>
+            // </>
+            <div className="bg-[#8A2F02] h-auto ">
+              <RecipeCards recipe={recipe} />
+            </div>
+          )}
+        </div>
         {/* Visa RecipeCards om showRecipe är true */}
         {/* {showRecipe && <RecipeCards recipe />} */}
       </div>

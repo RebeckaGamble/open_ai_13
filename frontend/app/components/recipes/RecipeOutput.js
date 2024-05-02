@@ -1,17 +1,10 @@
 import React from "react";
 import RecipeCard from "./RecipeCard";
-import RecipeCards from "./RecipeCards";
 
-export default function RecipeOutput({ recipe }) {
+export default function RecipeOutput() {
   return (
     <>
-      <div className="bg-[#8A2F02] h-[400px]">
-        <h3 className="font-semibold text-center text-[20px]">RecipeOutput:</h3>
-        <div>
-          <RecipeCards recipe={recipe} />
-        </div>
-      </div>
-      <div className="bg-[#F8E8C0] h-[400px]">
+      <div className="bg-[#F8E8C0] h-auto py-10">
         <h3 className="font-semibold text-center text-[20px]">RecipeOutput:</h3>
         <div>
           <RecipeCard />
