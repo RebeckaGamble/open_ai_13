@@ -12,10 +12,20 @@ export default function CreateUser() {
   const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // Tillståndsvariabel för att visa/dölja lösenordet
   const [passwordStrength, setPasswordStrength] = useState(0); // Lösenordsstyrka
+  //updaterat kod 
+  const [emailError, setEmailError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const login = useContext(LoginContext);
 
-  async function handleCreateUser() {
+  async function handleCreateUser(e) {
+    e.preventDefault();
+    if (!email ||!username ||!password) {
+      if (!email) setEmailError(true);
+      if (!username) setUsernameError(true);
+      if (!password) setPasswordError(true);
+    } else {
     const id = Math.floor(Math.random() * 1000) + 1;
     const newUser = { id, email, username, password };
     setUsers([...users, newUser]);
@@ -36,7 +46,11 @@ export default function CreateUser() {
     setUsername("");
     setPassword("");
     setEmail("");
+    setEmailError(false);
+    setUsernameError(false);
+    setPasswordError(false);
   }
+}
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
@@ -68,10 +82,10 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly p-5 w-[772.82px] h-[755.82px] top-[10%] font-sans rounded-[24px] bg-[#8A2F02] absolute">
+      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#8A2F02] absolute">
         <form
           onSubmit={handleCreateUser}
-          className="flex flex-col justify-top p-5 items-left w-[100%] h-[600px] justify-between font-sans rounded-xl bg-[#8A2F02]"
+          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-[600px] justify-between font-sans rounded-xl bg-[#8A2F02]"
         >
           <div className="flex flex-col top-10">
             <h2 className="text-[#F8E8C0]  text-[32px] font-semibold font-sans">
@@ -85,33 +99,36 @@ export default function CreateUser() {
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] ">Email</label>
               <input
-                className="bg-[#8A2F02] border-[1px] border-white pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                 className={`bg-[#8A2F02] border-[1px] border-${emailError? "red" : "white"} pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
+                 type="email"
+                 placeholder="Email"
+                 value={email}
+                 onChange={(e) => setEmail(e.target.value)}
+                 required
               />
+              {emailError && <p className="text-red-500 text-sm">Please enter an email</p>}
             </div>
             <div className="flex-col flex mb-1 space-y-1 ">
               <label className="text-[#F8E8C0]">Username</label>
               <input
-                className="bg-[#8A2F02] border-[1px] border-white pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]"
+                className={`bg-[#8A2F02] border-[1px] border-${usernameError? "red" : "white"} pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
               />
+              {usernameError && <p className="text-red-500 text-sm">Please enter a username</p>}
             </div>
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] mb-0">Password</label>
               <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
                 <input
-                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E]"
+                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
-                  onChange={handleChangePassword} // Uppdaterad eventhanterare
+                  onChange={handleChangePassword}
                 />
                 {showPassword ? (
                   <IoEyeOff
@@ -125,31 +142,36 @@ export default function CreateUser() {
                   />
                 )}
               </div>
+              {passwordError && <p className="text-red-500 text-sm">Please enter a password</p>}
               {/* Lösenordsstyrkeindikator */}
-              <div className="text-[12px] mt-1">
-                <span className="text-[#F8E8C0]">Password Strength: </span>
-                {[...Array(5)].map((_, index) => (
-                  <span
-                    key={index}
-                    className={`inline-block h-2 w-2 rounded-full mx-1 ${
-                      index < passwordStrength ? "bg-green-500" : "bg-gray-300"
-                    }`}
-                  ></span>
-                ))}
-              </div>
-              <div className="text-[12px]">
-                <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
-                  <li>Use 8 or more characters</li>
-                  <li>One Uppercase character</li>
-                  <li>One lowercase character</li>
-                  <li>One special character</li>
-                  <li>One number</li>
-                </ol>
-              </div>
+              {password.length > 0 && (
+                  <div className="text-[12px] mt-1">
+                    <span className="text-[#F8E8C0]">Password Strength: </span>
+                    {[...Array(5)].map((_, index) => (
+                      <span
+                        key={index}
+                        className={`inline-block h-2 w-2 rounded-full mx-1 ${
+                          index < passwordStrength? "bg-green-500" : "bg-gray-300"
+                        }`}
+                      ></span>
+                    ))}
+                  </div>
+                )}
+                {password.length > 0 && (
+                  <div className="text-[12px]">
+                    <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
+                      <li>Use 8 or more characters</li>
+                      <li>One Uppercase character</li>
+                      <li>One lowercase character</li>
+                      <li>One special character</li>
+                      <li>One number</li>
+                    </ol>
+                  </div>
+                )}
             </div>
-          </div>
-          <div className="pt-5">
-            <label className="inline-flex items-center">
+          </div >
+          <div className="pt-5 mb-0.5">
+            <label className="inline-flex items-center pt-5">
               <Checkbox
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
