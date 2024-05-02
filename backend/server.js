@@ -69,29 +69,6 @@ app.post("/login", async (req, res) => {
   res.status(200).json({ message: "login successful" });
 });
 
-//Test av Nitijs variant{
-// const promt = [];
-// promt.push("Give the answer in a json format? with a title  ");
-// promt.push("Can you give me one recipe based on the following steps?`");
-// promt.push(`Can you mirror the recepie to my mood, which is ${todaysMood}`);
-// promt.push(`My preferences are ${preferences}. meat should not include fish`);
-// promt.push(`This cuisine should take ${timeToSpend} to cook.`);
-// promt.push(`This dish should be influenced from this area ${country}`);
-// promt.push(`This dish should not include ${checkedItems}`);
-// prompt.push(
-//   "Please provide a detailed recipe, including steps for preparation and cooking."
-// );
-// }
-
-//let prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food on. I would prefer food from ${country}. Can you give me some different recipes based on this?`
-//bygg prompt - skicka inte hela strängen varje gång
-//todo: app post promt
-//todo: var i body
-//?spara svaren med ett användar id i db
-//todo: tbx..json array - tbx - parse -
-//! kategorisera datan som kommer tbx, markdown format - array med steg - map li - formatera text
-//! img - vilken modell
-//? insert - få tbx id, bildgenerering - svar - koppla bild till id
 app.post("/recipes", async (req, res) => {
   const { prompt } = req.body;
   try {
@@ -104,54 +81,16 @@ app.post("/recipes", async (req, res) => {
       ],
       model: "gpt-3.5-turbo",
     });
-
     const result = completion.choices[0].message.content;
     console.log("result:", result);
-
-    // Omvandla svaret till ett JavaScript-objekt
-    const recipeObject = {
-      title: "", // Titel från svaret
-      ingredients: [], // Lägg till ingredienser här från svaret
-      steps: [], // Lägg till steg här från svaret
-      historical_description: "", // Lägg till historisk beskrivning här från svaret
-    };
-
-    // Exempel på hur du kan extrahera information från svaret och uppdatera receptobjektet
-    const parsedResult = JSON.parse(result); // Om result är en JSON-sträng, annars använd result direkt
-
-    recipeObject.title = parsedResult.title; // Uppdatera titeln
-    recipeObject.ingredients = parsedResult.ingredients; // Uppdatera ingredienser
-    recipeObject.steps = parsedResult.steps; // Uppdatera steg
-    recipeObject.historical_description = parsedResult.historical_description;
-
-    // Skicka det omvandlade receptobjektet till klienten
-    res.json(recipeObject);
+    const parsed = JSON.parse(result);
+    console.log("pased", parsed);
+    res.json(parsed);
   } catch (error) {
     console.error("Error generating recepies:", error);
     res.status(500).json({ error: "Error generating recepies" });
   }
 });
-
-/*
-app.get("/recipe", async (req, res) => {
-  //  const apiKey = process.env.OPENAI_API_KEY;
-  const completion = await openai.chat.completions.create({
-    //meddelandet till ai
-    messages: [
-      //array med object
-      {
-        role: "user",
-        content:
-          "Im feeling spicy, can you give me some food recipe from India",
-      },
-    ],
-    model: "gpt-3.5-turbo",
-  });
-
-  const result = completion.choices[0].message.content;
-  res.send(result);
-});
-*/
 
 app.listen(port, () => {
   console.log("Listening on port: " + port);

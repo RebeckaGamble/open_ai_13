@@ -9,29 +9,22 @@ import {
   dontContain,
 } from "./dropdownOptions";
 import Checkbox from "./Checkbox";
-
 import RecipeCards from "../recipes/RecipeCards";
-
 export default function AiInputForm() {
   const [todaysMood, setTodaysMood] = useState("");
   const [timeToSpend, setTimeToSpend] = useState("");
   const [country, setCountry] = useState("");
   const [preferences, setPreferences] = useState("");
-
   const [selectedMood, setSelectedMood] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedPref, setSelectedPref] = useState("");
-
   const [selectedChecks, setSelectedChecks] = useState([]);
-
-  const [response, setResponse] = useState("");
+  const [recipe, setRecipe] = useState(null);
   const [showRecipe, setShowRecipe] = useState(false); // Tillstånd för att visa RecipeCards
-
   const handleSelect = (label, isChecked) => {
     console.log("Checkbox selected:", label);
     console.log("Is checked:", isChecked);
-
     if (isChecked) {
       setSelectedChecks((prevSelected) => [...prevSelected, label]);
     } else {
@@ -40,21 +33,16 @@ export default function AiInputForm() {
       );
     }
   };
-
   const handleSubmit = async () => {
     const checkedItems = dontContain
       .filter((item) => selectedChecks.includes(item))
       .join(", ");
-
     // Send selected values to the backend
-
     const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me one recipe based on this? it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.`;
     console.log(prompt);
-    setResponse(prompt);
+    // setResponse(prompt);
     setShowRecipe(true); // Visa RecipeCards-komponenten när användaren klickar på sökknappen
-
     // skicka objekt med states
-
     try {
       const response = await fetch("http://localhost:4000/recipes", {
         method: "POST",
@@ -63,14 +51,12 @@ export default function AiInputForm() {
         },
         body: JSON.stringify({ prompt }),
       });
-
       const data = await response.json();
-      // setResponse(data);
+      setRecipe(data);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   return (
     <div className="w-full">
       <div className="flex flex-col text-center ">
@@ -82,7 +68,7 @@ export default function AiInputForm() {
           possimus, reprehenderit assumenda cupiditate.
         </p>
       </div>
-      <div className="w-full flex flex-col items-center justify-center mx-auto">
+      <div className="flex flex-col items-center justify-center w-full mx-auto">
         <div className="flex flex-col justify-betweeen ">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
             <div className="flex flex-col ">
@@ -108,7 +94,6 @@ export default function AiInputForm() {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-
             {/*pref */}
             <Dropdown>
               <Dropdown.Button>
@@ -130,7 +115,6 @@ export default function AiInputForm() {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-
             {/*time */}
             <Dropdown>
               <Dropdown.Button>
@@ -177,9 +161,9 @@ export default function AiInputForm() {
         </div>
         {/*checkboxes */}
         <div className="w-full max-w-[90rem] flex flex-col py-10">
-          <h3 className="text-center text-xl pb-4">Don't include: </h3>
+          <h3 className="pb-4 text-xl text-center">Don't include: </h3>
           <form action="" className="flex justify-between mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6 items-center mx-auto justify-center ">
+            <div className="grid items-center justify-center w-full grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 ">
               {dontContain.map((dont, index) => (
                 <div
                   key={index}
@@ -204,14 +188,22 @@ export default function AiInputForm() {
         <div className="py-10">
           <button
             onClick={handleSubmit}
-            className="px-8 py-2 border uppercase border-slate-50 bg-[#ec7d46] rounded-full text-lg font-semibold hover:scale-105"
+            className="px-8 py-2 border uppercase border-slate-50 bg-[#EC7D46] rounded-full text-lg font-semibold hover:scale-105"
           >
             Search
           </button>
         </div>
-
+        {recipe && (
+          // <>
+          //   <div>{recipe.title}</div>
+          //   <div>{recipe.ingredients}</div>
+          // </>
+          <div className="bg-[#8A2F02]">
+            <RecipeCards recipe={recipe} />
+          </div>
+        )}
         {/* Visa RecipeCards om showRecipe är true */}
-        {showRecipe && <RecipeCards />}
+        {/* {showRecipe && <RecipeCards recipe />} */}
       </div>
     </div>
   );
