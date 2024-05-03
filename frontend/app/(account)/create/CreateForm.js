@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Checkbox from "@/app/components/ai/Checkbox";
 import { LoginContext } from "@/app/components/LoginContext";
+import { useRouter } from "next/navigation";
 
 export default function CreateUser() {
   const [users, setUsers] = useState([]);
@@ -12,45 +13,49 @@ export default function CreateUser() {
   const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // Tillståndsvariabel för att visa/dölja lösenordet
   const [passwordStrength, setPasswordStrength] = useState(0); // Lösenordsstyrka
-  //updaterat kod 
+  //updaterat kod
   const [emailError, setEmailError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const login = useContext(LoginContext);
+  const router = useRouter();
 
   async function handleCreateUser(e) {
     e.preventDefault();
-    if (!email ||!username ||!password) {
+    if (!email || !username || !password) {
       if (!email) setEmailError(true);
       if (!username) setUsernameError(true);
       if (!password) setPasswordError(true);
     } else {
-    const id = Math.floor(Math.random() * 1000) + 1;
-    const newUser = { id, email, username, password };
-    setUsers([...users, newUser]);
-    try {
-      const response = await fetch("http://localhost:4000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      });
-      const data = await response.json();
-      console.log(data);
-      // alert("User created successfully!");
-    } catch (error) {
-      console.error("Error:", error);
+      const id = Math.floor(Math.random() * 1000) + 1;
+      const newUser = { id, email, username, password };
+      setUsers([...users, newUser]);
+      try {
+        const response = await fetch("http://localhost:4000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        });
+        if (response.ok) {
+          router.push("/login");
+        }
+        const data = await response.json();
+        console.log(data);
+        // alert("User created successfully!");
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      setUsername("");
+      setPassword("");
+      setEmail("");
+      setEmailError(false);
+      setUsernameError(false);
+      setPasswordError(false);
     }
-    setUsername("");
-    setPassword("");
-    setEmail("");
-    setEmailError(false);
-    setUsernameError(false);
-    setPasswordError(false);
   }
-}
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
@@ -99,26 +104,34 @@ export default function CreateUser() {
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] ">Email</label>
               <input
-                 className={`bg-[#8A2F02] border-[1px] border-${emailError? "red" : "white"} pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
-                 type="email"
-                 placeholder="Email"
-                 value={email}
-                 onChange={(e) => setEmail(e.target.value)}
-                 required
+                className={`bg-[#8A2F02] border-[1px] border-${
+                  emailError ? "red" : "white"
+                } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-              {emailError && <p className="text-red-500 text-sm">Please enter an email</p>}
+              {emailError && (
+                <p className="text-red-500 text-sm">Please enter an email</p>
+              )}
             </div>
             <div className="flex-col flex mb-1 space-y-1 ">
               <label className="text-[#F8E8C0]">Username</label>
               <input
-                className={`bg-[#8A2F02] border-[1px] border-${usernameError? "red" : "white"} pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
+                className={`bg-[#8A2F02] border-[1px] border-${
+                  usernameError ? "red" : "white"
+                } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
-              {usernameError && <p className="text-red-500 text-sm">Please enter a username</p>}
+              {usernameError && (
+                <p className="text-red-500 text-sm">Please enter a username</p>
+              )}
             </div>
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] mb-0">Password</label>
@@ -142,34 +155,38 @@ export default function CreateUser() {
                   />
                 )}
               </div>
-              {passwordError && <p className="text-red-500 text-sm">Please enter a password</p>}
+              {passwordError && (
+                <p className="text-red-500 text-sm">Please enter a password</p>
+              )}
               {/* Lösenordsstyrkeindikator */}
               {password.length > 0 && (
-                  <div className="text-[12px] mt-1">
-                    <span className="text-[#F8E8C0]">Password Strength: </span>
-                    {[...Array(5)].map((_, index) => (
-                      <span
-                        key={index}
-                        className={`inline-block h-2 w-2 rounded-full mx-1 ${
-                          index < passwordStrength? "bg-green-500" : "bg-gray-300"
-                        }`}
-                      ></span>
-                    ))}
-                  </div>
-                )}
-                {password.length > 0 && (
-                  <div className="text-[12px]">
-                    <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
-                      <li>Use 8 or more characters</li>
-                      <li>One Uppercase character</li>
-                      <li>One lowercase character</li>
-                      <li>One special character</li>
-                      <li>One number</li>
-                    </ol>
-                  </div>
-                )}
+                <div className="text-[12px] mt-1">
+                  <span className="text-[#F8E8C0]">Password Strength: </span>
+                  {[...Array(5)].map((_, index) => (
+                    <span
+                      key={index}
+                      className={`inline-block h-2 w-2 rounded-full mx-1 ${
+                        index < passwordStrength
+                          ? "bg-green-500"
+                          : "bg-gray-300"
+                      }`}
+                    ></span>
+                  ))}
+                </div>
+              )}
+              {password.length > 0 && (
+                <div className="text-[12px]">
+                  <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
+                    <li>Use 8 or more characters</li>
+                    <li>One Uppercase character</li>
+                    <li>One lowercase character</li>
+                    <li>One special character</li>
+                    <li>One number</li>
+                  </ol>
+                </div>
+              )}
             </div>
-          </div >
+          </div>
           <div className="pt-5 mb-0.5">
             <label className="inline-flex items-center pt-5">
               <Checkbox
@@ -178,6 +195,7 @@ export default function CreateUser() {
                 iconSize={"text-[40px]"}
                 checkbg={"[#8A2F02]"}
                 borderColor={"[F5B25E]"}
+                required
               />
               <span className="ml-2 text-[#F8E8C0] text-[12px]">
                 I want to receive emails about the product, feature updates,
