@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --swiper-theme-color: #ca4502 !important;
+  --swiper-navigation-size: 32px !important;
+}
