@@ -1,6 +1,6 @@
 import React from "react";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { Cross1Icon } from "@radix-ui/react-icons";
 //[#F8E8C0]
 
 const Checkbox = ({
@@ -33,7 +33,7 @@ const Checkbox = ({
         checked={isChecked}
       >
         <RadixCheckbox.Indicator>
-          <CheckIcon />
+          <Cross1Icon />
         </RadixCheckbox.Indicator>
       </RadixCheckbox.Root>
     </>
