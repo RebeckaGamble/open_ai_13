@@ -8,7 +8,7 @@ import cx from "classnames";
 
 const AccordionItem = ({ title, value, isOpen, onToggle, children }) => {
   return (
-    <Accordion.Item value={value} className="border-b border-[#8A2F02] h-auto py-4">
+    <Accordion.Item value={value} className="border-b border-[#250D01] h-auto py-4">
       <Accordion.Trigger
         className="flex flex-row items-center justify-between w-full font-semibold"
         onClick={onToggle}
@@ -16,7 +16,7 @@ const AccordionItem = ({ title, value, isOpen, onToggle, children }) => {
         <span className="text-[18px]">{title}</span>
         <TiArrowSortedDown 
           className={cx(
-            "ml-2 h-5 w-5 shrink-0 text-[#8A2F02] ease-in-out dark:text-gray-400",
+            "ml-2 h-5 w-5 shrink-0 text-[#250D01] ease-in-out",
             isOpen && "rotate-180", //instead of chevronup icon
             "group-radix-state-open:duration-300"
           )}
@@ -37,8 +37,8 @@ export default function AccordionFAQ() {
   };
 
   return (
-    <div className="w-[600px] bg-[#F8E8C0] mx-auto h-auto shadow-md p-8">
-      <Accordion.Root type="single" collapsible className="flex flex-col  ">
+    <div className="w-full max-w-[90rem] bg-[#FFFF] mx-auto h-auto rounded-[10px] shadow-md p-10">
+      <Accordion.Root type="single" collapsible className="flex flex-col">
         <AccordionItem
           title={"What is ChefMate?"}
           value="item-1"

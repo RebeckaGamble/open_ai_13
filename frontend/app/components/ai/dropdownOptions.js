@@ -51,7 +51,7 @@ export const moodOptions = [
   export const countryOptions = [
     "Africa",
     "Asia",
-    "Australia",
+   // "Australia",
     "Europe",
     "North America",
     "South America",

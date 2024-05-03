@@ -92,7 +92,7 @@ export default function CreateUser() {
               Welcome to ChefMate
             </h2>
             <p className="text-[#F8E8C0] font-[20px] mb-5">
-              Already have an account? <a href="">Log in</a>
+              Already have an account? <a href="/login">Log in</a>
             </p>
           </div>
           <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">

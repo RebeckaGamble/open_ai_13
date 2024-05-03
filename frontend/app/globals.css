@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --swiper-theme-color: #ca4502 !important;
+  --swiper-theme-color: #250D01 !important;
   --swiper-navigation-size: 32px !important;
 }

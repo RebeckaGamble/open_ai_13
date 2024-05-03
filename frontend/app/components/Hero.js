@@ -3,8 +3,8 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <div className="w-full h-[964px] bg-gradient-to-t from-[#642201] to-[#CA4502]">
-      <div className="flex flex-col h-full justify-center items-center text-[#F8E8C0]">
+    <div className="w-full h-[964px] bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6]">
+      <div className="flex flex-col h-full justify-center items-center text-[#250D01]">
         <h3 className="font-semibold uppercase text-[87.4px]">ChefMate</h3>
         <p className="max-w-[800px]">
           "Flavors combined with mood" is like a culinary symphony where taste
@@ -20,9 +20,9 @@ export default function Hero() {
           Today, what combination of flavor and mood do you feel drawn to?
         </h3>
         <div className="flex flex-row py-8">
-          <button className="px-10 py-3 uppercase bg-[#F8E8C0] rounded-[28px] text-[#250D01] font-semibold text-[32px] hover:scale-105">
+          <Link href={"#ai"} className="px-10 py-3  uppercase bg-[#250D01] rounded-[28px] text-[#FFFFFF] font-semibold text-[32px] hover:scale-105">
             Start
-          </button>
+          </Link>
         </div>
       </div>
     </div>

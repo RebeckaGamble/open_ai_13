@@ -23,7 +23,7 @@ function DropdownButton({ children }) {
   const { open } = useContext(DropdownContext);
 
   return (
-    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#A83301] uppercase border-none rounded-[10px] w-[241px] sm:w-[550px] lg:w-[550px] px-6 py-1 text-md text-[#F8E8C0] focus-visible:outline-none data-[state=open]:bg-[#A83301]">
+    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#CBB89D] uppercase border-none rounded-[10px] w-[241px] sm:w-[550px] lg:w-[550px] px-6 py-2 text-md text-[#250D01] focus-visible:outline-none data-[state=open]:bg-[#CBB89D]">
       <p className="flex flex-row items-center justify-between">
         <span className="pr-1"> {children} </span> {open ? <TiArrowSortedUp /> : <TiArrowSortedDown />  }
       </p>
@@ -57,7 +57,7 @@ function DropdownMenu({ children }) {
             <RadixDropdownMenu.Content
               align="start"
               asChild
-              className="mt-1 overflow-hidden rounded-[10px] w-[241px] sm:w-[550px] bg-[#A83301] text-[#F8E8C0] p-2 text-left shadow backdrop-blur"
+              className="mt-1 overflow-hidden rounded-[10px] w-[241px] sm:w-[550px] bg-[#CBB89D] text-[#250D01] p-2 text-left shadow backdrop-blur"
             >
               <motion.div
                 initial="closed"
@@ -101,8 +101,8 @@ function DropdownMenuItem({ children, onSelect = () => {} }) {
           transition: { duration: 0.04 },
         });
         await controls.start({
-          backgroundColor: "orange",
-          color: "#F8E8C0",
+          backgroundColor: "#CBB89D",
+          color: "#250D01",
           transition: { duration: 0.04 },
         });
         await sleep(0.075);
@@ -110,7 +110,7 @@ function DropdownMenuItem({ children, onSelect = () => {} }) {
         await closeMenu();
         onSelect();
       }}
-      className="w-full select-none rounded px-2 py-1.5 text-[#F8E8C0] data-[highlighted]:bg-[#c8a395] data-[highlighted]:text-[#F8E8C0] data-[highlighted]:focus:outline-none"
+      className="w-full select-none rounded px-2 py-1.5 text-[#250D01] data-[highlighted]:bg-[#F8E8C0]/70 data-[highlighted]:font-semibold data-[highlighted]:focus:outline-none"
       asChild
     >
       <motion.div animate={controls}>{children}</motion.div>

@@ -25,8 +25,8 @@ const reviews = [
 
 function SwiperReviews() {
   return (
-    <div className="items-center justify-center text-center">
-      <div className="flex w-[600px] mx-auto py-8 sm:py-10">
+    <div className="w-full max-w-[90rem] items-center justify-center text-center">
+      <div className="flex w-full mx-auto py-8 sm:py-10">
         {/**swiper */}
         <Swiper
           spaceBetween={30}
