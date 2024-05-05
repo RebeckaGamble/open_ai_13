@@ -11,6 +11,9 @@ import {
 import Checkbox from "./Checkbox";
 import RecipeCards from "../recipes/RecipeCards";
 import RecipeCard from "../recipes/RecipeCard";
+import TooltipCheck from "./ToolTip";
+import { TbInfoSmall } from "react-icons/tb";
+
 export default function AiInputForm() {
   const [todaysMood, setTodaysMood] = useState("");
   const [timeToSpend, setTimeToSpend] = useState("");
@@ -65,7 +68,7 @@ export default function AiInputForm() {
 
   const handleSelect = (label, isChecked) => {
     //console.log("Checkbox selected:", label);
-   // console.log("Is checked:", isChecked);
+    // console.log("Is checked:", isChecked);
     if (isChecked) {
       setSelectedChecks((prevSelected) => [...prevSelected, label]);
     } else {
@@ -110,14 +113,18 @@ export default function AiInputForm() {
 
   return (
     <div className="w-full">
-      <div id="ai">
+      <div>
         <div className="flex flex-col text-center text-[#250D01]">
-          <h3 className="text-center text-[75px]">Make your choices</h3>
-          <p className="max-w-[838px] mx-auto pb-10 px-4">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum
-            architecto eveniet expedita vel, ea quisquam quis? Voluptate fuga
-            consequatur dolore? Repellat nobis itaque veniam aliquid
-            consequuntur possimus, reprehenderit assumenda cupiditate.
+          <h3 className="text-center md:leading-[75px] font-semibold text-3xl md:text-[75px]">
+            Make your choices
+          </h3>
+          <p className="max-w-[838px] mx-auto py-10">
+            Your culinary adventure begins here! Choose your mood, ingredients,
+            dietary preferences, and more, and let ChefMate work its magic to
+            craft a personalized recipe just for you. Like a trusty sous chef,
+            ChefMate is here to inspire, innovate, and elevate your cooking
+            experience. So go ahead, make your selections, and get ready to
+            embark on a flavor-filled journey!
           </p>
         </div>
         <div className="flex flex-col items-center justify-center w-full mx-auto">
@@ -129,7 +136,7 @@ export default function AiInputForm() {
                     {selectedMood ? (
                       <>
                         <span>Todays mood: </span>
-                        <span className="font-bold">{selectedMood}</span>
+                        <span className="pl-2 font-bold">{selectedMood}</span>
                       </>
                     ) : (
                       "Todays mood"
@@ -157,7 +164,7 @@ export default function AiInputForm() {
                   {selectedPref ? (
                     <>
                       <span>Prefereneces: </span>
-                      <span className="font-bold">{selectedPref}</span>
+                      <span className="pl-2 font-bold">{selectedPref}</span>
                     </>
                   ) : (
                     "Prefereneces(include)"
@@ -183,7 +190,7 @@ export default function AiInputForm() {
                   {selectedTime ? (
                     <>
                       <span>Time to spend: </span>
-                      <span className="font-bold">{selectedTime}</span>
+                      <span className="pl-2 font-bold">{selectedTime}</span>
                     </>
                   ) : (
                     "Time to spend"
@@ -209,7 +216,7 @@ export default function AiInputForm() {
                   {selectedCountry ? (
                     <>
                       <span>Preferably from: </span>
-                      <span className="font-bold">{selectedCountry}</span>
+                      <span className="pl-2 font-bold">{selectedCountry}</span>
                     </>
                   ) : (
                     "Preferably from"
@@ -232,14 +239,27 @@ export default function AiInputForm() {
             </div>
           </div>
           {/*checkboxes */}
-          <div className="w-full max-w-[90rem] flex flex-col py-10">
-            <h3 className="pb-4 text-xl text-center">Don't include: </h3>
+          <div className="w-full h-auto max-w-[90rem] flex flex-col py-10">
+            <TooltipCheck
+              text={
+                "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
+              }
+            >
+              <div className="font-semibold pb-4 gap-1 text-xl w-fit mx-auto flex flex-row ">
+                <h3 className="pt-2">Don't include</h3>
+                <div
+                  className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border"
+                >
+                  <TbInfoSmall size={30} />
+                </div>
+              </div>
+            </TooltipCheck>
             <form action="" className="flex justify-between mx-auto">
-              <div className="grid items-center justify-center w-full grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 ">
+              <div className="grid items-center justify-center w-full h-auto grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 ">
                 {dontContain.map((dont, index) => (
                   <div
                     key={index}
-                    className="hover:font-semibold flex w-[241px] sm:w-[264px] mb-[-15px] rounded-[10px] h-[36px] items-center justify-between bg-[#CBB89D]"
+                    className="hover:font-semibold flex w-[335px] sm:w-[264px] mb-[-15px] rounded-[10px] py-2 sm:py-3 px-2 items-center justify-between bg-[#CBB89D]"
                   >
                     <Checkbox
                       checked={selectedChecks.includes(dont)}
@@ -256,7 +276,7 @@ export default function AiInputForm() {
               </div>
             </form>
           </div>
-          <div className="py-10">
+          <div className="pt-10">
             <button
               onClick={handleSubmit}
               className="px-8 py-2 border uppercase bg-[#250D01] text-[#FFFFFF] rounded-full text-lg font-semibold hover:scale-105"

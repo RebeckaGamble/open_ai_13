@@ -1,12 +1,25 @@
-import Link from "next/link";
+"use client";
 import React from "react";
 
 export default function Hero() {
+  const handleClick = () => {
+    const aiSection = document.getElementById("ai");
+    if (aiSection) {
+      const offset = aiSection.offsetTop - 60; //the nav
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <div className="w-full h-[964px] bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6]">
+    <div className="w-full h-[964px] bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] px-4">
       <div className="flex flex-col h-full justify-center items-center text-[#250D01]">
-        <h3 className="font-semibold uppercase text-[87.4px]">ChefMate</h3>
-        <p className="max-w-[800px]">
+        <h3 className="font-semibold uppercase text-6xl pb-6 md:text-[87.4px]">
+          ChefMate
+        </h3>
+        <p className="max-w-[800px] sm:leading-7">
           "Flavors combined with mood" is like a culinary symphony where taste
           buds dance to the rhythm of emotions. When you're happy, perhaps a
           fresh and invigorating flavor like citrus or mint enhances your
@@ -16,13 +29,16 @@ export default function Hero() {
           making it a fascinating experience to explore the interplay between
           taste and mood.
         </p>
-        <h3 className="font-semibold pt-6 text-2xl">
+        <h3 className="font-semibold text-center py-6 text-2xl max-w-[540px]">
           Today, what combination of flavor and mood do you feel drawn to?
         </h3>
-        <div className="flex flex-row py-8">
-          <Link href={"#ai"} className="px-10 py-3  uppercase bg-[#250D01] rounded-[28px] text-[#FFFFFF] font-semibold text-[32px] hover:scale-105">
+        <div className="flex flex-row">
+          <button
+            onClick={handleClick}
+            className="px-8 py-2 uppercase bg-[#250D01] rounded-full text-[#FFFFFF] font-semibold text-[24px] hover:scale-105"
+          >
             Start
-          </Link>
+          </button>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function page() {
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-[#F8E8C0] relative">
+    <div className="flex justify-center py-10 items-center w-full h-auto min-h-[calc(100vh-260px)] bg-[#F8E8C0] relative">
       <div className="">
         <CreateForm />
       </div>
