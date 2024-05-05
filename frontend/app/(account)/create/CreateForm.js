@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useContext } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Checkbox from "@/app/components/ai/Checkbox";
@@ -17,16 +18,21 @@ export default function CreateUser() {
   const [emailError, setEmailError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  //latest update, 2024-05-05
+  const [emailDomainError, setEmailDomainError] = useState(false);
 
   const login = useContext(LoginContext);
   const router = useRouter();
 
   async function handleCreateUser(e) {
     e.preventDefault();
+    const emailDomain = email.split("@")[1];
     if (!email || !username || !password) {
       if (!email) setEmailError(true);
       if (!username) setUsernameError(true);
       if (!password) setPasswordError(true);
+    } else if (emailDomain !== "gmail.com" && emailDomain !== "outlook.com") {
+      setEmailDomainError(true);
     } else {
       const id = Math.floor(Math.random() * 1000) + 1;
       const newUser = { id, email, username, password };
@@ -54,6 +60,7 @@ export default function CreateUser() {
       setEmailError(false);
       setUsernameError(false);
       setPasswordError(false);
+      setEmailDomainError(false);
     }
   }
 
@@ -87,25 +94,25 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#8A2F02] absolute">
+      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] mt-6 bg-[#8A2F02] absolute">
         <form
           onSubmit={handleCreateUser}
-          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-[600px] justify-between font-sans rounded-xl bg-[#8A2F02]"
+          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-[580px] justify-between font-sans rounded-xl bg-[#8A2F02]"
         >
           <div className="flex flex-col top-10">
             <h2 className="text-[#F8E8C0]  text-[32px] font-semibold font-sans">
               Welcome to ChefMate
             </h2>
-            <p className="text-[#F8E8C0] font-[20px] mb-5">
+            <p className="text-[#F8E8C0] font-[20px]">
               Already have an account? <a href="/login">Log in</a>
             </p>
           </div>
           <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">
-            <div className="flex-col flex mb-1 space-y-1">
+          <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] ">Email</label>
               <input
                 className={`bg-[#8A2F02] border-[1px] border-${
-                  emailError ? "red" : "white"
+                  emailError || emailDomainError ? "red" : "white"
                 } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
                 type="email"
                 placeholder="Email"
@@ -115,6 +122,11 @@ export default function CreateUser() {
               />
               {emailError && (
                 <p className="text-red-500 text-sm">Please enter an email</p>
+              )}
+              {emailDomainError && (
+                <p className="text-red-500 text-sm">
+                  Please enter a valid email domain (gmail.com or outlook.com)
+                </p>
               )}
             </div>
             <div className="flex-col flex mb-1 space-y-1 ">

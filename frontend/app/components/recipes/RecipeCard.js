@@ -4,6 +4,7 @@ import testImg from "/public/img/test_img.jpg";
 import { FaRegHeart } from "react-icons/fa";
 
 export default function RecipeCard({ recipe }) {
+ 
   return (
     <div className="w-[90%] max-w-[90rem] flex flex-col mx-auto bg-[#E1DAD0] text-[#250D01] rounded-[10px] p-8 ">
       <div className="flex flex-row">

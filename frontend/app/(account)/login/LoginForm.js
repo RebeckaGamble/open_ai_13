@@ -49,10 +49,10 @@ export default function LoginForm() {
   return (
     <>
       <div className="px-4 bg-[#F5B25E]">
-        <div className="pt-5 flex flex-col mx-auto">
+        <div className="pt-5 flex flex-col mx-auto h-screen">
         <form
           action=""
-          className="flex flex-col gap-2 mx-auto 
+          className="flex flex-col gap-2 mx-auto mt-28
           rounded-lg bg-[#8A2F02] p-4 mb-5">
 
           <h3 className="font-semibold pt-5 text-center text-3xl text-[#F8E8C0]">
@@ -129,7 +129,7 @@ export default function LoginForm() {
       {/* passwordfield */}
       <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
                 <input
-                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full"
+                  className="bg-[#8A2F02] outline-none  placeholder-[#F5B25E] w-full"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
@@ -137,12 +137,12 @@ export default function LoginForm() {
                 />
                 {showPassword ? (
                   <IoEyeOff
-                    className="color-[#F8E8C0] mr-2 cursor-pointer"
+                    className="Eye color-[#F8E8C0] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
                   <IoEye
-                    className="color-[#F8E8C0] mr-2 cursor-pointer"
+                    className=" Eye-on color-[#F8E8C0] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 )}
@@ -150,7 +150,7 @@ export default function LoginForm() {
 
       {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="max-w-[300px] mt-4 flex justify-center items-center">
-        <Link href={"/"}>
+        <Link href="/">
           <button
             onClick={handleSubmit}
             className="bg-[#F8E8C0] text-black 

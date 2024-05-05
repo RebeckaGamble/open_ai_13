@@ -9,9 +9,9 @@ export default function Home() {
     <main>
        <Hero />      
        <AiInputSection />
-       {/** 
+       {/*
        <RecipeOutput />
-       */}
+      */}
        <FaqSection />
        <ReviewSection />
     </main>
