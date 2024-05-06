@@ -25,6 +25,7 @@ export default function AiInputForm() {
   const [selectedPref, setSelectedPref] = useState("");
   const [selectedChecks, setSelectedChecks] = useState([]);
   const [recipe, setRecipe] = useState(null);
+  const [recipes, setRecipes] = useState(null);
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSingleCard, setOpenSingleCard] = useState(false);
@@ -49,8 +50,8 @@ export default function AiInputForm() {
       .filter((item) => selectedChecks.includes(item))
       .join(", ");
     // Send selected values to the backend
-    const prompt = `I'm feeling ${todaysMood} and have maximum ${timeToSpend} to make food. It can not contain ${checkedItems} I would prefer food thats ${preferences} from ${country}. Can you give me one recipe based on this?  
-    Arrange the answer in a json format and make sure to always include a title, ingredients, steps and historic_overview.
+    const prompt = `I'm looking for a recipe, i'am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum ${timeToSpend} to make the dish. It can not contain ${checkedItems} I would prefer food that's ${preferences} from ${country}. Can you give me three significant recipes based on this?  
+    Arrange the recipes in a json format and make sure to always include a recipe_title, ingredients, steps, motivation_heading and a smal motivattion and a historic_overview.
     `;
     console.log(prompt);
     setShowRecipe(true);
@@ -65,7 +66,7 @@ export default function AiInputForm() {
       });
       const data = await response.json();
       setLoading(false);
-      setRecipe(data);
+      setRecipes(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -250,16 +251,16 @@ export default function AiInputForm() {
         </div>
         <div>
           {loading && <div>Loading...</div>}
-          {recipe && (
+          {recipes && (
             <div className="w-screen bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
-              <RecipeCards recipe={recipe} onClick={handleRecipeCardClick} />
+              <RecipeCards recipes={recipes} onClick={handleRecipeCardClick} />
             </div>
           )}
         </div>
         <div>
           {openSingleCard && (
             <div className="w-screen bg-[#FFFFFF] h-auto pt-10 lg:pt-20">
-              <RecipeCard recipe={recipe} />
+              <RecipeCard recipes={recipes} />
             </div>
           )}
         </div>
