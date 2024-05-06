@@ -11,15 +11,15 @@ import "swiper/css/pagination";
 //swiper cards
 const reviews = [
   {
-    text: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, veniam? ",
+    text: " It's a great site to find new recipes and explore food from other culture ",
     name: "Lottie",
   },
   {
-    text: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, veniam? ",
+    text: " ChefMate have helped me alot when it comes to finding quick and easy recipes",
     name: "Evan",
   },
   {
-    text: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, veniam? ",
+    text: " Using ChefMate have helped me become a greater cook ",
     name: "D",
   },
 ];
