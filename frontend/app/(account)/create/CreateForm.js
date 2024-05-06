@@ -1,10 +1,11 @@
 "use client";
-
 import { useState, useContext } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Checkbox from "@/app/components/ai/Checkbox";
 import { LoginContext } from "@/app/components/LoginContext";
 import { useRouter } from "next/navigation";
+import { TermsDialog, PrivacyDialog } from "./DialogComp";
+import Link from "next/link";
 
 export default function CreateUser() {
   const [users, setUsers] = useState([]);
@@ -94,25 +95,28 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] mt-6 bg-[#8A2F02] absolute">
+      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#8A2F02] absolute">
         <form
           onSubmit={handleCreateUser}
-          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-[580px] justify-between font-sans rounded-xl bg-[#8A2F02]"
+          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#8A2F02]"
         >
           <div className="flex flex-col top-10">
-            <h2 className="text-[#F8E8C0]  text-[32px] font-semibold font-sans">
+            <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
               Welcome to ChefMate
             </h2>
-            <p className="text-[#F8E8C0] font-[20px]">
-              Already have an account? <a href="/login">Log in</a>
+            <p className="text-[#F8E8C0] font-[20px] py-2">
+              Already have an account?{" "}
+              <Link href="/login" className="underline text-blue-700">
+                Log in
+              </Link>
             </p>
           </div>
           <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">
-          <div className="flex-col flex mb-1 space-y-1">
+            <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] ">Email</label>
               <input
-                className={`bg-[#8A2F02] border-[1px] border-${
-                  emailError || emailDomainError ? "red" : "white"
+                className={`bg-[#8A2F02] border-[1px] ${
+                  emailError || emailDomainError ? "border-red-500" : "white"
                 } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
                 type="email"
                 placeholder="Email"
@@ -132,8 +136,8 @@ export default function CreateUser() {
             <div className="flex-col flex mb-1 space-y-1 ">
               <label className="text-[#F8E8C0]">Username</label>
               <input
-                className={`bg-[#8A2F02] border-[1px] border-${
-                  usernameError ? "red" : "white"
+                className={`bg-[#8A2F02] border-[1px] ${
+                  usernameError ? "border-red-500" : "white"
                 } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
                 type="text"
                 placeholder="Username"
@@ -147,9 +151,11 @@ export default function CreateUser() {
             </div>
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] mb-0">Password</label>
-              <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
+              <div className={`flex items-center mt-0 border border-white ${
+                    passwordError ? "border-red-500" : "white"
+                  } justify-between rounded-md px-4 py-2`}>
                 <input
-                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full"
+                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
@@ -157,7 +163,7 @@ export default function CreateUser() {
                 />
                 {showPassword ? (
                   <IoEyeOff
-                    className="color-[#F8E8C0] mr-2 cursor-pointer"
+                    className="fill-[#F8E8C0] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
@@ -188,7 +194,7 @@ export default function CreateUser() {
               )}
               {password.length > 0 && (
                 <div className="text-[12px]">
-                  <ol className="grid grid-cols-3 gap-2  list-disc text-[#F8E8C0] overflow-auto p-4">
+                  <ol className="grid grid-cols-3 gap-2 list-disc text-[#F8E8C0] overflow-auto p-4">
                     <li>Use 8 or more characters</li>
                     <li>One Uppercase character</li>
                     <li>One lowercase character</li>
@@ -199,8 +205,8 @@ export default function CreateUser() {
               )}
             </div>
           </div>
-          <div className="pt-5 mb-0.5">
-            <label className="inline-flex items-center pt-5">
+          <div className="py-2">
+            <label className="inline-flex items-center">
               <Checkbox
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
@@ -212,13 +218,13 @@ export default function CreateUser() {
               <span className="ml-2 text-[#F8E8C0] text-[12px]">
                 I want to receive emails about the product, feature updates,
                 events, and marketing promotions. <br />
-                By creating an account you agree to the{" "}
-                <a href="#" className="text-[#F5B25E]">
-                  Terms of use
-                </a>{" "}
-                and <a className="text-[#F5B25E]">Privacy Policy</a>
               </span>
             </label>
+            <div className="ml-[46px] flex flex-row items-center gap-1 text-[12px]">
+              By creating an account you agree to the <TermsDialog />
+              and
+              <PrivacyDialog />
+            </div>
           </div>
 
           <button
