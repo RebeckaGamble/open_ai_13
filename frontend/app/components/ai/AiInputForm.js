@@ -251,14 +251,14 @@ export default function AiInputForm() {
         <div>
           {loading && <div>Loading...</div>}
           {recipe && (
-            <div className="w-screen bg-[#E1DAD0] h-auto py-10">
+            <div className="w-screen bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
               <RecipeCards recipe={recipe} onClick={handleRecipeCardClick} />
             </div>
           )}
         </div>
         <div>
           {openSingleCard && (
-            <div className="w-screen bg-[#FFFFFF] h-auto py-10">
+            <div className="w-screen bg-[#FFFFFF] h-auto pt-10 lg:pt-20">
               <RecipeCard recipe={recipe} />
             </div>
           )}
