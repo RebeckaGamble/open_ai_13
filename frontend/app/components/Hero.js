@@ -51,7 +51,7 @@ export default function Hero() {
             <Image
               src={kyckling}
               height={200}
-              width={300}
+              width={200}
               alt="Kyckling"
               className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
             />
@@ -69,7 +69,7 @@ export default function Hero() {
             <Image
               src={pasta}
               height={200}
-              width={300}
+              width={200}
               alt="Pasta"
               className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
             />
@@ -78,7 +78,7 @@ export default function Hero() {
             <Image
               src={lax}
               height={200}
-              width={300}
+              width={200}
               alt="Lax"
               className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
             />

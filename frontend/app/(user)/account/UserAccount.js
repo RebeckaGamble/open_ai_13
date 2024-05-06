@@ -52,20 +52,14 @@ export default function UserAccount() {
           </div>
         </>
       ) : (
-        <div className=" h-screen pt-20 w-full">
-          <div className="flex flex-row justify-end items-center gap-10 text-xl font-semibold p-4 mx-14">
-            <div className="border w-20 h-20 rounded-full"></div>
-          </div>
+        <div className=" h-[calc(100vh-320px)] pt-20 w-full">
           <hr className=" border-t-4 text-black mx-14" />
-          <div className="flex flex-row items-center gap-2 pt-10 mx-14">
-            <a className="text-2xl">
-              <CiHeart />
-            </a>
-            <h2 className="font-semibold text-xl">Sparade recept</h2>
-          </div>
-          <p>
-            You need to be logged in, in order to be able to bookmark recipes.{" "}
-            <Link href={"/login"}>Login</Link>
+          <p className="text-center text-[16px] pt-4">
+            You need to be{" "}
+            <Link href={"/login"} className="text-blue-600 underline">
+              logged in
+            </Link>
+            , in order to be able to bookmark recipes.{" "}
           </p>
         </div>
       )}

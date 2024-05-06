@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import * as Accordion from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { TiArrowSortedDown } from "react-icons/ti";
 
 import cx from "classnames";

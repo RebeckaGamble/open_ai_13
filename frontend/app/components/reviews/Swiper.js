@@ -46,7 +46,7 @@ function SwiperReviews() {
           {/**Swiper slides */}
           {reviews.map((review, index) => (
             <SwiperSlide key={index}>
-              <div className="w-[600px] flex mx-auto justify-center text-[18px]">
+              <div className="w-auto flex mx-auto justify-center text-[18px]">
                 <div className="h-auto py-10 w-auto flex mx-auto flex-col justify-center">
                   <q className="max-w-[200px] w-fit text-center md:max-w-[400px]">
                     {review.text}

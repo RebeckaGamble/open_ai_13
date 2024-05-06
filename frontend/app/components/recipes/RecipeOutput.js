@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import RecipeCard from "./RecipeCard";
 
@@ -13,3 +14,4 @@ export default function RecipeOutput() {
     </>
   );
 }
+*/

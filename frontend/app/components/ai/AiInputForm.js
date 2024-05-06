@@ -24,7 +24,7 @@ export default function AiInputForm() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedPref, setSelectedPref] = useState("");
   const [selectedChecks, setSelectedChecks] = useState([]);
-  const [recipe, setRecipe] = useState(null);
+  //const [recipe, setRecipe] = useState(null);
   const [recipes, setRecipes] = useState(null);
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,8 +50,8 @@ export default function AiInputForm() {
       .filter((item) => selectedChecks.includes(item))
       .join(", ");
     // Send selected values to the backend
-    const prompt = `I'm looking for a recipe, i'am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum ${timeToSpend} to make the dish. It can not contain ${checkedItems} I would prefer food that's ${preferences} from ${country}. Can you give me three significant recipes based on this?  
-    Arrange the recipes in a json format and make sure to always include a recipe_title, ingredients, steps, motivation_heading and a smal motivattion and a historic_overview.
+    const prompt = `I'm looking for recipes, i'am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum ${timeToSpend} to make the dish. It can not contain ${checkedItems} I would prefer food that's ${preferences} from ${country}. Can you give me three significant recipes based on this?  
+    Arrange the recipes in a json format and make sure to always include a recipe_title, ingredients, steps, motivation_heading and a smal motivattion and a historic_overview. Make that with European measurements.
     `;
     console.log(prompt);
     setShowRecipe(true);
@@ -72,15 +72,14 @@ export default function AiInputForm() {
     }
   };
 
-  const handleRecipeCardClick = (recipes) => {
-    setOpenSingleCard(recipes);
+  const handleRecipeCardClick = (recipe) => {
+    setOpenSingleCard(recipe);
     //console.log("Recipe clicked:", recipe);
   };
 
   return (
     <div className="w-full">
-      <div>
-        <div className="flex flex-col text-center text-[#250D01]">
+        <div className="flex flex-col text-center text-[#250D01] px-4">
           <h3 className="text-center md:leading-[75px] font-semibold text-3xl md:text-[75px]">
             Make your choices
           </h3>
@@ -93,7 +92,7 @@ export default function AiInputForm() {
             embark on a flavor-filled journey!
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center w-full mx-auto">
+        <div className="flex flex-col items-center justify-center w-full mx-auto px-4">
           <div className="flex flex-col justify-betweeen ">
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
               <div className="flex flex-col ">
@@ -256,19 +255,21 @@ export default function AiInputForm() {
             </div>
           )}
           {recipes && (
-            <div className="w-screen bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
+            <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
+            <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
               <RecipeCards recipes={recipes} onClick={handleRecipeCardClick} />
+            </div>
+
             </div>
           )}
         </div>
         <div>
           {openSingleCard && (
-            <div className="w-screen bg-[#FFFFFF] h-auto pt-10 lg:pt-20">
-              <RecipeCard recipes={recipes} />
+            <div className="w-full bg-[#FFFFFF] h-auto pt-10 lg:pt-20 px-4">
+              <RecipeCard recipes={openSingleCard} />
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }
