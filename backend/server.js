@@ -42,6 +42,14 @@ app.post("/users", async (req, res) => {
       "INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
       [email, username, hashedPassword]
     );
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
+    const newAccount = await query(
+      "INSERT INTO accounts (user_id, bookmarks ) VALUES (?, ?)",
+      [user.id, 0]
+    );
+    console.log("New user and user account created:", newAccount);
     res.status(201).json({ message: "User created" });
   } catch (error) {
     console.error("Error creating user", error);
@@ -69,6 +77,7 @@ app.post("/login", async (req, res) => {
   res.status(200).json({ message: "login successful" });
 });
 
+//recipes
 app.post("/recipes", async (req, res) => {
   const { prompt } = req.body;
   try {

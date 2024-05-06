@@ -37,6 +37,8 @@ export default function CreateUser() {
     } else {
       const id = Math.floor(Math.random() * 1000) + 1;
       const newUser = { id, email, username, password };
+      // const account = { user_id, bookmarks };
+
       setUsers([...users, newUser]);
       try {
         const response = await fetch("http://localhost:4000/users", {
@@ -151,9 +153,11 @@ export default function CreateUser() {
             </div>
             <div className="flex-col flex mb-1 space-y-1">
               <label className="text-[#F8E8C0] mb-0">Password</label>
-              <div className={`flex items-center mt-0 border border-white ${
-                    passwordError ? "border-red-500" : "white"
-                  } justify-between rounded-md px-4 py-2`}>
+              <div
+                className={`flex items-center mt-0 border border-white ${
+                  passwordError ? "border-red-500" : "white"
+                } justify-between rounded-md px-4 py-2`}
+              >
                 <input
                   className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full "
                   type={showPassword ? "text" : "password"}

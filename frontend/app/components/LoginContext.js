@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useState } from "react";
 
 const LoginContext = createContext();
@@ -14,7 +16,7 @@ const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ loggedIn, login, logout }}>
+    <LoginContext.Provider value={{ loggedIn, login, logout, setLoggedIn }}>
       {children}
     </LoginContext.Provider>
   );
