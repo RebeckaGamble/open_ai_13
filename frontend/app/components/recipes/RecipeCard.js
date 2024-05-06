@@ -4,6 +4,10 @@ import testImg from "/public/img/test_img.jpg";
 import { FaRegHeart } from "react-icons/fa";
 
 export default function RecipeCard({ recipes }) {
+  if (!recipes) {
+    return <div>No recipe available</div>;
+  }
+
   return (
     <div className="w-full px-4 max-w-[90rem] flex flex-col mx-auto bg-[#E1DAD0] text-[#250D01] rounded-[10px] p-4 md:p-8 ">
       <div className="flex flex-col md:flex-row">
@@ -16,10 +20,9 @@ export default function RecipeCard({ recipes }) {
             className="rounded-[10px] h-auto w-full object-cover"
           />
           <div className="flex flex-row items-center pt-1">
-            {" "}
             <span className="pr-2">
               <FaRegHeart size={18} />
-            </span>{" "}
+            </span>
             Save recipe
           </div>
         </div>
@@ -58,18 +61,8 @@ export default function RecipeCard({ recipes }) {
       <div className="flex flex-row pt-4">
         <div>
           <h3 className="font-semibold text-[20px]">Historical Description:</h3>
-          <p> {recipes.historic_overview}</p>
+          <p>{recipes.historic_overview}</p>
         </div>
-        {/** 
-        <div>
-          <h4>rubrik</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque
-            porro reprehenderit saepe dignissimos recusandae aliquid sit,
-            asperiores natus harum provident.
-          </p>
-        </div>
-        */}
       </div>
     </div>
   );

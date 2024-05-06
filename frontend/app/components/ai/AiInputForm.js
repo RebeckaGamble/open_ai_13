@@ -72,8 +72,8 @@ export default function AiInputForm() {
     }
   };
 
-  const handleRecipeCardClick = (recipe) => {
-    setOpenSingleCard(recipe);
+  const handleRecipeCardClick = (recipes) => {
+    setOpenSingleCard(recipes);
     //console.log("Recipe clicked:", recipe);
   };
 
@@ -250,7 +250,11 @@ export default function AiInputForm() {
           </div>
         </div>
         <div>
-          {loading && <div>Loading...</div>}
+          {loading && (
+            <div className="flex justify-center items-center text-2xl p-4">
+              Generating recipes...
+            </div>
+          )}
           {recipes && (
             <div className="w-screen bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
               <RecipeCards recipes={recipes} onClick={handleRecipeCardClick} />
