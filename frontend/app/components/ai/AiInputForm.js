@@ -30,41 +30,6 @@ export default function AiInputForm() {
   const [openSingleCard, setOpenSingleCard] = useState(false);
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
-  const jsonFormAi = {
-    result: {
-      title: "Lasagna",
-      servings: 2,
-    },
-    ingredients: [
-      {
-        ingredient: "Lasagna plates",
-        amount: "250g",
-      },
-      {
-        ingredient: "Onion",
-        amount: "1",
-      },
-      {
-        ingredient: "Egg",
-        amount: "1",
-      },
-      {
-        ingredient: "Lean ground beef",
-        amount: "500g",
-      },
-      {
-        ingredient: "crushed tomatoes",
-        amount: "",
-      },
-    ],
-    steps: [
-      "chop the onion",
-      "fry the minced meat and the onion",
-      "place the lasagna plates in a form and alternate with the minced meat mixture",
-    ],
-    history:
-      "Lasagna has its roots in ancient Rome, although the dish we know today has evolved over the centuries. The name 'lasagna' originally referred to the wide, flat pasta sheets used in the dish rather than the assembled dish itself.",
-  };
 
   const handleSelect = (label, isChecked) => {
     //console.log("Checkbox selected:", label);
@@ -247,9 +212,7 @@ export default function AiInputForm() {
             >
               <div className="font-semibold pb-4 gap-1 text-xl w-fit mx-auto flex flex-row ">
                 <h3 className="pt-2">Don't include</h3>
-                <div
-                  className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border"
-                >
+                <div className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border">
                   <TbInfoSmall size={30} />
                 </div>
               </div>
