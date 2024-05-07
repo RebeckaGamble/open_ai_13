@@ -15,7 +15,7 @@ export default function DialogComp({
       <Dialog.Trigger asChild>
         <button
           onClick={() => setOpen(true)}
-          className="h-auto items-center justify-center font-medium leading-none underline text-blue-700"
+          className="h-auto items-center justify-center font-medium leading-none text-blue-700"
         >
           {dialogEl}
         </button>
@@ -118,7 +118,7 @@ export const TermsDialog = () => {
       setOpen={setOpenTermsOfUse}
       title={"Terms of use"}
       text={
-        <div className="gap-2 flex flex-col  overflow-scroll">
+        <div className="gap-2 flex flex-col overflow-hidden">
           <div className="">
             <p>
               Welcome to ChefMate! These terms and conditions outline the rules

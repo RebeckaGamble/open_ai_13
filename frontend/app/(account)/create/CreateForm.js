@@ -2,6 +2,7 @@
 import { useState, useContext } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Checkbox from "@/app/components/ai/Checkbox";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { LoginContext } from "@/app/components/LoginContext";
 import { useRouter } from "next/navigation";
 import { TermsDialog, PrivacyDialog } from "./DialogComp";
@@ -108,18 +109,18 @@ export default function CreateUser() {
             </h2>
             <p className="text-[#250D01] font-[20px] py-2">
               Already have an account?{" "}
-              <Link href="/login" className="underline text-blue-700">
+              <Link href="/login" className="text-blue-700">
                 Log in
               </Link>
             </p>
           </div>
-          <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#E1DAD0] text-[#250D01] w-[100%]">
+          <div className="flex flex-col h-2/4 space-y-4 justify-evenly bg-[#E1DAD0] text-[#250D01] w-[100%]">
             <div className="flex-col flex mb-1 space-y-1">
-              <label className="text-[#250D01] ">Email</label>
+              <label className="text-[#250D01] font-semibold">Email</label>
               <input
                 className={`bg-[#FFFFFF] border-[1px] ${
                   emailError || emailDomainError ? "border-red-500" : "white"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#250D01]`}
+                } pl-3 rounded-md px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -140,11 +141,11 @@ export default function CreateUser() {
               )}
             </div>
             <div className="flex-col flex mb-1 space-y-1 ">
-              <label className="text-[#250D01]">Username</label>
+              <label className="text-[#250D01] font-semibold">Username</label>
               <input
                 className={`bg-[#FFFFFF] border-[1px] ${
                   usernameError ? "border-red-500" : "border-slate-200"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#250D01]`}
+                } pl-3 rounded-md px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -159,14 +160,14 @@ export default function CreateUser() {
               )}
             </div>
             <div className="flex-col flex mb-1 space-y-1">
-              <label className="text-[#250D01] mb-0">Password</label>
+              <label className="text-[#250D01] font-semibold">Password</label>
               <div
                 className={`flex items-center mt-0 bg-[#FFFFFF] border focus:outline border-white ${
                   passwordError ? "border-red-500" : "border-white"
                 } justify-between rounded-md px-4 py-2`}
               >
                 <input
-                  className="bg-[#FFFFFF] outline-none placeholder-[#250D01] w-full "
+                  className="bg-[#FFFFFF] outline-none placeholder-[#CCB99E] tracking-wider text-[20px] w-full "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
@@ -177,11 +178,13 @@ export default function CreateUser() {
                 />
                 {showPassword ? (
                   <IoEyeOff
+                  size={24}
                     className="fill-[#250D01] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
                   <IoEye
+                  size={24}
                     className="color-[#F8E8C0] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
@@ -219,22 +222,26 @@ export default function CreateUser() {
               )}
             </div>
           </div>
-          <div className="py-2">
+          <div className="py-4">
             <label className="inline-flex items-center">
               <Checkbox
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
-                iconSize={"text-[40px]"}
-                checkbg={"[#FFFFFF]"}
-                borderColor={"[#FFFFFF]"}
+              //  iconSize={"text-[20px]"}
+                checkBg={"[#E1DAD0]"}
+                borderColor={"[#0C0603]"}
+                checkIcon={<CheckIcon />}
+                label={"I want to receive emails about the product, feature updates, events, and marketing promotions. "}
                 required
               />
+              {/*
               <span className="ml-2 text-[#250D01] text-[12px]">
                 I want to receive emails about the product, feature updates,
                 events, and marketing promotions. <br />
               </span>
+              * */}
             </label>
-            <div className="ml-[46px] flex flex-row items-center gap-1 text-[12px]">
+            <div className="flex flex-row items-center gap-1">
               By creating an account you agree to the <TermsDialog />
               and
               <PrivacyDialog />
@@ -242,7 +249,7 @@ export default function CreateUser() {
           </div>
 
           <button
-            className="bg-[#250D01] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
+            className="bg-[#0C0603] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-semibold font-inter text-[16px]"
             onClick={handleCreateUser}
           >
             Create an account

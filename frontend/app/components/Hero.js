@@ -1,13 +1,10 @@
-"use client";
-
+'use client'
 import React from "react";
 import Image from "next/image";
-import kyckling from "/public/img/kyckling.jpg";
-import lax from "/public/img/citronlax.jpg";
-import pasta from "/public/img/pastarätt.jpg";
-import vegetarisk from "/public/img/vegetarisk.jpg";
+import heroBg from "../../public/heroimage.png";
 
 export default function Hero() {
+
   const handleClick = () => {
     const aiSection = document.getElementById("ai");
     if (aiSection) {
@@ -20,8 +17,12 @@ export default function Hero() {
   };
 
   return (
-    <div className="w-full h-[964px] bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] px-4">
-      <div className="flex flex-col h-full justify-center items-center text-[#250D01]">
+    <div className="relative w-full h-[964px] px-4">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroBg.src})` }}
+      ></div>
+      <div className="relative flex flex-col top-[20%] h-full justify-center items-center text-[#250D01]">
         <h3 className="font-semibold uppercase text-6xl pb-6 md:text-[87.4px]">
           ChefMate
         </h3>

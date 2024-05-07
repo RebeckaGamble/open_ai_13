@@ -1,59 +1,63 @@
 export const moodOptions = [
-    "Bitter",
-    "Bubbly",
-    "Cold",
-    //"Creamy",
-   // "Frosty",
-    "Hot",
-   // "Juicy",
-    "Salty",
-    "Smooth",
-    "Sour",
-    "Sweet",
-  ];
-  
-  export const mustContain = ["Fish", "Meet", "No pork", "Vegetarian", "Vegan"];
-  
-  export const dontContain = [
-    "Almonds",
-    //"Barley",
-   // "Cashews",
-    "Dairy",
-   // "Eggs",
-   // "Fish",
-    "Gluten",
-    "Hazelnuts",
-    //"Kiwi",
-    //"Lupin",
-   // "Meat",
-    "Nuts",
-    "Oats",
-    "Peanuts",
-   // "Pork",
-    //"Quinoa",
-   // "Rice",
-   // "Sesame seeds",
-   // "Tree nuts",
-   // "Umbellifers",
-    "Wheat",
-   // "Yeast",
-   // "Zucchini",
-  ];
-  
-  export const timeOptions = [
-    "20 - 30 minutes",
-    "30 - 45 minutes",
-    "45 - 60 minutes",
-    "60 - 90 minutes",
-    "90 + minutes",
-  ];
-  
-  export const countryOptions = [
-    "Africa",
-    "Asia",
-   // "Australia",
-    "Europe",
-    "North America",
-    "South America",
-  ];
-  
+  "Bitter",
+  "Bubbly",
+  "Cold",
+  //"Creamy",
+  // "Frosty",
+  "Hot",
+  // "Juicy",
+  "Salty",
+  "Smooth",
+  "Sour",
+  "Sweet",
+];
+
+export const mustContain = ["Fish", "Meet", "No pork", "Vegetarian", "Vegan"];
+
+export const dontContain = [
+  //"Almonds",
+  //"Barley",
+  // "Cashews",
+  "Dairy",
+  "Eggs",
+  // "Fish",
+  "Gluten",
+  // "Hazelnuts",
+  //"Kiwi",
+  //"Lupin",
+  // "Meat",
+  "Nuts",
+  //"Oats",
+  //"Peanuts",
+  // "Pork",
+  //"Quinoa",
+  // "Rice",
+  // "Sesame seeds",
+  "Shellfish",
+  // "Tree nuts",
+  // "Umbellifers",
+  //"Wheat",
+  // "Yeast",
+  // "Zucchini",
+];
+
+export const timeOptions = [
+  "20 - 30 minutes",
+  "30 - 45 minutes",
+  "45 - 60 minutes",
+  "60 + minutes",
+ // "90 + minutes",
+];
+
+export const countryOptions = [
+  "Spring",
+  "Summer",
+  "Autumn",
+  "Winter"
+ // "Africa",
+ // "Asia",
+  // "Australia",
+  //"Europe",
+  //"North America",
+ // "South America",
+];
