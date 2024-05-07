@@ -97,29 +97,29 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#8A2F02] absolute">
+      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#E1DAD0] absolute">
         <form
           onSubmit={handleCreateUser}
-          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#8A2F02]"
+          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#E1DAD0]"
         >
           <div className="flex flex-col top-10">
-            <h2 className="text-[#F8E8C0] text-[32px] font-semibold font-sans">
+            <h2 className="text-[#250D01] text-[32px] font-semibold font-sans">
               Welcome to ChefMate
             </h2>
-            <p className="text-[#F8E8C0] font-[20px] py-2">
+            <p className="text-[#250D01] font-[20px] py-2">
               Already have an account?{" "}
               <Link href="/login" className="underline text-blue-700">
                 Log in
               </Link>
             </p>
           </div>
-          <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#8A2F02] text-[#F5B25E] w-[100%]">
+          <div className="flex flex-col h-2/4 space-y-3 justify-evenly bg-[#E1DAD0] text-[#250D01] w-[100%]">
             <div className="flex-col flex mb-1 space-y-1">
-              <label className="text-[#F8E8C0] ">Email</label>
+              <label className="text-[#250D01] ">Email</label>
               <input
-                className={`bg-[#8A2F02] border-[1px] ${
+                className={`bg-[#FFFFFF] border-[1px] ${
                   emailError || emailDomainError ? "border-red-500" : "white"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
+                } pl-3 rounded-md px-4 py-2 placeholder-[#250D01]`}
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -136,11 +136,11 @@ export default function CreateUser() {
               )}
             </div>
             <div className="flex-col flex mb-1 space-y-1 ">
-              <label className="text-[#F8E8C0]">Username</label>
+              <label className="text-[#250D01]">Username</label>
               <input
-                className={`bg-[#8A2F02] border-[1px] ${
-                  usernameError ? "border-red-500" : "white"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#F5B25E]`}
+                className={`bg-[#FFFFFF] border-[1px] ${
+                  usernameError ? "border-red-500" : "border-slate-200"
+                } pl-3 rounded-md px-4 py-2 placeholder-[#250D01]`}
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -152,14 +152,14 @@ export default function CreateUser() {
               )}
             </div>
             <div className="flex-col flex mb-1 space-y-1">
-              <label className="text-[#F8E8C0] mb-0">Password</label>
+              <label className="text-[#250D01] mb-0">Password</label>
               <div
-                className={`flex items-center mt-0 border border-white ${
+                className={`flex items-center mt-0 bg-[#FFFFFF] border focus:outline border-white ${
                   passwordError ? "border-red-500" : "white"
                 } justify-between rounded-md px-4 py-2`}
               >
                 <input
-                  className="bg-[#8A2F02] outline-none placeholder-[#F5B25E] w-full "
+                  className="bg-[#FFFFFF] outline-none placeholder-[#250D01] w-full "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
@@ -167,7 +167,7 @@ export default function CreateUser() {
                 />
                 {showPassword ? (
                   <IoEyeOff
-                    className="fill-[#F8E8C0] mr-2 cursor-pointer"
+                    className="fill-[#250D01] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
@@ -183,7 +183,7 @@ export default function CreateUser() {
               {/* Lösenordsstyrkeindikator */}
               {password.length > 0 && (
                 <div className="text-[12px] mt-1">
-                  <span className="text-[#F8E8C0]">Password Strength: </span>
+                  <span className="text-[#250D01]">Password Strength: </span>
                   {[...Array(5)].map((_, index) => (
                     <span
                       key={index}
@@ -198,7 +198,7 @@ export default function CreateUser() {
               )}
               {password.length > 0 && (
                 <div className="text-[12px]">
-                  <ol className="grid grid-cols-3 gap-2 list-disc text-[#F8E8C0] overflow-auto p-4">
+                  <ol className="grid grid-cols-3 gap-2 list-disc text-[#250D01] overflow-auto p-4">
                     <li>Use 8 or more characters</li>
                     <li>One Uppercase character</li>
                     <li>One lowercase character</li>
@@ -215,11 +215,11 @@ export default function CreateUser() {
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
                 iconSize={"text-[40px]"}
-                checkbg={"[#8A2F02]"}
-                borderColor={"[F5B25E]"}
+                checkbg={"[#FFFFFF]"}
+                borderColor={"[#FFFFFF]"}
                 required
               />
-              <span className="ml-2 text-[#F8E8C0] text-[12px]">
+              <span className="ml-2 text-[#250D01] text-[12px]">
                 I want to receive emails about the product, feature updates,
                 events, and marketing promotions. <br />
               </span>
@@ -232,7 +232,7 @@ export default function CreateUser() {
           </div>
 
           <button
-            className="bg-[#F8E8C0] text-black w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
+            className="bg-[#250D01] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
             onClick={handleCreateUser}
           >
             Create an account

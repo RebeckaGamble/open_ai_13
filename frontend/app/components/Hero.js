@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import kyckling from "/public/img/kyckling-maträtt.jpg";
+import kyckling from "/public/img/kyckling.jpg";
 import lax from "/public/img/citronlax.jpg";
 import pasta from "/public/img/pastarätt.jpg";
 import vegetarisk from "/public/img/vegetarisk.jpg";
