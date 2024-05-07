@@ -57,7 +57,7 @@ export default function LoginForm() {
           <form
             action=""
             className="flex flex-col gap-2 mx-auto mt-28
-          rounded-lg bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] p-4 mb-5"
+          rounded-lg bg-[#F3F2F2] p-4 mb-5 shadow-md"
           >
             <h3 className="font-semibold pt-5 text-center text-3xl ">Login</h3>
 
@@ -90,7 +90,7 @@ export default function LoginForm() {
                 style={{ width: "300px", height: "40px" }}
               >
                 <FaGoogle size={24} />
-                <span className="ml-3">Login With Google</span>
+                <span className="ml-3 text-black">Login With Google</span>
               </a>
             </div>
 
@@ -107,12 +107,11 @@ export default function LoginForm() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
               className="bg-white flex justify-center items-center  border-[1px] border-[#E4DED6] 
-                rounded-md pl-[16px] py-2 placeholder-black"
+                rounded-md pl-[16px] py-2 placeholder-black outline-none"
             />
             <div className="flex items-center mt-0 bg-white border border-white justify-between rounded-md px-4">
               <input
-                className="bg-white 
-        rounded-md px-4 py-2 placeholder-black"
+                className="bg-white rounded-md py-2 placeholder-black outline-none"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
