@@ -222,7 +222,7 @@ export default function AiInputForm() {
                 {dontContain.map((dont, index) => (
                   <div
                     key={index}
-                    className="hover:font-semibold flex w-[335px] sm:w-[264px] mb-[-15px] rounded-[10px] py-2 sm:py-3 px-2 items-center justify-between bg-[#CBB89D]"
+                    className="hover:font-semibold flex w-[335px] sm:w-[264px] mb-[-15px] rounded-[10px] py-2 sm:py-3 px-2 items-center justify-between"
                   >
                     <Checkbox
                       checked={selectedChecks.includes(dont)}
