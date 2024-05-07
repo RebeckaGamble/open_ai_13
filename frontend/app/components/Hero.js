@@ -46,44 +46,6 @@ export default function Hero() {
             Start
           </button>
         </div>
-        <div className="flex flex-row space-x-4 mt-4">
-          <div className="group relative">
-            <Image
-              src={kyckling}
-              height={200}
-              width={200}
-              alt="Kyckling"
-              className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
-            />
-          </div>
-          <div className="group relative">
-            <Image
-              src={vegetarisk}
-              height={200}
-              width={200}
-              alt="Vegetarisk Mat"
-              className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
-            />
-          </div>
-          <div className="group relative">
-            <Image
-              src={pasta}
-              height={200}
-              width={200}
-              alt="Pasta"
-              className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
-            />
-          </div>
-          <div className="group relative">
-            <Image
-              src={lax}
-              height={200}
-              width={200}
-              alt="Lax"
-              className="rounded-[10px] h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
