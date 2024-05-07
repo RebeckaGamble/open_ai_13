@@ -52,22 +52,18 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="px-4 bg-[#F5B25E]">
+      <div className="px-4 bg-gradient-to-t bg-white">
         <div className="pt-5 flex flex-col mx-auto h-screen">
           <form
             action=""
             className="flex flex-col gap-2 mx-auto mt-28
-          rounded-lg bg-[#8A2F02] p-4 mb-5"
+          rounded-lg bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] p-4 mb-5"
           >
-            <h3 className="font-semibold pt-5 text-center text-3xl text-[#F8E8C0]">
-              Login
-            </h3>
+            <h3 className="font-semibold pt-5 text-center text-3xl ">Login</h3>
 
             <div className="pt-4 text-center">
               <p className="pb-3">
-                <span style={{ color: "#F8E8C0" }}>
-                  Don't have an account?{" "}
-                </span>
+                <span style={{ color: "black" }}>Don't have an account? </span>
                 <Link href="/create" className="text-blue-700">
                   Register
                 </Link>
@@ -79,7 +75,7 @@ export default function LoginForm() {
                 href="https://www.facebook.com/?locale=sv_SE"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-700 m-2 flex items-center justify-center  bg-[#F8E8C0] rounded-full shadow-lg shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
+                className="text-blue-700 m-2 flex items-center justify-center  bg-[white] rounded-full shadow-md shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
                 style={{ width: "300px", height: "40px" }}
               >
                 <FaFacebook size={24} />
@@ -90,7 +86,7 @@ export default function LoginForm() {
                 href="https://myaccount.google.com/"
                 target="_blank"
                 rel="noreferrer"
-                className="m-2 flex items-center justify-center bg-[#F8E8C0] rounded-full shadow-lg shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
+                className="m-2 flex items-center justify-center bg-white rounded-full shadow-md shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
                 style={{ width: "300px", height: "40px" }}
               >
                 <FaGoogle size={24} />
@@ -99,9 +95,9 @@ export default function LoginForm() {
             </div>
 
             <div className="flex justify-center items-center mb-4">
-              <div className="border-b  w-2/6"></div>
-              <h3 className="text-center mx-4 text-[#F8E8C0]">OR</h3>
-              <div className="border-b  w-2/6"></div>
+              <div className="border-b border-white bg-white w-2/6"></div>
+              <h3 className="text-center mx-4 ">OR</h3>
+              <div className="border-b border-white w-2/6"></div>
             </div>
 
             <input
@@ -110,12 +106,13 @@ export default function LoginForm() {
               required
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
-              className="bg-[#8A2F02] border-[1px] border-white pl-3 
-        rounded-md px-4 py-2 mb-2 placeholder-[#F5B25E]"
+              className="bg-white flex justify-center items-center  border-[1px] border-[#E4DED6] 
+                rounded-md pl-[16px] py-2 placeholder-black"
             />
-            <div className="flex items-center mt-0 border border-white justify-between rounded-md px-4 py-2">
+            <div className="flex items-center mt-0 bg-white border border-white justify-between rounded-md px-4">
               <input
-                className="bg-[#8A2F02] outline-none  placeholder-[#F5B25E] w-full"
+                className="bg-white 
+        rounded-md px-4 py-2 placeholder-black"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
@@ -123,12 +120,12 @@ export default function LoginForm() {
               />
               {showPassword ? (
                 <IoEyeOff
-                  className="Eye color-[#F8E8C0] mr-2 cursor-pointer"
+                  className="Eye bg-white color-gray-900 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <IoEye
-                  className=" Eye-on color-[#F8E8C0] mr-2 cursor-pointer"
+                  className=" Eye-on color-gray-900 fill-gray-400 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 />
               )}
@@ -139,11 +136,11 @@ export default function LoginForm() {
                 Invalid password or username
               </p>
             )}
-            <div className="max-w-[300px] mt-4 flex justify-center items-center">
+            <div className="max-w-full mt-4 flex justify-center items-center">
               <Link href="/">
                 <button
                   onClick={handleSubmit}
-                  className="bg-[#F8E8C0] text-black 
+                  className="bg-white text-black 
             w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
                 >
                   Log in
