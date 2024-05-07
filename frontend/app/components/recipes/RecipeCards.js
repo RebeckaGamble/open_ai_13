@@ -4,14 +4,6 @@ import React, { useState, useEffect } from "react";
 import testImg from "../../../public/img/test_img.jpg";
 
 export default function RecipeCards({ recipes, onClick }) {
-  //   const [recipe, setRecipe] = useState(null);
-
-  /*
-  function openRecipe() {
-    if (recipe) {
-      onClick(recipe);
-    }
-  }*/
   const openRecipe = (recipe) => {
     onClick(recipe);
   };
@@ -34,12 +26,9 @@ export default function RecipeCards({ recipes, onClick }) {
             <h3 className="font-semibold text-[18px]">
               {recipe.motivation_heading}
             </h3>
-            <p
-              className="overflow-hidden line-clamp-5 py-2"
-            >
+            <p className="overflow-hidden line-clamp-5 py-2">
               {recipe.motivation}
             </p>
-            
           </div>
           <div className="h-[360px] relative w-[320px] bg-[#FFFFFF] text-[#250D01] flex flex-col p-6 rounded-[10px] lg:hover:scale-105">
             <div className="w-full mx-auto flex justify-center">
@@ -63,7 +52,6 @@ export default function RecipeCards({ recipes, onClick }) {
               </button>
             </div>
           </div>
-        
         </div>
       ))}
     </div>
