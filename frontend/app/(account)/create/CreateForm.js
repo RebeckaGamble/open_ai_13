@@ -123,7 +123,10 @@ export default function CreateUser() {
                 type="email"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailError(false);
+                }}
                 required
               />
               {emailError && (
@@ -131,7 +134,8 @@ export default function CreateUser() {
               )}
               {emailDomainError && (
                 <p className="text-red-500 text-sm">
-                  Please enter a valid email domain (gmail.com or outlook.com)
+                  Please enter a valid email domain (gmail.com or outlook.com or
+                  hotmail.com)
                 </p>
               )}
             </div>
@@ -144,7 +148,10 @@ export default function CreateUser() {
                 type="text"
                 placeholder="Username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameError(false);
+                }}
                 required
               />
               {usernameError && (
@@ -155,7 +162,7 @@ export default function CreateUser() {
               <label className="text-[#250D01] mb-0">Password</label>
               <div
                 className={`flex items-center mt-0 bg-[#FFFFFF] border focus:outline border-white ${
-                  passwordError ? "border-red-500" : "white"
+                  passwordError ? "border-red-500" : "border-white"
                 } justify-between rounded-md px-4 py-2`}
               >
                 <input
@@ -163,7 +170,10 @@ export default function CreateUser() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
-                  onChange={handleChangePassword}
+                  onChange={(e) => {
+                    handleChangePassword(e);
+                    setPasswordError(false);
+                  }}
                 />
                 {showPassword ? (
                   <IoEyeOff
