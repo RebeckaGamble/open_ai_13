@@ -15,7 +15,7 @@ export default function DialogComp({
       <Dialog.Trigger asChild>
         <button
           onClick={() => setOpen(true)}
-          className="h-auto items-center justify-center font-medium leading-none text-blue-700"
+          className="h-auto w-fit items-center justify-center font-medium leading-none text-blue-700"
         >
           {dialogEl}
         </button>

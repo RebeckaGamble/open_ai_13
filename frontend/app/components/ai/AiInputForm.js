@@ -214,7 +214,7 @@ export default function AiInputForm() {
               "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
             }
           >
-            <div className="font-semibold pb-4 gap-1 text-xl w-fit mx-auto flex flex-row ">
+            <div className="font-semibold pb-4 gap-1 text-xl w-fit mx-auto flex flex-row">
               <h3 className="pt-2 text-[20px] sm:text-[24px]">
                 Do you have any allergies? I will not put this into your recipe!
               </h3>

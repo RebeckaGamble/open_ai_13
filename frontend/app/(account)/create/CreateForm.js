@@ -98,29 +98,29 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly p-5 font-sans rounded-[24px] bg-[#E1DAD0] absolute">
+      <div className="flex flex-col justify-evenly px-4 py-8 font-sans md:rounded-[24px] bg-[#E1DAD0]">
+        <div className="flex flex-col pb-6">
+          <h2 className="text-[#250D01] text-[32px] font-semibold font-sans">
+            Welcome to ChefMate
+          </h2>
+          <p className="text-[#250D01] text-[20px] py-1">
+            Already have an account?{" "}
+            <Link href="/login" className="text-blue-700">
+              Log in
+            </Link>
+          </p>
+        </div>
         <form
           onSubmit={handleCreateUser}
-          className="flex flex-col gap-1 justify-top p-5 items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#E1DAD0]"
+          className="flex flex-col gap-1 justify-top  items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#E1DAD0]"
         >
-          <div className="flex flex-col top-10">
-            <h2 className="text-[#250D01] text-[32px] font-semibold font-sans">
-              Welcome to ChefMate
-            </h2>
-            <p className="text-[#250D01] font-[20px] py-2">
-              Already have an account?{" "}
-              <Link href="/login" className="text-blue-700">
-                Log in
-              </Link>
-            </p>
-          </div>
           <div className="flex flex-col h-2/4 space-y-4 justify-evenly bg-[#E1DAD0] text-[#250D01] w-[100%]">
-            <div className="flex-col flex mb-1 space-y-1">
+            <div className="flex-col flex space-y-1">
               <label className="text-[#250D01] font-semibold">Email</label>
               <input
                 className={`bg-[#FFFFFF] border-[1px] ${
                   emailError || emailDomainError ? "border-red-500" : "white"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
+                } pl-3 rounded-[8px] px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -140,12 +140,12 @@ export default function CreateUser() {
                 </p>
               )}
             </div>
-            <div className="flex-col flex mb-1 space-y-1 ">
+            <div className="flex-col flex space-y-1">
               <label className="text-[#250D01] font-semibold">Username</label>
               <input
                 className={`bg-[#FFFFFF] border-[1px] ${
                   usernameError ? "border-red-500" : "border-slate-200"
-                } pl-3 rounded-md px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
+                } pl-3 rounded-[8px] px-4 py-2 placeholder-[#CCB99E] tracking-wider text-[20px]`}
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -159,12 +159,12 @@ export default function CreateUser() {
                 <p className="text-red-500 text-sm">Please enter a username</p>
               )}
             </div>
-            <div className="flex-col flex mb-1 space-y-1">
+            <div className="flex-col flex space-y-1">
               <label className="text-[#250D01] font-semibold">Password</label>
               <div
                 className={`flex items-center mt-0 bg-[#FFFFFF] border focus:outline border-white ${
                   passwordError ? "border-red-500" : "border-white"
-                } justify-between rounded-md px-4 py-2`}
+                } justify-between rounded-[8px] px-4 py-2`}
               >
                 <input
                   className="bg-[#FFFFFF] outline-none placeholder-[#CCB99E] tracking-wider text-[20px] w-full "
@@ -178,13 +178,13 @@ export default function CreateUser() {
                 />
                 {showPassword ? (
                   <IoEyeOff
-                  size={24}
+                    size={24}
                     className="fill-[#250D01] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
                   <IoEye
-                  size={24}
+                    size={24}
                     className="color-[#F8E8C0] mr-2 cursor-pointer"
                     onClick={togglePasswordVisibility}
                   />
@@ -222,16 +222,19 @@ export default function CreateUser() {
               )}
             </div>
           </div>
-          <div className="py-4">
-            <label className="inline-flex items-center">
+          <div className="py-4 flex flex-col">
+            <label className="inline-flex h-auto items-center">
               <Checkbox
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
-              //  iconSize={"text-[20px]"}
+                //  iconSize={"text-[20px]"}
                 checkBg={"[#E1DAD0]"}
-                borderColor={"[#0C0603]"}
+                borderColor={"[#250D01]"}
                 checkIcon={<CheckIcon />}
-                label={"I want to receive emails about the product, feature updates, events, and marketing promotions. "}
+                className={"pl-2"}
+                label={
+                  "I want to receive emails about the product, feature updates, events, and marketing promotions. "
+                }
                 required
               />
               {/*
@@ -241,10 +244,11 @@ export default function CreateUser() {
               </span>
               * */}
             </label>
-            <div className="flex flex-row items-center gap-1">
-              By creating an account you agree to the <TermsDialog />
-              and
-              <PrivacyDialog />
+            <div className="inline-flex w-full items-center">
+              <p className="w-full">
+                By creating an account you agree to the <TermsDialog /> and{" "}
+                <PrivacyDialog />
+              </p>
             </div>
           </div>
 
