@@ -280,10 +280,10 @@ export default function CreateUser() {
               )}
             </div>
           </div>
-          <div className="py-4 flex flex-col">
+          <div className="py-4 flex flex-col gap-2">
             <label className="inline-flex h-auto items-center">
               <Checkbox
-                onCheckedChange={handleCheckboxChange}
+               // onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
                 checkBg={"[#E1DAD0]"}
                 borderColor={"[#250D01]"}
@@ -296,10 +296,28 @@ export default function CreateUser() {
               />
             </label>
             <div className="inline-flex w-full items-center">
+              <Checkbox
+                onCheckedChange={handleCheckboxChange}
+                checked={isChecked}
+                checkBg={"[#E1DAD0]"}
+                borderColor={"[#250D01]"}
+                checkIcon={<CheckIcon />}
+                className={"pl-2"}
+                label={
+                  <>
+                    By creating an account you agree to the <TermsDialog /> and{" "}
+                    <PrivacyDialog />
+                  </>
+                }
+                required
+              />
+              {/** 
+
               <p className="w-full">
                 By creating an account you agree to the <TermsDialog /> and{" "}
                 <PrivacyDialog />
               </p>
+              */}
             </div>
           </div>
           <button

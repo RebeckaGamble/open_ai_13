@@ -32,13 +32,13 @@ function SwiperReviews() {
         {/**swiper */}
         <Swiper
           spaceBetween={30}
-          navigation={true}
+          //navigation={true}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
           }}
           pagination={{ clickable: true }}
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[ Pagination, Autoplay]}
           speed={1000}
           slidesPerView={1}
           className="w-full h-auto mx-20"

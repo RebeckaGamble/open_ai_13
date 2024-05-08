@@ -85,15 +85,20 @@ export default function AiInputForm() {
     <div className="w-full">
       <div className="flex flex-col text-center text-[#250D01] px-4">
         <h3 className="text-center md:leading-[75px] font-semibold text-3xl md:text-[75px]">
-          Make your choices
+          Let me help you!{" "}
         </h3>
         <p className="max-w-[838px] mx-auto py-10">
+          Ready to dive into the culinary adventure? Simply tell me your mood,
+          how much time you've got, your preferences and a season, and I'll
+          create some personalized recipe suggestions just for you. Let's team
+          up and cook something delicious!
+          {/** 
           Your culinary adventure begins here! Choose your mood, ingredients,
           dietary preferences, and more, and let ChefMate work its magic to
           craft a personalized recipe just for you. Like a trusty sous chef,
           ChefMate is here to inspire, innovate, and elevate your cooking
           experience. So go ahead, make your selections, and get ready to embark
-          on a flavor-filled journey!
+          on a flavor-filled journey!*/}
         </p>
       </div>
       <div className="flex flex-col items-center justify-center w-full mx-auto px-4">
@@ -230,7 +235,7 @@ export default function AiInputForm() {
               {dontContain.map((dont, index) => (
                 <div
                   key={index}
-                  className="hover:font-semibold flex mb-[-15px] items-center  "
+                  className="hover:font-semibold flex mb-[-15px] items-center "
                 >
                   <Checkbox
                     checked={selectedChecks.includes(dont)}
@@ -242,7 +247,9 @@ export default function AiInputForm() {
                     checkBg={"[#FFFFFF]"}
                     borderColor={"[#000000]"}
                     checkIcon={<Cross1Icon />}
-                    className={" leading-none text-[#88806A] text-[18px] font-semibold"}
+                    className={
+                      "leading-none text-[#88806A] text-[18px] pl-2 font-semibold"
+                    }
                   />
                 </div>
               ))}

@@ -21,12 +21,12 @@ export default function DialogComp({
         </button>
       </Dialog.Trigger>
       <Dialog.Portal className="overflow-scroll">
-        <Dialog.Overlay className="bg-black/60 data-[state=open]:animate-overlayShow fixed inset-0" />
+        <Dialog.Overlay className="bg-black/80 data-[state=open]:animate-overlayShow fixed inset-0" />
         <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] w-full h-auto sm:max-h-[85vh] sm:w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-md focus:outline-none">
           <Dialog.Title className="text-black m-0 text-[20px] font-semibold">
             {title}
           </Dialog.Title>
-          <Dialog.Title className="mt-[10px] mb-5 text-[16px] leading-normal overflow-hidden">
+          <Dialog.Title className="mt-[10px] mb-5 text-[16px] leading-normal overflow-y-scroll h-[420px] md:h-[530px]">
             {text}
           </Dialog.Title>
           {children}
@@ -118,7 +118,7 @@ export const TermsDialog = () => {
       setOpen={setOpenTermsOfUse}
       title={"Terms of use"}
       text={
-        <div className="gap-2 flex flex-col overflow-hidden">
+        <div className="gap-2 flex flex-col">
           <div className="">
             <p>
               Welcome to ChefMate! These terms and conditions outline the rules
@@ -167,16 +167,6 @@ export const TermsDialog = () => {
             className="bg-gray-300 text-black hover:bg-gray-400 inline-flex h-[35px] items-center justify-center rounded-md px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
           >
             Close
-          </button>
-        </Dialog.Close>
-
-        <Dialog.Close asChild>
-          <button
-            onClick={() => setOpenTermsOfUse(false)}
-            aria-label="Agree"
-            className="bg-green-300 text-black hover:bg-green-500 inline-flex h-[35px] items-center justify-center rounded-md px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none"
-          >
-            I agree
           </button>
         </Dialog.Close>
       </div>

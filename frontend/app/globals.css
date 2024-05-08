@@ -7,6 +7,12 @@
   --swiper-navigation-size: 32px !important;
 }
 
+/*
+.swiper-slide {
+  width: 300px !important;
+  margin: 0 0 0 30px;
+}
+*/
 .Eye-on{
   color: aliceblue;
 }
