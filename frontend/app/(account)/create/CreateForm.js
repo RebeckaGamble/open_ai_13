@@ -9,19 +9,22 @@ import { TermsDialog, PrivacyDialog } from "./DialogComp";
 import Link from "next/link";
 
 export default function CreateUser() {
+  // State variables for user data
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmedPassword, setConfirmedPassword] = useState(""); 
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // Tillståndsvariabel för att visa/dölja lösenordet
-  const [passwordStrength, setPasswordStrength] = useState(0); // Lösenordsstyrka
-  //updaterat kod
+  const [showPassword, setShowPassword] = useState(false); // State variable to show/hide password
+  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false); // State variable to show/hide confirmed password
+  const [passwordStrength, setPasswordStrength] = useState(0); // Password strength
   const [emailError, setEmailError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  //latest update, 2024-05-05
+  const [confirmedPasswordError, setConfirmedPasswordError] = useState(false); 
   const [emailDomainError, setEmailDomainError] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false); 
 
   const login = useContext(LoginContext);
   const router = useRouter();
@@ -29,16 +32,20 @@ export default function CreateUser() {
   async function handleCreateUser(e) {
     e.preventDefault();
     const emailDomain = email.split("@")[1];
-    if (!email || !username || !password) {
+    if (!email || !username || !password || !confirmedPassword) { 
       if (!email) setEmailError(true);
       if (!username) setUsernameError(true);
       if (!password) setPasswordError(true);
+      if (!confirmedPassword) setConfirmedPasswordError(true); 
+    } else if (password !== confirmedPassword) { 
+      setPasswordMatchError(true);
+      setPasswordError(true);
+      setConfirmedPasswordError(true);
     } else if (emailDomain !== "gmail.com" && emailDomain !== "outlook.com") {
       setEmailDomainError(true);
     } else {
       const id = Math.floor(Math.random() * 1000) + 1;
       const newUser = { id, email, username, password };
-      // const account = { user_id, bookmarks };
 
       setUsers([...users, newUser]);
       try {
@@ -54,33 +61,36 @@ export default function CreateUser() {
         }
         const data = await response.json();
         console.log(data);
-        // alert("User created successfully!");
       } catch (error) {
         console.error("Error:", error);
       }
+      // Reset all fields after creating user
       setUsername("");
       setPassword("");
+      setConfirmedPassword("");
       setEmail("");
       setEmailError(false);
       setUsernameError(false);
       setPasswordError(false);
+      setConfirmedPasswordError(false);
       setEmailDomainError(false);
+      setPasswordMatchError(false);
     }
   }
 
-  function handleCheckboxChange() {
-    setIsChecked(!isChecked);
-  }
-
-  // Funktion för att visa/dölja lösenordet
+  // Function to show/hide password
   function togglePasswordVisibility() {
     setShowPassword(!showPassword);
   }
 
-  // Funktion för att bedöma lösenordsstyrka
+  // Function to show/hide confirmed password
+  function toggleConfirmedPasswordVisibility() {
+    setShowConfirmedPassword(!showConfirmedPassword);
+  }
+
+  // Function to check password strength
   function checkPasswordStrength(password) {
     let strength = 0;
-    // lösenord förstärkelse, Bokstav, Siffra och täcken/mönster
     if (password.length >= 8) strength += 1;
     if (/[A-Z]/.test(password)) strength += 1;
     if (/[a-z]/.test(password)) strength += 1;
@@ -94,6 +104,11 @@ export default function CreateUser() {
     setPassword(newPassword);
     const strength = checkPasswordStrength(newPassword);
     setPasswordStrength(strength);
+  }
+
+  // Function to handle checkbox changes
+  function handleCheckboxChange() {
+    setIsChecked(!isChecked);
   }
 
   return (
@@ -175,6 +190,7 @@ export default function CreateUser() {
                     handleChangePassword(e);
                     setPasswordError(false);
                   }}
+                  required // Make password field required
                 />
                 {showPassword ? (
                   <IoEyeOff
@@ -190,10 +206,9 @@ export default function CreateUser() {
                   />
                 )}
               </div>
-              {passwordError && (
+              {passwordError && !password && ( // felmeddelande när lösenord fält är tomot
                 <p className="text-red-500 text-sm">Please enter a password</p>
               )}
-              {/* Lösenordsstyrkeindikator */}
               {password.length > 0 && (
                 <div className="text-[12px] mt-1">
                   <span className="text-[#250D01]">Password Strength: </span>
@@ -221,13 +236,54 @@ export default function CreateUser() {
                 </div>
               )}
             </div>
+            {/* Confirm password/lösenord input */}
+            <div className="flex-col flex space-y-1">
+              <label className="text-[#250D01] font-semibold">
+                Confirm Password
+              </label>
+              <div
+                className={`flex items-center mt-0 bg-[#FFFFFF] border focus:outline border-white ${
+                  confirmedPasswordError ? "border-red-500" : "border-white"
+                } justify-between rounded-[8px] px-4 py-2`}
+              >
+                <input
+                  className="bg-[#FFFFFF] outline-none placeholder-[#CCB99E] tracking-wider text-[20px] w-full "
+                  type={showConfirmedPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={confirmedPassword}
+                  onChange={(e) => {
+                    setConfirmedPassword(e.target.value);
+                    setConfirmedPasswordError(false);
+                    setPasswordMatchError(false); 
+                  }}
+                  required 
+                />
+                {showConfirmedPassword ? (
+                  <IoEyeOff
+                    size={24}
+                    className="fill-[#250D01] mr-2 cursor-pointer"
+                    onClick={toggleConfirmedPasswordVisibility}
+                  />
+                ) : (
+                  <IoEye
+                    size={24}
+                    className="color-[#F8E8C0] mr-2 cursor-pointer"
+                    onClick={toggleConfirmedPasswordVisibility}
+                  />
+                )}
+              </div>
+              {passwordMatchError && (
+                <p className="text-red-500 text-sm">
+                  Passwords do not match. Please enter the same password in both fields.
+                </p>
+              )}
+            </div>
           </div>
           <div className="py-4 flex flex-col">
             <label className="inline-flex h-auto items-center">
               <Checkbox
                 onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
-                //  iconSize={"text-[20px]"}
                 checkBg={"[#E1DAD0]"}
                 borderColor={"[#250D01]"}
                 checkIcon={<CheckIcon />}
@@ -237,12 +293,6 @@ export default function CreateUser() {
                 }
                 required
               />
-              {/*
-              <span className="ml-2 text-[#250D01] text-[12px]">
-                I want to receive emails about the product, feature updates,
-                events, and marketing promotions. <br />
-              </span>
-              * */}
             </label>
             <div className="inline-flex w-full items-center">
               <p className="w-full">
@@ -251,7 +301,6 @@ export default function CreateUser() {
               </p>
             </div>
           </div>
-
           <button
             className="bg-[#0C0603] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-semibold font-inter text-[16px]"
             onClick={handleCreateUser}
