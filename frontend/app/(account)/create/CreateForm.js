@@ -13,7 +13,7 @@ export default function CreateUser() {
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmedPassword, setConfirmedPassword] = useState(""); 
+  const [confirmedPassword, setConfirmedPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State variable to show/hide password
@@ -22,9 +22,9 @@ export default function CreateUser() {
   const [emailError, setEmailError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [confirmedPasswordError, setConfirmedPasswordError] = useState(false); 
+  const [confirmedPasswordError, setConfirmedPasswordError] = useState(false);
   const [emailDomainError, setEmailDomainError] = useState(false);
-  const [passwordMatchError, setPasswordMatchError] = useState(false); 
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
 
   const login = useContext(LoginContext);
   const router = useRouter();
@@ -32,12 +32,12 @@ export default function CreateUser() {
   async function handleCreateUser(e) {
     e.preventDefault();
     const emailDomain = email.split("@")[1];
-    if (!email || !username || !password || !confirmedPassword) { 
+    if (!email || !username || !password || !confirmedPassword) {
       if (!email) setEmailError(true);
       if (!username) setUsernameError(true);
       if (!password) setPasswordError(true);
-      if (!confirmedPassword) setConfirmedPasswordError(true); 
-    } else if (password !== confirmedPassword) { 
+      if (!confirmedPassword) setConfirmedPasswordError(true);
+    } else if (password !== confirmedPassword) {
       setPasswordMatchError(true);
       setPasswordError(true);
       setConfirmedPasswordError(true);
@@ -106,7 +106,6 @@ export default function CreateUser() {
     setPasswordStrength(strength);
   }
 
-  // Function to handle checkbox changes
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
   }
@@ -155,6 +154,7 @@ export default function CreateUser() {
                 </p>
               )}
             </div>
+            {/* Render other fields */}
             <div className="flex-col flex space-y-1">
               <label className="text-[#250D01] font-semibold">Username</label>
               <input
@@ -206,7 +206,7 @@ export default function CreateUser() {
                   />
                 )}
               </div>
-              {passwordError && !password && ( // felmeddelande när lösenord fält är tomot
+              {passwordError && !password && (
                 <p className="text-red-500 text-sm">Please enter a password</p>
               )}
               {password.length > 0 && (
@@ -254,9 +254,9 @@ export default function CreateUser() {
                   onChange={(e) => {
                     setConfirmedPassword(e.target.value);
                     setConfirmedPasswordError(false);
-                    setPasswordMatchError(false); 
+                    setPasswordMatchError(false);
                   }}
-                  required 
+                  required
                 />
                 {showConfirmedPassword ? (
                   <IoEyeOff
@@ -274,7 +274,8 @@ export default function CreateUser() {
               </div>
               {passwordMatchError && (
                 <p className="text-red-500 text-sm">
-                  Passwords do not match. Please enter the same password in both fields.
+                  Passwords do not match. Please enter the same password in both
+                  fields.
                 </p>
               )}
             </div>
@@ -302,8 +303,11 @@ export default function CreateUser() {
             </div>
           </div>
           <button
-            className="bg-[#0C0603] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-semibold font-inter text-[16px]"
-            onClick={handleCreateUser}
+            className={`bg-[#0C0603] tracking-wider text-white w-[190px] h-[48px] rounded-xl font-semibold font-inter text-[16px] ${
+              !isChecked ? "cursor-not-allowed opacity-50" : ""
+            }`}
+            type="submit"
+            disabled={!isChecked}
           >
             Create an account
           </button>
