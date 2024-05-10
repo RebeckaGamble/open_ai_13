@@ -46,7 +46,7 @@ app.post("/users", async (req, res) => {
       username,
     ]);
     const newAccount = await query(
-      "INSERT INTO accounts (user_id, bookmarks ) VALUES (?, ?)",
+      "INSERT INTO bookmarks (user_id, recipe_id ) VALUES (?, ?)",
       [user.id, 0]
     );
     console.log("New user and user account created:", newAccount);
