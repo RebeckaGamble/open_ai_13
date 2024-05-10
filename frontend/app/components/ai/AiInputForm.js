@@ -193,7 +193,7 @@ export default function AiInputForm() {
                     <span className="pl-2 font-bold">{selectedCountry}</span>
                   </>
                 ) : (
-                  "Which season speaks to you?"
+                  "What budget do you have?"
                 )}
               </Dropdown.Button>
               <Dropdown.Menu>
@@ -213,23 +213,34 @@ export default function AiInputForm() {
           </div>
         </div>
         {/*checkboxes */}
-        <div className="w-full h-auto max-w-[90rem] flex flex-col py-10">
-          <TooltipCheck
-            text={
-              "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
-            }
-          >
-            <div className="font-semibold pb-4 gap-1 text-xl w-fit mx-auto flex flex-row">
-              <h3 className="pt-2 text-[20px] sm:text-[24px]">
-                Do you have any allergies? I will not put this into your recipe!
-              </h3>
-              {/** 
+        <div className="w-full h-auto max-w-[90rem] mx-auto flex flex-col py-10">
+          <div className="w-full flex flex-row justify-center items-center">
+            <div className="font-semibold md:flex-row md:flex pb-4 mx-auto text-xl">
+            <TooltipCheck
+              text={
+                "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
+              }
+            >
+              <div className="w-fit items-center justify-center mx-auto ">
+
+                <p className=" relative text-[20px] pr-2 text-center sm:text-[24px] ">
+                  Do you have any allergies?
+                  <span className="rounded-full w-[24px] h-[24px] flex absolute top-[-6px] right-[-7px]">
+                    <TbInfoSmall size={20} />
+                  </span>
+                </p>
+              </div>
+            </TooltipCheck>
+                <p className=" text-[20px] text-center sm:text-[24px]">
+                  I will not put this into your recipe!
+                </p>
+            </div>
+            {/** 
                 <div className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border">
                   <TbInfoSmall size={30} />
                 </div>
                 */}
-            </div>
-          </TooltipCheck>
+          </div>
           <form action="" className="flex justify-between mx-auto">
             <div className="flex flex-wrap items-center justify-center w-full h-auto gap-6 mx-auto ">
               {dontContain.map((dont, index) => (
@@ -245,10 +256,10 @@ export default function AiInputForm() {
                     id={index}
                     label={dont}
                     checkBg={"[#FFFFFF]"}
-                    borderColor={"[#000000]"}
+                    //borderColor={"black"}
                     checkIcon={<Cross1Icon />}
                     className={
-                      "leading-none text-[#88806A] text-[18px] pl-2 font-semibold"
+                      "leading-none text-[#000000] text-[18px] pl-2 font-semibold"
                     }
                   />
                 </div>

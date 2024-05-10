@@ -7,7 +7,7 @@ const TooltipCheck = ({ children, text }) => {
     <Tooltip.Root>
       <Tooltip.Trigger
         asChild
-        className="text-center text-xl pb-4"
+        className="text-center text-xl"
       >
        {children}
       </Tooltip.Trigger>

@@ -20,8 +20,8 @@ import "swiper/css/navigation";
 const bannerimg = [
   {
     src: chicken,
-    alt: "Chicken",
-    text: "Roasted chicken and vegetables",
+    alt: "Budget friendly recipes",
+    text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes for busy days.",
     id: 1,
   },
   {
@@ -32,7 +32,7 @@ const bannerimg = [
   },
   {
     src: shellfish,
-    alt: "Shellfish",
+    alt: "Oatmeal recipes",
     text: "Start your day with warmth and goodness. Discover hearty oatmeal recipes here.",
     id: 3,
   },
@@ -66,12 +66,6 @@ const bannerimg = [
     text: "A rainbow on your plate awaits. Tap to explore nutritious salad ideas.",
     id: 8,
   },
-  {
-    src: vego,
-    alt: "Alt Text 3",
-    text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes for busy days.",
-    id: 9,
-  },
 ];
 
 export default function BannerContent() {
@@ -82,7 +76,7 @@ export default function BannerContent() {
   };
 
   return (
-    <div className="w-full h-auto bg-white flex flex-col items-center justify-center border-b">
+    <div className="w-full h-auto bg-white flex flex-col items-center justify-center border-b border-t">
       <div className="max-w-[90rem] w-full justify-center items-center flex mx-auto py-10 ">
         <Swiper
           navigation={true}
