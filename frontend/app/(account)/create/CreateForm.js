@@ -125,7 +125,7 @@ export default function CreateUser() {
           </p>
         </div>
         <form
-          onSubmit={handleCreateUser}
+          // onSubmit={handleCreateUser}
           className="flex flex-col gap-1 justify-top  items-left w-[100%] h-auto justify-between font-sans rounded-xl bg-[#E1DAD0]"
         >
           <div className="flex flex-col h-2/4 space-y-4 justify-evenly bg-[#E1DAD0] text-[#250D01] w-[100%]">
@@ -283,7 +283,7 @@ export default function CreateUser() {
           <div className="py-4 flex flex-col gap-2">
             <label className="inline-flex h-auto items-center">
               <Checkbox
-               // onCheckedChange={handleCheckboxChange}
+                // onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
                 checkBg={"[#E1DAD0]"}
                 borderColor={"[#250D01]"}
@@ -326,8 +326,9 @@ export default function CreateUser() {
             }`}
             type="submit"
             disabled={!isChecked}
+            onClick={handleCreateUser}
           >
-            Create an account
+            <Link href={"/login"}>Create an account</Link>
           </button>
         </form>
       </div>
