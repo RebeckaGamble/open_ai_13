@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
-import { useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { CiHeart } from "react-icons/ci";
 import { LoginContext } from "@/app/components/LoginContext";
 import Link from "next/link";
@@ -15,6 +14,22 @@ export default function UserAccount() {
     girl: ""
   });
 
+  const [customAvatar, setCustomAvatar] = useState(null);
+  const popupRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setShowPopup(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
   const selectAvatar = (avatarIndex) => {
     setSelectedAvatar(avatarIndex);
     setShowPopup(false); 
@@ -22,6 +37,14 @@ export default function UserAccount() {
       setAvatarBorders({ boy: "border-4 border-blue-500", girl: "" });
     } else if (avatarIndex === "profile_girl.png") {
       setAvatarBorders({ boy: "", girl: "border-4 border-pink-500" });
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedAvatar(null); 
+      setCustomAvatar(URL.createObjectURL(file));
     }
   };
 
@@ -38,12 +61,12 @@ export default function UserAccount() {
               <div className="relative">
               {/* popup */}
               <div
-                className="w-20 h-20 rounded-full overflow-hidden cursor-pointer"
+                className="w-20 h-20 rounded-full overflow-hidden border-4 cursor-pointer"
                 onClick={() => setShowPopup(true)}
               >
-                {selectedAvatar && (
+                {(selectedAvatar || customAvatar) && (
                   <img
-                    src={`../avatars/${selectedAvatar}`}
+                    src={customAvatar || `../avatars/${selectedAvatar}`}
                     alt="Selected Avatar"
                     className={`w-full h-full object-cover rounded-full ${
                       avatarBorders.boy ? avatarBorders.boy : avatarBorders.girl
@@ -53,9 +76,9 @@ export default function UserAccount() {
               </div>
               {/* Popup-container */}
               {showPopup && (
-                <div className="absolute top-0 right-0 mt-24 w-48 bg-white border border-gray-200 rounded shadow-lg z-10">
+                <div ref={popupRef} className="absolute top-0 right-0 mt-24 w-48 pt-4 bg-white border border-gray-200 rounded shadow-lg z-10">
                   <div
-                    className="cursor-pointer p-2 hover:bg-gray-100"
+                    className="cursor-pointer p-2 hover:bg-gray-100 flex flex-row items-center justify-evenly"
                     onClick={() => selectAvatar("profile_boy.png")}
                   >
                     <img
@@ -65,9 +88,10 @@ export default function UserAccount() {
                         avatarBorders.boy
                       }`}
                     />
+                    <h1 className="text-sm">Male Avatar</h1>
                   </div>
                   <div
-                    className="cursor-pointer p-2 hover:bg-gray-100"
+                    className="cursor-pointer p-2 hover:bg-gray-100 flex flex-row items-center justify-evenly"
                     onClick={() => selectAvatar("profile_girl.png")}
                   >
                     <img
@@ -77,6 +101,19 @@ export default function UserAccount() {
                         avatarBorders.girl
                       }`}
                     />
+                    <h1 className="text-sm">Female Avatar</h1>
+                  </div>
+                  <div className="p-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden p-4"
+                    id="avatar-input"
+                  />
+                  <label htmlFor="avatar-input" className="block text-center mt-2 text-blue-600 cursor-pointer text-xs p-4 bg-slate-300 border rounded-md">
+                    Upload Custom Avatar
+                  </label>
                   </div>
                 </div>
               )}
