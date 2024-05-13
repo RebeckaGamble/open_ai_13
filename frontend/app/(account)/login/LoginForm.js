@@ -11,7 +11,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { setLoggedIn } = useContext(LoginContext);
+  const { setLoggedIn, login } = useContext(LoginContext);
 
   const router = useRouter();
 
@@ -27,9 +27,9 @@ export default function LoginForm() {
       });
       if (response.ok) {
         const data = await response.json();
-        router.push("/");
+        router.push("/account");
         console.log("Login succeded");
-        setLoggedIn(true);
+        login()
         console.log(setLoggedIn, "Du är inloggad!");
       } else {
         console.error("Invalid username or password!");
