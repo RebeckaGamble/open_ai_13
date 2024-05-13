@@ -23,7 +23,7 @@ function DropdownButton({ children }) {
   const { open } = useContext(DropdownContext);
 
   return (
-    <RadixDropdownMenu.Trigger className="cursor-default select-none border bg-[#CBB89D] uppercase border-none rounded-[10px] w-[335px] sm:w-[550px] px-4 sm:px-6 py-2 sm:py-3 text-md text-[#250D01] focus-visible:outline-none data-[state=open]:bg-[#CBB89D]">
+    <RadixDropdownMenu.Trigger className="cursor-default font-semibold select-none border bg-[#CBB89D] uppercase border-none rounded-[10px] w-[335px] sm:w-[550px] px-4 sm:px-6 py-2 sm:py-3 text-md text-[#250D01] focus-visible:outline-none data-[state=open]:bg-[#CBB89D]">
       <p className="flex flex-row items-center justify-between">
         <span className="pr-1"> {children} </span> {open ? <TiArrowSortedUp /> : <TiArrowSortedDown />  }
       </p>

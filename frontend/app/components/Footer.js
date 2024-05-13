@@ -39,7 +39,7 @@ export default function Footer() {
               </li>
               <li>
               <Link href="https://www.instagram.com" target="blank">
-                  <FaInstagram size={30} className="rounded-lg fill-white bg-gradient-to-t from-[#fdf497] via-[#fd5949] via-[#d6249f] to-[#285aeb]" />
+                  <FaInstagram size={30} className="rounded-lg fill-white bg-gradient-to-t from-[#edb438] via-[#fd5949] via-[#d6249f] to-[#285aeb]" />
                 </Link>
               </li>
             </ul>

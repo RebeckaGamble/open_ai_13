@@ -12,7 +12,7 @@ import {
 } from "../TipsContent";
 import Image from "next/image";
 import { LuPrinter } from "react-icons/lu";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 //1
 export function Budget() {
@@ -72,6 +72,7 @@ export function RecipeCards({ recipes }) {
 export function RecipeCard({ recipe }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
+  const [saveRecipe, setSaveRecipe] = useState(false);
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -88,11 +89,35 @@ export function RecipeCard({ recipe }) {
     window.print();
   };
 
+  const handleToggleFavorite = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/bookmarkRecipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recipe: recipe, // Pass the entire recipe
+        }),
+      });
+      if (response.ok) {
+        setSaveRecipe(!saveRecipe); //toggle save
+      } else {
+        console.error("Failed to toggle save recipe");
+      }
+    } catch (error) {
+      console.error("Error toggling favorite recipe:", error);
+    }
+  };
+
   return (
     <>
       {recipe.recipes &&
         recipe.recipes.map((item, index) => (
-          <div key={index} className="recipe-card relative bg-white w-[360px] sm:w-[520px] xl:w-[600px] px-4 py-6 rounded-[10px]">
+          <div
+            key={index}
+            className="recipe-card relative bg-white w-[360px] sm:w-[520px] xl:w-[600px] px-4 py-6 rounded-[10px]"
+          >
             <div className="recipe-card ">
               {/* Your recipe card content here */}
               <div ref={contentRef} className="sm:px-4 md:px-8">
@@ -100,8 +125,8 @@ export function RecipeCard({ recipe }) {
                   {item.title}
                 </h3>
                 <div className=" absolute right-4 top-4 flex flex-row gap-2">
-                  <button>
-                    <FaRegHeart />
+                  <button onClick={() => handleToggleFavorite(recipe)}>
+                    {saveRecipe ? <FaHeart /> : <FaRegHeart />}
                   </button>
                   <button onClick={() => handlePrint()}>
                     <LuPrinter />
@@ -127,7 +152,9 @@ export function RecipeCard({ recipe }) {
                     </li>
                   ))}
                 </ul>
-                <h4 className="font-semibold text-[20px] pb-2">Instructions:</h4>
+                <h4 className="font-semibold text-[20px] pb-2">
+                  Instructions:
+                </h4>
                 <ol>
                   {isExpanded
                     ? item.instructions.map((instruction, index) => (
@@ -138,14 +165,16 @@ export function RecipeCard({ recipe }) {
                           {instruction}
                         </li>
                       ))
-                    : item.instructions.slice(0, 2).map((instruction, index) => (
-                        <li
-                          key={index}
-                          className="list-decimal list-inside text-[16px]"
-                        >
-                          {instruction}
-                        </li>
-                      ))}
+                    : item.instructions
+                        .slice(0, 2)
+                        .map((instruction, index) => (
+                          <li
+                            key={index}
+                            className="list-decimal list-inside text-[16px]"
+                          >
+                            {instruction}
+                          </li>
+                        ))}
                 </ol>
                 {contentHeight > 800 && (
                   <button

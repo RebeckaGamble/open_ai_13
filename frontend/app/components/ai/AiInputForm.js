@@ -92,13 +92,6 @@ export default function AiInputForm() {
           how much time you've got, your preferences and a season, and I'll
           create some personalized recipe suggestions just for you. Let's team
           up and cook something delicious!
-          {/** 
-          Your culinary adventure begins here! Choose your mood, ingredients,
-          dietary preferences, and more, and let ChefMate work its magic to
-          craft a personalized recipe just for you. Like a trusty sous chef,
-          ChefMate is here to inspire, innovate, and elevate your cooking
-          experience. So go ahead, make your selections, and get ready to embark
-          on a flavor-filled journey!*/}
         </p>
       </div>
       <div className="flex flex-col items-center justify-center w-full mx-auto px-4">
@@ -189,7 +182,7 @@ export default function AiInputForm() {
               <Dropdown.Button>
                 {selectedCountry ? (
                   <>
-                    <span>Which season speaks to you? </span>
+                    <span>What budget do you have? </span>
                     <span className="pl-2 font-bold">{selectedCountry}</span>
                   </>
                 ) : (
