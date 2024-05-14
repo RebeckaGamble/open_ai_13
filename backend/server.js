@@ -101,6 +101,21 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
+app.post("/bookmarks", async (req, res) => {
+  const { recipe } = req.body;
+  try {
+    const addedRecipe = await query(
+      "INSERT INTO recipes ( recipe ) VALUES (?)",
+      [recipe]
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error bookmarking recipe:", error);
+    res.status(500).json({ error: "Error bookmarking recipe" });
+  }
+});
+
 app.listen(port, () => {
   console.log("Listening on port: " + port);
 });
