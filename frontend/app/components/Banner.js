@@ -10,6 +10,8 @@ import bowl from "../../public/img/bowl.jpg";
 import shellfish from "../../public/img/shellfish.jpg";
 import salad from "../../public/img/salad.jpg";
 import steak from "../../public/img/steak.png";
+import fish from "../../public/swiper_img/Fish1_bg.png"
+
 
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,48 +21,56 @@ import "swiper/css/navigation";
 
 const bannerimg = [
   {
-    src: chicken,
+    title: "Budget friendly",
+    src: fish,
     alt: "Budget friendly recipes",
     text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes for busy days.",
     id: 1,
   },
   {
+    title: "Healthy bowls",
     src: bowl,
     alt: "Bowl",
     text: "Nourish your body with a bowl full of goodness. Tap for healthy meal ideas.",
     id: 2,
   },
   {
+    title: "Oatmeal",
     src: shellfish,
     alt: "Oatmeal recipes",
     text: "Start your day with warmth and goodness. Discover hearty oatmeal recipes here.",
     id: 3,
   },
   {
+    title: "Smoothies",
     src: kyckling,
     alt: "Chciken",
     text: "Blend your way to wellness. Click to discover refreshing smoothie recipes.",
     id: 4,
   },
   {
+    title: "Nutritious snack",
     src: steak,
     alt: "Steak",
     text: "Snack smarter with wholesome bites. Tap for nutritious snack ideas.",
     id: 5,
   },
   {
+    title: "Fresh herbs",
     src: lax,
     alt: "Salmon",
     text: "Add flavor and freshness to your meals. Click to explore herb garden ideas.",
     id: 6,
   },
   {
+    title: "Energy boost",
     src: vego,
     alt: "Vegetarian stew",
     text: "Boost your energy with nature's bounty. Discover easy, affordable recipes.",
     id: 7,
   },
   {
+    title: "Nutritious sallad",
     src: salad,
     alt: "Salad",
     text: "A rainbow on your plate awaits. Tap to explore nutritious salad ideas.",
@@ -111,7 +121,9 @@ export default function BannerContent() {
                 <div className="flex flex-col h-full w-full">
                   <div className="w-full h-auto flex justify-center items-center">
                     <div className="overflow-hidden rounded-full bg-white  border border-slate-50">
-                      <div className="group relative w-[240px] h-[240px] items-center justify-center flex ">
+                      <div className="group relative w-[240px] h-[240px] items-center justify-center flex bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] ">
+                       <p className="p-2 uppercase font-semibold text-[32px] text-center rounded-full h-auto w-full object-cover object-center transition duration-300 transform group-hover:scale-110">{dish.title}</p>
+                       {/**
                         <Image
                           src={dish.src}
                           height={300}
@@ -119,6 +131,7 @@ export default function BannerContent() {
                           alt={dish.alt}
                           className="rounded-full h-auto w-full object-cover object-center transition duration-300 transform group-hover:scale-110"
                         />
+                         */}
                         <div className="absolute h-auto w-full inset-0 opacity-1 group-hover:opacity-100 transition-opacity"></div>
                       </div>
                     </div>
