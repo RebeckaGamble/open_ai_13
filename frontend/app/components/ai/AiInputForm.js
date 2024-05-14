@@ -14,6 +14,7 @@ import RecipeCard from "../recipes/RecipeCard";
 import TooltipCheck from "./ToolTip";
 import { TbInfoSmall } from "react-icons/tb";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { food } from "../recipes/recipeImagesOptions";
 
 export default function AiInputForm() {
   /*state for inputs and checkboxes */
@@ -31,6 +32,7 @@ export default function AiInputForm() {
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSingleCard, setOpenSingleCard] = useState(false);
+  const [recipeImages, setRecipeImages] = useState([])
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
@@ -67,6 +69,7 @@ export default function AiInputForm() {
         },
         body: JSON.stringify({ prompt }),
       });
+      console.log("image: ", recipeImages)
       const data = await response.json();
       setLoading(false);
       setRecipes(data);
@@ -77,8 +80,11 @@ export default function AiInputForm() {
 
   //open single recipe
   const handleRecipeCardClick = (recipe) => {
-    setOpenSingleCard(recipe);
+    setOpenSingleCard({ ...recipe, image: recipeImages[recipe.imageKey] });
+
+   // setOpenSingleCard({...recipe, image});
     //console.log("Recipe clicked:", recipe);
+   // setOpenSingleCard(recipe)
   };
 
   return (
@@ -169,6 +175,11 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setPreferences(pref);
                       setSelectedPref(pref);
+                      setRecipeImages(pref)
+                      // const images = food.find((item) => item[pref]);
+        //if (images) {
+         // setRecipeImages(images[pref]);
+        //}
                     }}
                   >
                     {pref}
@@ -278,7 +289,7 @@ export default function AiInputForm() {
         {recipes && (
           <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
             <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
-              <RecipeCards recipes={recipes} onClick={handleRecipeCardClick} />
+              <RecipeCards recipes={recipes} recipeImages={recipeImages} onClick={handleRecipeCardClick} />
             </div>
           </div>
         )}
@@ -286,7 +297,7 @@ export default function AiInputForm() {
       <div>
         {openSingleCard && (
           <div className="w-full bg-[#FFFFFF] h-auto pt-10 lg:pt-20 px-4">
-            <RecipeCard recipes={openSingleCard} />
+            <RecipeCard recipes={openSingleCard} image={openSingleCard.image}  />
           </div>
         )}
       </div>

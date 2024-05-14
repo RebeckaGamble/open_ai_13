@@ -13,7 +13,7 @@ export const moodOptions = [
   "Sweet",
 ];
 
-export const mustContain = ["Fish", "Chicken", "Red meet", "Vegetarian", "Vegan"];
+export const mustContain = ["Fish", "Chicken", "Red meat", "Vegetarian", "Vegan"];
 
 export const dontContain = [
   //"Almonds",
