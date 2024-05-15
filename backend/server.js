@@ -125,6 +125,36 @@ app.post("/bookmarks", async (req, res) => {
   }
 });
 
+app.get("/getbookmarks", async (req, res) => {
+  try{
+    const bookmarks = await query(
+      "SELECT * FROM recipes",
+    
+    );
+
+    res.status(200).json({ bookmarks, id: bookmarks.id });
+  } catch(error){
+    console.error("Error fetching bookmarks:", error);
+    res.status(500).json({ error: "Error fetching bookmarks" });
+  }
+})
+
+app.delete('/removeRecipe', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const result = await query('DELETE FROM recipes WHERE id = ?', [id]);
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Recipe removed successfully' });
+    } else {
+      res.status(404).json({ error: 'Recipe not found' });
+    }
+  } catch (error) {
+    console.error('Error removing recipe:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.listen(port, () => {
   console.log("Listening on port: " + port);
 });
