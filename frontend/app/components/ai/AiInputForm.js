@@ -32,6 +32,7 @@ export default function AiInputForm() {
   const [loading, setLoading] = useState(false);
   const [openSingleCard, setOpenSingleCard] = useState(false);
   const [recipeImages, setRecipeImages] = useState([]);
+  const [newRecipe, setNewRecipe] = useState(null);
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
@@ -55,20 +56,20 @@ export default function AiInputForm() {
       .join(", ");
     // Send selected values to the backend
     const prompt = `I'm looking for recipes, I am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum of ${timeToSpend} to make the dish. It cannot contain ${checkedItems}. I would prefer food that's ${preferences} from ${country}. Can you give me one recipe based on this?
-Please provide the recipe in the following JSON format:
+      Please provide the recipe in the following JSON format:
 
-{
-    "recipeId": "",
-    "recipe_title": "",
-    "ingredients": [],
-    "steps": [],
-    "historic_overview": "",
-    "motivation_heading": "",
-    "motivation": ""
-}
+      {
+        "recipeId": "",
+        "recipe_title": "",
+        "ingredients": [],
+        "steps": [],
+        "historic_overview": "",
+        "motivation_heading": "",
+        "motivation": ""
+      }
 
-Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
-`;
+      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+    `;
     console.log(prompt);
     setShowRecipe(true);
     // skicka objekt med states
@@ -82,8 +83,16 @@ Make sure to include a recipe_title, ingredients, steps, motivation_heading, a s
       });
       console.log("image: ", recipeImages);
       const data = await response.json();
-      const newRecipe = await generateNewRecipe();
-      setRecipes([...recipes, newRecipe]);
+      if (!recipes) {
+        // If no recipes are currently set, set the new recipe as the initial recipe
+        setRecipes([data]);
+      } else {
+        // If recipes already exist, add the new recipe to the existing list
+        setRecipes([...recipes, data]);
+      }
+
+      //  const newRecipe = await generateNewRecipe();
+      //  setRecipes([...recipes, newRecipe]);
 
       setLoading(false);
       // setRecipes(data);
@@ -94,7 +103,9 @@ Make sure to include a recipe_title, ingredients, steps, motivation_heading, a s
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     fetchNewRecipe();
+    setLoading(false);
   };
 
   //open single recipe
@@ -119,7 +130,7 @@ Make sure to include a recipe_title, ingredients, steps, motivation_heading, a s
           up and cook something delicious!
         </p>
       </div>
-      <div className="flex flex-col items-center justify-center w-full mx-auto px-4">
+      <div className="flex flex-col items-center justify-center w-full pb-12 mx-auto px-4">
         <div className="flex flex-col justify-betweeen ">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
             <div className="flex flex-col ">
@@ -304,18 +315,34 @@ Make sure to include a recipe_title, ingredients, steps, motivation_heading, a s
             Generating recipe...
           </div>
         )}
-        {recipes && (
-          <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
-            <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
-              <RecipeCards
-                recipes={recipes}
-                recipeImages={recipeImages}
-                onClick={handleRecipeCardClick}
-                handleSubmit={handleSubmit}
-              />
+        <div className="flex flex-col gap-10">
+          {recipes && (
+            <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
+              <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
+                <RecipeCards
+                  recipes={recipes}
+                  recipeImages={recipeImages}
+                  onClick={handleRecipeCardClick}
+                  handleSubmit={handleSubmit}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          
+          {newRecipe && (
+            <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
+              <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
+                <RecipeCards
+                  recipes={[newRecipe]}
+                  recipeImages={recipeImages}
+                  onClick={handleRecipeCardClick}
+                  handleSubmit={fetchNewRecipe}
+                  isLoading={loading}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <div>
         {openSingleCard && (
