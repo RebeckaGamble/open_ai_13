@@ -23,13 +23,13 @@ export default function LoginForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       });
       if (response.ok) {
         const data = await response.json();
         router.push("/account");
         console.log("Login succeded");
-        login()
+        login();
         console.log(setLoggedIn, "Du är inloggad!");
       } else {
         console.error("Invalid username or password!");

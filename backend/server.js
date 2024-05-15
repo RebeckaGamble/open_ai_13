@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import cors from "cors";
 import mysql from "mysql2/promise";
+// import { loggedIn } from "../frontend/app/component/LoginContext";
 
 dotenv.config();
 
@@ -74,6 +75,7 @@ app.post("/login", async (req, res) => {
   if (!passwordMatch) {
     return res.status(401).send("invalid usernam or password");
   }
+  // req.session.loggedIn = true;
   res.status(200).json({ message: "login successful" });
 });
 
@@ -90,14 +92,21 @@ app.post("/recipes", async (req, res) => {
       ],
       model: "gpt-3.5-turbo",
     });
+
     const result = completion.choices[0].message.content;
-    console.log("result:", result);
-    const parsed = JSON.parse(result);
-    console.log("pased", parsed);
-    res.json(parsed);
+
+    // Försök att parsa resultatet som JSON
+    try {
+      const parsed = JSON.parse(result);
+      console.log("Parsed JSON:", parsed);
+      res.json(parsed);
+    } catch (error) {
+      console.error("JSON parse error:", error);
+      res.status(500).json({ error: "Invalid JSON format" });
+    }
   } catch (error) {
-    console.error("Error generating recepies:", error);
-    res.status(500).json({ error: "Error generating recepies" });
+    console.error("Error generating recipes:", error);
+    res.status(500).json({ error: "Error generating recipes" });
   }
 });
 

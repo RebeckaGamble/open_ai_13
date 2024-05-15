@@ -14,7 +14,6 @@ import RecipeCard from "../recipes/RecipeCard";
 import TooltipCheck from "./ToolTip";
 import { TbInfoSmall } from "react-icons/tb";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { food } from "../recipes/recipeImagesOptions";
 
 export default function AiInputForm() {
   /*state for inputs and checkboxes */
@@ -48,27 +47,28 @@ export default function AiInputForm() {
     }
   };
 
-  const handleSubmit = async () => {
+  const fetchNewRecipe = async () => {
     setLoading(true);
     //join the checkboxes for the prompt
     const checkedItems = dontContain
       .filter((item) => selectedChecks.includes(item))
       .join(", ");
     // Send selected values to the backend
-    const prompt = `I'm looking for recipes, i'am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum ${timeToSpend} to make the dish. It can not contain ${checkedItems} I would prefer food that's ${preferences} from ${country}. Can you give me three significant recipes based on this?  
-    Arrange the recipes in a json format and make sure to always include a recipe_title, ingredients, steps, motivation_heading and a smal motivattion and a historic_overview. Make that with European measurements.
+    const prompt = `I'm looking for recipes, I am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum of ${timeToSpend} to make the dish. It cannot contain ${checkedItems}. I would prefer food that's ${preferences} from ${country}. Can you give me one recipe based on this?
+Please provide the recipe in the following JSON format:
 
-    Here is an example:
+{
+    "recipeId": "",
+    "recipe_title": "",
+    "ingredients": [],
+    "steps": [],
+    "historic_overview": "",
+    "motivation_heading": "",
+    "motivation": ""
+}
 
-    recipe_title: ""
-    ingredients: []
-    steps: []
-    historic_overview: ""
-    motivation_heading: ""
-    motivation: ""
-    
-
-    `;
+Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+`;
     console.log(prompt);
     setShowRecipe(true);
     // skicka objekt med states
@@ -82,11 +82,19 @@ export default function AiInputForm() {
       });
       console.log("image: ", recipeImages);
       const data = await response.json();
+      const newRecipe = await generateNewRecipe();
+      setRecipes([...recipes, newRecipe]);
+
       setLoading(false);
-      setRecipes(data);
+      // setRecipes(data);
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchNewRecipe();
   };
 
   //open single recipe
@@ -283,7 +291,7 @@ export default function AiInputForm() {
         </div>
         <div className="pt-10">
           <button
-            onClick={handleSubmit}
+            onClick={fetchNewRecipe}
             className="px-8 py-2 border uppercase bg-[#250D01] text-[#FFFFFF] rounded-full text-lg font-semibold hover:scale-105"
           >
             Search
@@ -293,7 +301,7 @@ export default function AiInputForm() {
       <div>
         {loading && (
           <div className="flex justify-center items-center text-2xl p-4">
-            Generating recipes...
+            Generating recipe...
           </div>
         )}
         {recipes && (
@@ -303,6 +311,7 @@ export default function AiInputForm() {
                 recipes={recipes}
                 recipeImages={recipeImages}
                 onClick={handleRecipeCardClick}
+                handleSubmit={handleSubmit}
               />
             </div>
           </div>
