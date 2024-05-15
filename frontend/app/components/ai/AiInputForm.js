@@ -32,7 +32,7 @@ export default function AiInputForm() {
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSingleCard, setOpenSingleCard] = useState(false);
-  const [recipeImages, setRecipeImages] = useState([])
+  const [recipeImages, setRecipeImages] = useState([]);
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
@@ -57,6 +57,17 @@ export default function AiInputForm() {
     // Send selected values to the backend
     const prompt = `I'm looking for recipes, i'am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum ${timeToSpend} to make the dish. It can not contain ${checkedItems} I would prefer food that's ${preferences} from ${country}. Can you give me three significant recipes based on this?  
     Arrange the recipes in a json format and make sure to always include a recipe_title, ingredients, steps, motivation_heading and a smal motivattion and a historic_overview. Make that with European measurements.
+
+    Here is an example:
+
+    recipe_title: ""
+    ingredients: []
+    steps: []
+    historic_overview: ""
+    motivation_heading: ""
+    motivation: ""
+    
+
     `;
     console.log(prompt);
     setShowRecipe(true);
@@ -69,7 +80,7 @@ export default function AiInputForm() {
         },
         body: JSON.stringify({ prompt }),
       });
-      console.log("image: ", recipeImages)
+      console.log("image: ", recipeImages);
       const data = await response.json();
       setLoading(false);
       setRecipes(data);
@@ -82,9 +93,9 @@ export default function AiInputForm() {
   const handleRecipeCardClick = (recipe) => {
     setOpenSingleCard({ ...recipe, image: recipeImages[recipe.imageKey] });
 
-   // setOpenSingleCard({...recipe, image});
+    // setOpenSingleCard({...recipe, image});
     //console.log("Recipe clicked:", recipe);
-   // setOpenSingleCard(recipe)
+    // setOpenSingleCard(recipe)
   };
 
   return (
@@ -175,11 +186,11 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setPreferences(pref);
                       setSelectedPref(pref);
-                      setRecipeImages(pref)
+                      setRecipeImages(pref);
                       // const images = food.find((item) => item[pref]);
-        //if (images) {
-         // setRecipeImages(images[pref]);
-        //}
+                      //if (images) {
+                      // setRecipeImages(images[pref]);
+                      //}
                     }}
                   >
                     {pref}
@@ -220,24 +231,23 @@ export default function AiInputForm() {
         <div className="w-full h-auto max-w-[90rem] mx-auto flex flex-col py-10">
           <div className="w-full flex flex-row justify-center items-center">
             <div className="font-semibold md:flex-row md:flex pb-4 mx-auto text-xl">
-            <TooltipCheck
-              text={
-                "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
-              }
-            >
-              <div className="w-fit items-center justify-center mx-auto ">
-
-                <p className=" relative text-[20px] pr-2 text-center sm:text-[24px] ">
-                  Do you have any allergies?
-                  <span className="rounded-full w-[24px] h-[24px] flex absolute top-[-6px] right-[-7px]">
-                    <TbInfoSmall size={20} />
-                  </span>
-                </p>
-              </div>
-            </TooltipCheck>
-                <p className=" text-[20px] text-center sm:text-[24px]">
-                  I will not put this into your recipe!
-                </p>
+              <TooltipCheck
+                text={
+                  "If you have allergies or specific dislikes, feel free to check the corresponding boxes to tailor your recipe recommendations accordingly."
+                }
+              >
+                <div className="w-fit items-center justify-center mx-auto ">
+                  <p className=" relative text-[20px] pr-2 text-center sm:text-[24px] ">
+                    Do you have any allergies?
+                    <span className="rounded-full w-[24px] h-[24px] flex absolute top-[-6px] right-[-7px]">
+                      <TbInfoSmall size={20} />
+                    </span>
+                  </p>
+                </div>
+              </TooltipCheck>
+              <p className=" text-[20px] text-center sm:text-[24px]">
+                I will not put this into your recipe!
+              </p>
             </div>
             {/** 
                 <div className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border">
@@ -289,7 +299,11 @@ export default function AiInputForm() {
         {recipes && (
           <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
             <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
-              <RecipeCards recipes={recipes} recipeImages={recipeImages} onClick={handleRecipeCardClick} />
+              <RecipeCards
+                recipes={recipes}
+                recipeImages={recipeImages}
+                onClick={handleRecipeCardClick}
+              />
             </div>
           </div>
         )}
@@ -297,7 +311,7 @@ export default function AiInputForm() {
       <div>
         {openSingleCard && (
           <div className="w-full bg-[#FFFFFF] h-auto pt-10 lg:pt-20 px-4">
-            <RecipeCard recipes={openSingleCard} image={openSingleCard.image}  />
+            <RecipeCard recipes={openSingleCard} image={openSingleCard.image} />
           </div>
         )}
       </div>
