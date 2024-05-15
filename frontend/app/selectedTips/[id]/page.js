@@ -90,6 +90,9 @@ export function RecipeCard({ recipe }) {
   };
 
   const handleToggleFavorite = async () => {
+    setSaveRecipe(!saveRecipe); //toggle save
+    console.log("saved?:", saveRecipe);
+    /*
     try {
       const response = await fetch("http://localhost:4000/bookmarkRecipe", {
         method: "POST",
@@ -107,7 +110,7 @@ export function RecipeCard({ recipe }) {
       }
     } catch (error) {
       console.error("Error toggling favorite recipe:", error);
-    }
+    }*/
   };
 
   return (
@@ -116,7 +119,9 @@ export function RecipeCard({ recipe }) {
         recipe.recipes.map((item, index) => (
           <div
             key={index}
-            className="recipe-card relative bg-white w-[360px] sm:w-[520px] xl:w-[600px] px-4 py-6 rounded-[10px]"
+            className={`recipe-card relative ${
+              isExpanded ? "h-auto pb-12" : "h-[800px]"
+            } bg-white w-[360px] sm:w-[520px] xl:w-[600px] px-4 py-6 rounded-[10px]`}
           >
             <div className="recipe-card ">
               {/* Your recipe card content here */}
@@ -126,7 +131,7 @@ export function RecipeCard({ recipe }) {
                 </h3>
                 <div className=" absolute right-4 top-4 flex flex-row gap-2">
                   <button onClick={() => handleToggleFavorite(recipe)}>
-                    {saveRecipe ? <FaHeart /> : <FaRegHeart />}
+                    {saveRecipe ? <FaRegHeart /> : <FaHeart />}
                   </button>
                   <button onClick={() => handlePrint()}>
                     <LuPrinter />
@@ -176,10 +181,10 @@ export function RecipeCard({ recipe }) {
                           </li>
                         ))}
                 </ol>
-                {contentHeight > 800 && (
+                {contentHeight > 700 && (
                   <button
                     onClick={toggleExpand}
-                    className="text-blue-500 hover:underline fixed bottom-4"
+                    className="text-blue-500 hover:underline absolute bottom-4"
                   >
                     {isExpanded ? "Read Less" : "Read More"}
                   </button>
