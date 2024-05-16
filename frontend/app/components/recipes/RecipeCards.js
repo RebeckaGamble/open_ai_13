@@ -57,7 +57,7 @@ export default function RecipeCards({
   const handleToRecipe = () => {
     const send = document.getElementById("#1");
     if (send) {
-      const offset = send.offsetTop - 60; //the nav
+      const offset = send.offsetTop - 60;
       window.scrollTo({
         top: offset,
         behavior: "smooth",
