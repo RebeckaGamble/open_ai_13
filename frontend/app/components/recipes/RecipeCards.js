@@ -51,7 +51,18 @@ export default function RecipeCards({
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 6000); // Adjust the delay time as needed
+    }, 6500); // Adjust the delay time as needed
+  };
+
+  const handleToRecipe = () => {
+    const send = document.getElementById("#1");
+    if (send) {
+      const offset = send.offsetTop - 60; //the nav
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -71,7 +82,7 @@ export default function RecipeCards({
               </p>
             </div>
             <div className="h-[260px] relative w-full max-w-[800px] px-6 bg-[#FFFFFF] text-[#250D01] flex flex-row p-6 rounded-[10px] lg:hover:scale-105">
-              <div className="w-[30%] h-full mx-auto flex justify-center text-black border-r-[2px] border-black">
+              <div className="w-[30%] h-full mx-auto flex justify-center text-black ">
                 {/** Map recipeImages based on food preferences */}
                 {recipeImages &&
                   food.map((pref) => {
@@ -83,8 +94,8 @@ export default function RecipeCards({
                           src={randomImage.src}
                           alt={"not found"}
                           height={140}
-                          width={180}
-                          className="rounded-[10px] object-fit "
+                          width={200}
+                          className="rounded-[10px] object-fit bg-[#CBB89D] "
                         />
                       );
                     }
@@ -96,7 +107,10 @@ export default function RecipeCards({
                 </h2>
                 <div className="flex justify-center w-full">
                   <button
-                    onClick={() => openRecipe(recipe)}
+                    onClick={() => {
+                      openRecipe(recipe);
+                      handleToRecipe();
+                    }}
                     className="bg-[#CBB89D] text-[#250D01] rounded-full bottom-6 right-6 text-[24px] absolute px-8 py-2 hover:scale-105 hover:font-semibold"
                   >
                     Open recipe

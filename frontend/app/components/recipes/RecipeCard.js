@@ -35,7 +35,10 @@ export default function RecipeCard({ recipes }) {
   }
 
   return (
-    <div className="w-full px-4 max-w-[90rem] flex flex-col mx-auto bg-[#E1DAD0] text-[#250D01] rounded-[10px] p-4 md:p-8 ">
+    <div
+      id="#1"
+      className="w-full px-4 max-w-[90rem] flex flex-col mx-auto bg-[#E1DAD0] text-[#250D01] rounded-[10px] p-4 md:p-8 "
+    >
       <div className="flex flex-col lg:flex-row">
         <div className="w-full max-w-[500px] flex flex-col mx-auto lg:w-[30%] pb-10 lg:pb-6">
           <Image

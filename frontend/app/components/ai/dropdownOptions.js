@@ -1,7 +1,7 @@
 export const moodOptions = [
   "Bitter",
   //"Bubbly",
- // "Cold",
+  // "Cold",
   //"Creamy",
   "Fresh",
   // "Frosty",
@@ -13,7 +13,13 @@ export const moodOptions = [
   "Sweet",
 ];
 
-export const mustContain = ["Fish", "Chicken", "Red meat", "Vegetarian", "Vegan"];
+export const mustContain = [
+  "Fish",
+  "Chicken",
+  "Red meat",
+  "Vegetarian",
+  "Vegan",
+];
 
 export const dontContain = [
   //"Almonds",
@@ -30,7 +36,7 @@ export const dontContain = [
   "Nuts",
   //"Oats",
   //"Peanuts",
-   "Pork",
+  "Pork",
   //"Quinoa",
   // "Rice",
   // "Sesame seeds",
@@ -47,19 +53,18 @@ export const timeOptions = [
   "30 - 45 minutes",
   "45 - 60 minutes",
   "60 + minutes",
- // "90 + minutes",
+  // "90 + minutes",
 ];
 
 export const countryOptions = [
-"50 - 100 SEK",
-"100 - 200 SEK",
-"200 - 300 SEK",
-"300 - 400 SEK",
-"400 - 500 SEK"
- // "Africa",
- // "Asia",
-  // "Australia",
-  //"Europe",
-  //"North America",
- // "South America",
+  // "50 - 100 SEK",
+  // "100 - 200 SEK",
+  // "200 - 300 SEK",
+  // "300 - 400 SEK",
+  // "400 - 500 SEK"
+  "African",
+  "Asian",
+  "European",
+  "North American",
+  "South American",
 ];

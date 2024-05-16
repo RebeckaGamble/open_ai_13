@@ -270,11 +270,11 @@ export default function AiInputForm() {
               <Dropdown.Button>
                 {selectedCountry ? (
                   <>
-                    <span>What budget do you have? </span>
+                    <span>Which food culture do you prefer??</span>
                     <span className="pl-2 font-bold">{selectedCountry}</span>
                   </>
                 ) : (
-                  "What budget do you have?"
+                  "Which food culture do you prefer??"
                 )}
               </Dropdown.Button>
               <Dropdown.Menu>
