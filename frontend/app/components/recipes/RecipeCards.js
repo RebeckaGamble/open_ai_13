@@ -2,19 +2,20 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { food } from "./recipeImagesOptions";
+import { handleClick } from "../Hero";
 
 export default function RecipeCards({
   recipes,
   onClick,
   recipeImages,
   handleSubmit,
-  isLoading,
+  // isLoading,
 }) {
   const openRecipe = (recipe) => {
     onClick(recipe);
   };
 
-  //const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [tries, setTries] = useState(0);
 
   const toggleExpanded = () => {
@@ -39,12 +40,18 @@ export default function RecipeCards({
     setIsLoading(false);
   };
    */
-  const handleTryNew = (event) => {
+  const handleTryNew = async (event) => {
     event.preventDefault();
-    //setIsLoading(true);
+    setIsLoading(true);
     setTries(tries + 1);
-    handleSubmit(event);
-   // setIsLoading(false);
+    try {
+      await handleSubmit(event);
+    } catch (error) {
+      console.error("Error fetching new recipe:", error);
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 6000); // Adjust the delay time as needed
   };
 
   return (
@@ -64,7 +71,7 @@ export default function RecipeCards({
               </p>
             </div>
             <div className="h-[260px] relative w-full max-w-[800px] px-6 bg-[#FFFFFF] text-[#250D01] flex flex-row p-6 rounded-[10px] lg:hover:scale-105">
-              <div className="w-[30%] h-full mx-auto flex justify-center text-black">
+              <div className="w-[30%] h-full mx-auto flex justify-center text-black border-r-[2px] border-black">
                 {/** Map recipeImages based on food preferences */}
                 {recipeImages &&
                   food.map((pref) => {
@@ -77,7 +84,7 @@ export default function RecipeCards({
                           alt={"not found"}
                           height={140}
                           width={180}
-                          className="rounded-[10px] object-fit"
+                          className="rounded-[10px] object-fit "
                         />
                       );
                     }
@@ -99,20 +106,33 @@ export default function RecipeCards({
             </div>
           </div>
         ))}
-        {isLoading && (
-          <div className="flex justify-center w-full h-10 bg-green-200 items-center text-2xl p-4">
-            Generating new recipe...
-          </div>
-        )}
+      {isLoading && (
+        <div className="flex justify-center w-screen h-10 bg-green-200 items-center text-2xl p-4">
+          Generating new recipe...
+        </div>
+      )}
       {!isLoading && tries < 2 && (
         <button
           onClick={(event) => handleTryNew(event)}
           className="px-8 py-2 border uppercase bg-[#250D01] text-[#FFFFFF] rounded-full mt-4 text-lg font-semibold hover:scale-105"
         >
-          Try new
+          Generate new
         </button>
       )}
 
+      {!isLoading && tries >= 2 && (
+        <>
+          <p className="font-semibold text-xl border-t-2 border-dotted border-black/30 w-full flex justify-center pt-3">
+            Adjust the form settings to reveal your ideal recipe match!
+          </p>
+          <button
+            onClick={handleClick}
+            className="px-8 py-2 border uppercase bg-[#250D01] text-[#FFFFFF] rounded-full mt-4 text-lg font-semibold hover:scale-105"
+          >
+            Back to form
+          </button>
+        </>
+      )}
     </div>
   );
 }

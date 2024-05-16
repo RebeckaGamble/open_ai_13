@@ -68,9 +68,56 @@ export default function AiInputForm() {
         "motivation": ""
       }
 
-      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation personalised as if to a dear friend, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
     `;
     console.log(prompt);
+    setShowRecipe(true);
+    // skicka objekt med states
+    try {
+      const response = await fetch("http://localhost:4000/recipes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
+      console.log("image: ", recipeImages);
+      const data = await response.json();
+      if (!recipes) {
+        // If no recipes are currently set, set the new recipe as the initial recipe
+        setRecipes([data]);
+      } else {
+        // If recipes already exist, add the new recipe to the existing list
+        setRecipes([...recipes, data]);
+      }
+
+      //  const newRecipe = await generateNewRecipe();
+      //  setRecipes([...recipes, newRecipe]);
+
+      setLoading(false);
+      // setRecipes(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const fetchSuprise = async () => {
+    setLoading(true);
+    const prompt = `I'm looking for recipe, suprise me!
+      Please provide the recipe in the following JSON format:
+
+      {
+        "recipeId": "",
+        "recipe_title": "",
+        "ingredients": [],
+        "steps": [],
+        "historic_overview": "",
+        "motivation_heading": "",
+        "motivation": ""
+      }
+
+      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation personalised as if to a dear friend, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+    `;
+
     setShowRecipe(true);
     // skicka objekt med states
     try {
@@ -303,9 +350,15 @@ export default function AiInputForm() {
         <div className="pt-10">
           <button
             onClick={fetchNewRecipe}
-            className="px-8 py-2 border uppercase bg-[#250D01] text-[#FFFFFF] rounded-full text-lg font-semibold hover:scale-105"
+            className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
           >
-            Search
+            Generate my recipe
+          </button>
+          <button
+            onClick={fetchSuprise}
+            className="px-8 py-2 border-[1px] border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
+          >
+            surprise me!
           </button>
         </div>
       </div>
@@ -328,7 +381,7 @@ export default function AiInputForm() {
               </div>
             </div>
           )}
-          
+
           {newRecipe && (
             <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
               <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
@@ -339,6 +392,7 @@ export default function AiInputForm() {
                   handleSubmit={fetchNewRecipe}
                   isLoading={loading}
                 />
+                {loading && <div>tja</div>}
               </div>
             </div>
           )}

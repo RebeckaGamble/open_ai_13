@@ -2,18 +2,17 @@
 import React from "react";
 import heroBg from "../../public/heroimage.png";
 
+export const handleClick = () => {
+  const aiSection = document.getElementById("ai");
+  if (aiSection) {
+    const offset = aiSection.offsetTop - 60; //the nav
+    window.scrollTo({
+      top: offset,
+      behavior: "smooth",
+    });
+  }
+};
 export default function Hero() {
-  const handleClick = () => {
-    const aiSection = document.getElementById("ai");
-    if (aiSection) {
-      const offset = aiSection.offsetTop - 60; //the nav
-      window.scrollTo({
-        top: offset,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <div className="relative w-full h-[964px] px-4">
       <div
