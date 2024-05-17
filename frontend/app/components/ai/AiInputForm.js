@@ -33,6 +33,8 @@ export default function AiInputForm() {
   const [openSingleCard, setOpenSingleCard] = useState(false);
   const [recipeImages, setRecipeImages] = useState([]);
   const [newRecipe, setNewRecipe] = useState(null);
+  const [error, setError] = useState("");
+
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
@@ -47,8 +49,19 @@ export default function AiInputForm() {
       );
     }
   };
+ //remove error msg
+  const handleChange = () => {
+    if (todaysMood && timeToSpend && country && preferences) {
+      setError("");
+    }
+  };
 
   const fetchNewRecipe = async () => {
+    if (!todaysMood || !timeToSpend || !country || !preferences) {
+      setError("Please select all required fields.");
+      return;
+    }
+
     setLoading(true);
     //join the checkboxes for the prompt
     const checkedItems = dontContain
@@ -199,6 +212,7 @@ export default function AiInputForm() {
                       onSelect={() => {
                         setTodaysMood(mood);
                         setSelectedMood(mood);
+                        handleChange();
                       }}
                     >
                       {mood}
@@ -226,6 +240,7 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setTimeToSpend(time);
                       setSelectedTime(time);
+                      handleChange();
                     }}
                   >
                     {time}
@@ -253,6 +268,7 @@ export default function AiInputForm() {
                       setPreferences(pref);
                       setSelectedPref(pref);
                       setRecipeImages(pref);
+                      handleChange();
                       // const images = food.find((item) => item[pref]);
                       //if (images) {
                       // setRecipeImages(images[pref]);
@@ -284,6 +300,7 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setCountry(from);
                       setSelectedCountry(from);
+                      handleChange();
                     }}
                   >
                     {from}
@@ -347,16 +364,21 @@ export default function AiInputForm() {
             </div>
           </form>
         </div>
-        <div className="pt-10">
+        <div className="pt-10 flex flex-row gap-6">
+          <div className="flex flex-col gap-2 text-center">
+
           <button
             onClick={fetchNewRecipe}
             className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
           >
             Generate my recipe
           </button>
+          <div>{error && <p className="text-red-500">{error}</p>}</div>
+          </div>
+
           <button
             onClick={fetchSuprise}
-            className="px-8 py-2 border-[1px] border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
+            className="px-8 max-h-[46px] py-2 border-[1px] border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
           >
             surprise me!
           </button>

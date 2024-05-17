@@ -100,7 +100,7 @@ export default function UserAccount() {
       {loggedIn ? (
       */}
       <>
-        <div className=" h-auto py-10 lg:py-20 w-full px-4">
+        <div className="h-auto py-10 lg:py-20 w-full px-4">
           <div className="flex flex-row justify-end items-center gap-10 text-xl font-semibold p-4 mx-14">
             <h2>Name</h2>
             <h2>Email</h2>

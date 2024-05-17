@@ -10,7 +10,7 @@ export const budgetOptions = [
     text: "Embark on a culinary adventure without breaking the bank! Explore our collection of budget-friendly recipes designed to tantalize your taste buds and nourish your soul. From hearty stir-fries to comforting pasta dishes and wholesome vegetarian meals, these recipes prove that eating well doesn't have to cost a fortune. Let's savor the flavors of affordability and creativity together, one delicious bite at a time!",
     recipes: [
       {
-        title: "Chicken and Vegetable Stir-Fry",
+        recipe_title: "Chicken and Vegetable Stir-Fry",
         src: shellfish,
         ingredients: [
           "300g chicken breast, sliced",
@@ -29,7 +29,7 @@ export const budgetOptions = [
       },
       //2
       {
-        title: "Vegetarian Tofu Stir-Fry",
+        recipe_title: "Vegetarian Tofu Stir-Fry",
         src: shellfish,
         ingredients: [
           "300g firm tofu, cubed",
@@ -49,7 +49,7 @@ export const budgetOptions = [
       },
       //3
       {
-        title: "Spaghetti Aglio e Olio",
+        recipe_title: "Spaghetti Aglio e Olio",
         src: shellfish,
         ingredients: [
           "300g spaghetti",
@@ -69,7 +69,7 @@ export const budgetOptions = [
       },
       //4
       {
-        title: "Creamy Mushroom Pasta",
+        recipe_title: "Creamy Mushroom Pasta",
         src: shellfish,
         ingredients: [
           "300g pasta of your choice",
@@ -93,7 +93,7 @@ export const budgetOptions = [
       },
       //5
       {
-        title: "Quinoa Stuffed Bell Peppers",
+        recipe_title: "Quinoa Stuffed Bell Peppers",
         src: shellfish,
         ingredients: [
           "4 bell peppers, halved and seeds removed",
@@ -119,7 +119,7 @@ export const budgetOptions = [
       },
       //6
       {
-        title: "Vegetarian Lentil Curry",
+        recipe_title: "Vegetarian Lentil Curry",
         src: shellfish,
         ingredients: [
           "1 cup dried lentils, rinsed",
@@ -157,7 +157,7 @@ export const bowlOptions = [
     text: "Nourish your body with a bowl full of goodness. These hearty bowl recipes are packed with wholesome ingredients and flavors that will keep you feeling satisfied and energized throughout the day.",
     recipes: [
       {
-        title: "Quinoa Buddha Bowl",
+        recipe_title: "Quinoa Buddha Bowl",
         src: shellfish,
         ingredients: [
           "1 cup cooked quinoa",
@@ -178,7 +178,7 @@ export const bowlOptions = [
         ],
       },
       {
-        title: "Teriyaki Salmon Rice Bowl",
+        recipe_title: "Teriyaki Salmon Rice Bowl",
         src: shellfish,
         ingredients: [
           "1 cup cooked brown rice",
@@ -199,7 +199,7 @@ export const bowlOptions = [
         ],
       },
       {
-        title: "Mediterranean Falafel Bowl",
+        recipe_title: "Mediterranean Falafel Bowl",
         src: shellfish,
         ingredients: [
           "1 cup cooked quinoa",
@@ -219,7 +219,7 @@ export const bowlOptions = [
         ],
       },
       {
-        title: "Vegetarian Burrito Bowl",
+        recipe_title: "Vegetarian Burrito Bowl",
         src: shellfish,
         ingredients: [
           "1 cup cooked brown rice",
@@ -250,7 +250,7 @@ export const oatsOptions = [
     text: "Start your day with a burst of warmth and goodness by indulging in these delightful oatmeal recipes. Whether you prefer classic flavors or adventurous twists, these hearty bowls are sure to fuel your body and soul for the day ahead.",
     recipes: [
       {
-        title: "Classic Maple Cinnamon Oatmeal",
+        recipe_title: "Classic Maple Cinnamon Oatmeal",
         src: shellfish,
         ingredients: [
           "2.5 dl rolled oats",
@@ -269,7 +269,7 @@ export const oatsOptions = [
         ],
       },
       {
-        title: "Savory Spinach and Mushroom Oatmeal",
+        recipe_title: "Savory Spinach and Mushroom Oatmeal",
         src: shellfish,
         ingredients: [
           "2.5 dl rolled oats",
@@ -300,7 +300,7 @@ export const smoothieOptions = [
     text: "Blend your way to wellness with these delicious and nutritious smoothie recipes. Packed with vitamins, minerals, and antioxidants, these refreshing beverages are perfect for starting your day on a healthy note or for a quick energy boost any time of the day.",
     recipes: [
       {
-        title: "Berry Blast Smoothie",
+        recipe_title: "Berry Blast Smoothie",
         src: shellfish,
         ingredients: [
           "1 cup mixed berries (strawberries, blueberries, raspberries)",
@@ -317,7 +317,7 @@ export const smoothieOptions = [
         ],
       },
       {
-        title: "Green Goddess Smoothie",
+        recipe_title: "Green Goddess Smoothie",
         src: shellfish,
         ingredients: [
           "1 cup spinach leaves",
@@ -334,7 +334,7 @@ export const smoothieOptions = [
         ],
       },
       {
-        title: "Tropical Paradise Smoothie",
+        recipe_title: "Tropical Paradise Smoothie",
         src: shellfish,
         ingredients: [
           "1/2 cup mango chunks",
@@ -351,7 +351,7 @@ export const smoothieOptions = [
         ],
       },
       {
-        title: "Peanut Butter Banana Smoothie",
+        recipe_title: "Peanut Butter Banana Smoothie",
         src: shellfish,
         ingredients: [
           "1 ripe banana, peeled and sliced",
@@ -368,7 +368,7 @@ export const smoothieOptions = [
         ],
       },
       {
-        title: "Chocolate Protein Smoothie",
+        recipe_title: "Chocolate Protein Smoothie",
         src: shellfish,
         ingredients: [
           "1 scoop chocolate protein powder",
@@ -385,7 +385,7 @@ export const smoothieOptions = [
         ],
       },
       {
-        title: "Cherry Almond Smoothie",
+        recipe_title: "Cherry Almond Smoothie",
         src: shellfish,
         ingredients: [
           "1 cup frozen cherries",
@@ -412,7 +412,7 @@ export const snackOptions = [
     text: "Snack smarter with wholesome bites. These nutritious snack ideas are perfect for satisfying your cravings while keeping you fueled and energized throughout the day.",
     recipes: [
       {
-        title: "Greek Yogurt Parfait",
+        recipe_title: "Greek Yogurt Parfait",
         src: shellfish,
         ingredients: [
           "1/2 cup Greek yogurt",
@@ -428,7 +428,7 @@ export const snackOptions = [
         ],
       },
       {
-        title: "Avocado Toast with Egg",
+        recipe_title: "Avocado Toast with Egg",
         src: shellfish,
         ingredients: [
           "1 slice whole grain bread, toasted",
@@ -444,7 +444,7 @@ export const snackOptions = [
         ],
       },
       {
-        title: "Vegetable Sticks with Hummus",
+        recipe_title: "Vegetable Sticks with Hummus",
         src: shellfish,
         ingredients: [
           "Assorted vegetable sticks (carrots, cucumber, bell peppers, celery)",
@@ -457,7 +457,7 @@ export const snackOptions = [
         ],
       },
       {
-        title: "Trail Mix",
+        recipe_title: "Trail Mix",
         src: shellfish,
         ingredients: [
           "1/2 cup mixed nuts (almonds, cashews, peanuts)",
@@ -483,7 +483,7 @@ export const herbGardenOptions = [
     text: "Add flavor and freshness to your meals with these herb garden ideas. Whether you have a spacious backyard or a small balcony, growing your own herbs is a rewarding experience that will elevate your cooking to new heights.",
     recipes: [
       {
-        title: "Classic Basil Pesto",
+        recipe_title: "Classic Basil Pesto",
         src: salad1,
         ingredients: [
           "50g fresh basil leaves",
@@ -502,7 +502,7 @@ export const herbGardenOptions = [
         ],
       },
       {
-        title: "Rosemary Roasted Potatoes",
+        recipe_title: "Rosemary Roasted Potatoes",
         src: salad1,
         ingredients: [
           "500g baby potatoes, halved",
@@ -520,7 +520,7 @@ export const herbGardenOptions = [
         ],
       },
       {
-        title: "Lemon Thyme Chicken",
+        recipe_title: "Lemon Thyme Chicken",
         src: salad1,
         ingredients: [
           "4 chicken breasts",
@@ -551,7 +551,7 @@ export const energyBoostOptions = [
     text: "Discover easy and affordable recipes that will boost your energy levels and keep you feeling revitalized throughout the day. These recipes are packed with nutritious ingredients and are budget-friendly, making them perfect for anyone looking for a quick and satisfying meal.",
     recipes: [
       {
-        title: "Quinoa Salad with Chickpeas and Avocado",
+        recipe_title: "Quinoa Salad with Chickpeas and Avocado",
         src: salad2,
         ingredients: [
           "150g quinoa",
@@ -572,7 +572,7 @@ export const energyBoostOptions = [
         ],
       },
       {
-        title: "Vegetable Stir-Fry with Tofu",
+        recipe_title: "Vegetable Stir-Fry with Tofu",
         src: salad2,
         ingredients: [
           "300g firm tofu, cubed",
@@ -597,7 +597,7 @@ export const energyBoostOptions = [
         ],
       },
       {
-        title: "Banana Oatmeal Breakfast Smoothie",
+        recipe_title: "Banana Oatmeal Breakfast Smoothie",
         src: salad2,
         ingredients: [
           "1 ripe banana",
@@ -624,7 +624,7 @@ export const salladOptions = [
     text: "Explore a variety of nutritious and delicious salad recipes that will tantalize your taste buds and keep you feeling satisfied and energized throughout the day. From vibrant veggie salads to protein-packed bowls, there's something for everyone to enjoy!",
     recipes: [
       {
-        title: "Chicken Caesar Salad",
+        recipe_title: "Chicken Caesar Salad",
         src: salad1,
         ingredients: [
           "2 cups cooked chicken breast, diced",
@@ -640,7 +640,7 @@ export const salladOptions = [
         ],
       },
       {
-        title: "Grilled Salmon Salad",
+        recipe_title: "Grilled Salmon Salad",
         src: salad1,
         ingredients: [
           "2 fillets of grilled salmon",
@@ -658,7 +658,7 @@ export const salladOptions = [
         ],
       },
       {
-        title: "Mediterranean Chickpea Salad",
+        recipe_title: "Mediterranean Chickpea Salad",
         src: salad2,
         ingredients: [
           "2 cups cooked chickpeas",
@@ -680,7 +680,7 @@ export const salladOptions = [
         ],
       },
       {
-        title: "Quinoa Avocado Salad",
+        recipe_title: "Quinoa Avocado Salad",
         src: salad2,
         ingredients: [
           "1 cup cooked quinoa",

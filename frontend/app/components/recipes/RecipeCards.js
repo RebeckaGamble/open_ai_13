@@ -121,7 +121,7 @@ export default function RecipeCards({
           </div>
         ))}
       {isLoading && (
-        <div className="flex justify-center w-screen h-10 bg-green-200 items-center text-2xl p-4">
+        <div className="flex justify-center items-center text-2xl p-4">
           Generating new recipe...
         </div>
       )}

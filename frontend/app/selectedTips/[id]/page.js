@@ -60,7 +60,7 @@ export function RecipeCards({ recipes }) {
               {recipe.text}
             </p>
             <div className="flex flex-wrap gap-10 items-center justify-center">
-              <RecipeCard recipe={recipe} />
+              <RecipeCard recipes={recipe} />
             </div>
           </div>
         ))}
@@ -69,7 +69,7 @@ export function RecipeCards({ recipes }) {
   );
 }
 
-export function RecipeCard({ recipe }) {
+export function RecipeCard({ recipes }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const [saveRecipe, setSaveRecipe] = useState(false);
@@ -89,9 +89,31 @@ export function RecipeCard({ recipe }) {
     window.print();
   };
 
-  const handleToggleFavorite = async () => {
-    setSaveRecipe(!saveRecipe); //toggle save
-    console.log("saved?:", saveRecipe);
+  const handleBookmark = async () => {
+    //setSaveRecipe(!saveRecipe); //toggle save
+    //console.log("saved?:", saveRecipe);
+    try {
+      const response = await fetch("http://localhost:4000/bookmarkTips", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ recipe: recipes }), // Send recipes object directly
+      });
+  console.log(response)
+      if (response.ok) {
+        setSaveRecipe(!saveRecipe); // Toggle the save status
+
+        //const data = await response.json(); // Parse response JSON
+       // console.log(data); // Check the response data
+       // setSaveRecipe((prevSaveRecipe) => !prevSaveRecipe); // Toggle the save status
+      } else {
+
+ const errorMessage = await response.text();
+      console.error("Error bookmarking recipes:", errorMessage);      }
+    } catch (error) {
+      console.error("Error bookmarking recipes:", error);
+    }
     /*
     try {
       const response = await fetch("http://localhost:4000/bookmarkRecipe", {
@@ -115,8 +137,8 @@ export function RecipeCard({ recipe }) {
 
   return (
     <>
-      {recipe.recipes &&
-        recipe.recipes.map((item, index) => (
+      {recipes.recipes &&
+        recipes.recipes.map((recipes, index) => (
           <div
             key={index}
             className={`recipe-card relative ${
@@ -127,11 +149,11 @@ export function RecipeCard({ recipe }) {
               {/* Your recipe card content here */}
               <div ref={contentRef} className="sm:px-4 md:px-8">
                 <h3 className="font-semibold text-[24px] sm:text-[28px] text-center pt-2 pb-6">
-                  {item.title}
+                  {recipes.recipe_title}
                 </h3>
                 <div className=" absolute right-4 top-4 flex flex-row gap-2">
-                  <button onClick={() => handleToggleFavorite(recipe)}>
-                    {saveRecipe ? <FaRegHeart /> : <FaHeart />}
+                  <button onClick={() => handleBookmark(recipes.id)}>
+                    {saveRecipe[recipes.id] ? <FaHeart /> : <FaRegHeart />}
                   </button>
                   <button onClick={() => handlePrint()}>
                     <LuPrinter />
@@ -139,8 +161,8 @@ export function RecipeCard({ recipe }) {
                 </div>
                 <div className="w-[70%] mx-auto items-center justify-center pb-6">
                   <Image
-                    src={item.src}
-                    alt={item.title}
+                    src={recipes.src}
+                    alt={recipes.recipe_title}
                     width={300}
                     height={300}
                     className="object-cover w-full h-auto"
@@ -148,7 +170,7 @@ export function RecipeCard({ recipe }) {
                 </div>
                 <h4 className="font-semibold text-[20px] pb-2">Ingredients:</h4>
                 <ul className="pb-6">
-                  {item.ingredients.map((ingredient, index) => (
+                  {recipes.ingredients.map((ingredient, index) => (
                     <li
                       key={index}
                       className="list-disc list-inside text-[16px]"
@@ -162,7 +184,7 @@ export function RecipeCard({ recipe }) {
                 </h4>
                 <ol>
                   {isExpanded
-                    ? item.instructions.map((instruction, index) => (
+                    ? recipes.instructions.map((instruction, index) => (
                         <li
                           key={index}
                           className="list-decimal list-inside text-[16px]"
@@ -170,7 +192,7 @@ export function RecipeCard({ recipe }) {
                           {instruction}
                         </li>
                       ))
-                    : item.instructions
+                    : recipes.instructions
                         .slice(0, 2)
                         .map((instruction, index) => (
                           <li

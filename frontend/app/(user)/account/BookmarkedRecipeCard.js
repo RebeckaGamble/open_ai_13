@@ -34,9 +34,9 @@ export default function BookmarkedRecipeCard({ title, src, id, alt, content }) {
         showContent ? "h-auto w-full" : "h-[360px] w-[480px]"
       } p-10 rounded-[30px] bg-[#E1DAD0]`}
     >
-      <div className="absolute top-4 right-4">
+      <div className=" absolute top-4 right-4">
         <TooltipCheck text={"Remove saved recipe from your account"} >
-        <button className="font-semibold text-[20px] hover:text-red-600" onClick={removeRecipe}>
+        <button className="flex items-start justify-end w-10 h-10 font-semibold text-[20px] hover:text-red-600" onClick={removeRecipe}>
           X
         
         </button>
