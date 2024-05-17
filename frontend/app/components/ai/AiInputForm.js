@@ -35,7 +35,6 @@ export default function AiInputForm() {
   const [newRecipe, setNewRecipe] = useState(null);
   const [error, setError] = useState("");
 
-
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
   const handleSelect = (label, isChecked) => {
@@ -49,7 +48,7 @@ export default function AiInputForm() {
       );
     }
   };
- //remove error msg
+  //remove error msg
   const handleChange = () => {
     if (todaysMood && timeToSpend && country && preferences) {
       setError("");
@@ -94,23 +93,40 @@ export default function AiInputForm() {
         },
         body: JSON.stringify({ prompt }),
       });
-      console.log("image: ", recipeImages);
+      // console.log("image: ", recipeImages);
       const data = await response.json();
+      const { recipe_title } = data;
+
+      // Fetch image based on recipe title
+      const imageResponse = await fetch(
+        "http://localhost:4000/generate-image",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ foodDescription: recipe_title }),
+        }
+      );
+
+      const imageData = await imageResponse.json();
+      const imageUrl = imageData.imageUrl;
+
+      // Add image URL to the recipe data
+      const recipeWithImage = { ...data, imageUrl };
+
       if (!recipes) {
         // If no recipes are currently set, set the new recipe as the initial recipe
-        setRecipes([data]);
+        setRecipes([recipeWithImage]);
       } else {
         // If recipes already exist, add the new recipe to the existing list
-        setRecipes([...recipes, data]);
+        setRecipes([...recipes, recipeWithImage]);
       }
 
-      //  const newRecipe = await generateNewRecipe();
-      //  setRecipes([...recipes, newRecipe]);
-
       setLoading(false);
-      // setRecipes(data);
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
   const fetchSuprise = async () => {
@@ -143,21 +159,38 @@ export default function AiInputForm() {
       });
       console.log("image: ", recipeImages);
       const data = await response.json();
+      const { recipe_title } = data;
+
+      // Fetch image based on recipe title
+      const imageResponse = await fetch(
+        "http://localhost:4000/generate-image",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ foodDescription: recipe_title }),
+        }
+      );
+
+      const imageData = await imageResponse.json();
+      const imageUrl = imageData.imageUrl;
+
+      // Add image URL to the recipe data
+      const recipeWithImage = { ...data, imageUrl };
+
       if (!recipes) {
         // If no recipes are currently set, set the new recipe as the initial recipe
-        setRecipes([data]);
+        setRecipes([recipeWithImage]);
       } else {
         // If recipes already exist, add the new recipe to the existing list
-        setRecipes([...recipes, data]);
+        setRecipes([...recipes, recipeWithImage]);
       }
 
-      //  const newRecipe = await generateNewRecipe();
-      //  setRecipes([...recipes, newRecipe]);
-
       setLoading(false);
-      // setRecipes(data);
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
 
@@ -366,14 +399,13 @@ export default function AiInputForm() {
         </div>
         <div className="pt-10 flex flex-row gap-6">
           <div className="flex flex-col gap-2 text-center">
-
-          <button
-            onClick={fetchNewRecipe}
-            className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
-          >
-            Generate my recipe
-          </button>
-          <div>{error && <p className="text-red-500">{error}</p>}</div>
+            <button
+              onClick={fetchNewRecipe}
+              className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
+            >
+              Generate my recipe
+            </button>
+            <div>{error && <p className="text-red-500">{error}</p>}</div>
           </div>
 
           <button
@@ -396,20 +428,20 @@ export default function AiInputForm() {
               <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
                 <RecipeCards
                   recipes={recipes}
-                  recipeImages={recipeImages}
+                  // imageUrl={imageUrl}
+                  // recipeImages={recipeImages}
                   onClick={handleRecipeCardClick}
                   handleSubmit={handleSubmit}
                 />
               </div>
             </div>
           )}
-
           {newRecipe && (
             <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
               <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
                 <RecipeCards
                   recipes={[newRecipe]}
-                  recipeImages={recipeImages}
+                  // recipeImages={recipeImages}
                   onClick={handleRecipeCardClick}
                   handleSubmit={fetchNewRecipe}
                   isLoading={loading}

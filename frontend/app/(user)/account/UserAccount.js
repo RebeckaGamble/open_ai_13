@@ -183,7 +183,7 @@ export default function UserAccount() {
                   <BookmarkedRecipeCard
                     key={index}
                     id={recipe.id}
-                    src={test}
+                    src={recipe.imageUrl}
                     alt={"not found"}
                     title={recipe.recipe_title}
                     content={recipe}

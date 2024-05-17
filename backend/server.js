@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import cors from "cors";
 import mysql from "mysql2/promise";
-// import { loggedIn } from "../frontend/app/component/LoginContext";
 
 dotenv.config();
 
@@ -110,6 +109,30 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
+// generera bild
+app.post("/generate-image", async (req, res) => {
+  const { foodDescription } = req.body;
+  if (!foodDescription) {
+    return res.status(400).json({ error: "Missing food description" });
+  }
+
+  try {
+    const imageResponse = await openai.images.generate({
+      model: "dall-e-2",
+      prompt: foodDescription,
+      n: 1,
+      size: "256x256",
+    });
+
+    const imageUrl = imageResponse.data[0].url;
+    console.log(imageUrl);
+    res.json({ imageUrl });
+  } catch (error) {
+    console.error("Error generating image:", error);
+    res.status(500).json({ error: "Error generating image" });
+  }
+});
+
 app.post("/bookmarks", async (req, res) => {
   const { recipe } = req.body;
   try {
@@ -147,32 +170,29 @@ app.post("/bookmarkTips", async (req, res) => {
 });
 
 app.get("/getbookmarks", async (req, res) => {
-  try{
-    const bookmarks = await query(
-      "SELECT * FROM recipes",
-    
-    );
+  try {
+    const bookmarks = await query("SELECT * FROM recipes");
 
     res.status(200).json({ bookmarks, id: bookmarks.id });
-  } catch(error){
+  } catch (error) {
     console.error("Error fetching bookmarks:", error);
     res.status(500).json({ error: "Error fetching bookmarks" });
   }
-})
+});
 
-app.delete('/removeRecipe', async (req, res) => {
+app.delete("/removeRecipe", async (req, res) => {
   const { id } = req.body;
 
   try {
-    const result = await query('DELETE FROM recipes WHERE id = ?', [id]);
+    const result = await query("DELETE FROM recipes WHERE id = ?", [id]);
     if (result.affectedRows > 0) {
-      res.status(200).json({ message: 'Recipe removed successfully' });
+      res.status(200).json({ message: "Recipe removed successfully" });
     } else {
-      res.status(404).json({ error: 'Recipe not found' });
+      res.status(404).json({ error: "Recipe not found" });
     }
   } catch (error) {
-    console.error('Error removing recipe:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error removing recipe:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

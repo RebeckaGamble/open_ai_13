@@ -19,6 +19,7 @@ export default function RecipeCard({ recipes }) {
         body: JSON.stringify({ recipe: recipes }),
       });
       console.log(response);
+      console.log(recipes);
 
       if (response.ok) {
         setIsBookmarked(true);
@@ -42,11 +43,11 @@ export default function RecipeCard({ recipes }) {
       <div className="flex flex-col lg:flex-row">
         <div className="w-full max-w-[500px] flex flex-col mx-auto lg:w-[30%] pb-10 lg:pb-6">
           <Image
-            src={testImg}
-            height={200}
-            width={300}
-            alt="testImg"
-            className="rounded-[10px] h-auto w-full object-cover"
+            src={recipes.imageUrl}
+            alt={"generat img"}
+            height={140}
+            width={200}
+            className="rounded-[10px] object-fit bg-[#CBB89D] "
           />
           <div
             className="flex flex-row items-center pt-1"

@@ -7,7 +7,8 @@ import { handleClick } from "../Hero";
 export default function RecipeCards({
   recipes,
   onClick,
-  recipeImages,
+  // recipeImages,
+  imageUrl,
   handleSubmit,
   // isLoading,
 }) {
@@ -84,7 +85,7 @@ export default function RecipeCards({
             <div className="h-[260px] relative w-full max-w-[800px] px-6 bg-[#FFFFFF] text-[#250D01] flex flex-row p-6 rounded-[10px] lg:hover:scale-105">
               <div className="w-[30%] h-full mx-auto flex justify-center text-black ">
                 {/** Map recipeImages based on food preferences */}
-                {recipeImages &&
+                {/* {recipeImages &&
                   food.map((pref) => {
                     if (pref[recipeImages]) {
                       const randomImage = getRandomItem(pref[recipeImages]);
@@ -99,7 +100,14 @@ export default function RecipeCards({
                         />
                       );
                     }
-                  })}
+                  })} */}
+                <Image
+                  src={recipe.imageUrl}
+                  alt={"generat img"}
+                  height={140}
+                  width={200}
+                  className="rounded-[10px] object-fit bg-[#CBB89D] "
+                />
               </div>
               <div className="flex flex-col w-[70%] justify-between ">
                 <h2 className="font-semibold text-center text-[24px] leading-8 py-4">
