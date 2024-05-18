@@ -2,6 +2,49 @@ import shellfish from "../../public/img/shellfish.jpg";
 import bowl from "../../public/img/bowl.jpg";
 import salad1 from "../../public/img/salad.jpg";
 import salad2 from "../../public/img/salad2.jpg";
+//budget 1
+import chicken_stir from "../../public/swiper_img/chicken_stir.jpg"
+import tofu_stir from "../../public/swiper_img/tofu_stir.jpg"
+import spagetti_stir from "../../public/swiper_img/spagetti_stir.jpg"
+import stir from "../../public/swiper_img/stir.jpg"
+
+//bowl 2
+import vego_bowl from "../../public/swiper_img/vego_bowl.jpg"
+import quinoa_bowl from "../../public/swiper_img/quinoa_bowl.jpg"
+import falafel from "../../public/swiper_img/falafel.jpg"
+import salmon_bowl from "../../public/swiper_img/salmon_bowl.jpg"
+
+//oatmeal 3
+import oat1 from "../../public/swiper_img/oat1.jpg"
+import oat2 from "../../public/swiper_img/oat2.jpg"
+
+//smoothie 4
+import smoothie from "../../public/swiper_img/smoothie.jpg"
+import smoothie2 from "../../public/swiper_img/smoothie2.jpg"
+import smoothie3 from "../../public/swiper_img/mango_smoothie.jpg"
+import smoothie4 from "../../public/swiper_img/smoothie4.jpg"
+
+//snacks 5
+import nuts from "../../public/swiper_img/nutmix.jpg"
+import greekyoghurt from "../../public/swiper_img/greekyogurt.jpg"
+import hummus from "../../public/swiper_img/hummus.jpg"
+import avocadotoast from "../../public/swiper_img/avocadotoast.jpg"
+
+//herbs 6 
+import lemon_chicken from "../../public/swiper_img/lemon_chicken.jpg"
+import potato from "../../public/swiper_img/potato.jpg"
+import pesto from "../../public/swiper_img/pesto.jpg"
+
+//energy 7
+import energy from "../../public/swiper_img/smoothie3.jpg"
+import energy1 from "../../public/swiper_img/energy1.jpg"
+
+//salad 8
+import chicken_salad from "../../public/swiper_img/chicken_salad.jpg"
+import salmon_salad from "../../public/swiper_img/salmon_salad.jpg"
+import chickpea_salad from "../../public/swiper_img/chickpea_salad.jpg"
+import avocado_salad from "../../public/swiper_img/avocado_salad.jpg"
+
 
 //id 1: budget options -4 recipes
 export const budgetOptions = [
@@ -11,7 +54,7 @@ export const budgetOptions = [
     recipes: [
       {
         recipe_title: "Chicken and Vegetable Stir-Fry",
-        src: shellfish,
+        src: chicken_stir,
         ingredients: [
           "300g chicken breast, sliced",
           "2 cups mixed vegetables",
@@ -30,7 +73,7 @@ export const budgetOptions = [
       //2
       {
         recipe_title: "Vegetarian Tofu Stir-Fry",
-        src: shellfish,
+        src: tofu_stir,
         ingredients: [
           "300g firm tofu, cubed",
           "2 cups broccoli florets",
@@ -50,7 +93,7 @@ export const budgetOptions = [
       //3
       {
         recipe_title: "Spaghetti Aglio e Olio",
-        src: shellfish,
+        src: spagetti_stir,
         ingredients: [
           "300g spaghetti",
           "4 cloves garlic, thinly sliced",
@@ -70,7 +113,7 @@ export const budgetOptions = [
       //4
       {
         recipe_title: "Creamy Mushroom Pasta",
-        src: shellfish,
+        src: stir,
         ingredients: [
           "300g pasta of your choice",
           "200g mushrooms, sliced",
@@ -91,61 +134,7 @@ export const budgetOptions = [
           "Season with salt and black pepper, serve hot.",
         ],
       },
-      //5
-      {
-        recipe_title: "Quinoa Stuffed Bell Peppers",
-        src: shellfish,
-        ingredients: [
-          "4 bell peppers, halved and seeds removed",
-          "1 cup quinoa, rinsed",
-          "1 can (400g) black beans, drained and rinsed",
-          "1 cup corn kernels",
-          "1 cup diced tomatoes",
-          "1/2 cup shredded cheddar cheese",
-          "1/4 cup chopped fresh cilantro",
-          "1 tsp ground cumin",
-          "1 tsp chili powder",
-          "Salt and black pepper to taste",
-        ],
-        instructions: [
-          "Preheat oven to 375°F (190°C).",
-          "Cook quinoa according to package instructions.",
-          "In a large bowl, combine cooked quinoa, black beans, corn kernels, diced tomatoes, shredded cheddar cheese, chopped cilantro, ground cumin, chili powder, salt, and black pepper.",
-          "Stuff each bell pepper half with the quinoa mixture.",
-          "Place stuffed peppers in a baking dish, cover with foil, and bake for 25-30 minutes until peppers are tender.",
-          "Remove foil, sprinkle with additional cheese if desired, and bake for another 5 minutes until cheese is melted and bubbly.",
-          "Serve hot.",
-        ],
-      },
-      //6
-      {
-        recipe_title: "Vegetarian Lentil Curry",
-        src: shellfish,
-        ingredients: [
-          "1 cup dried lentils, rinsed",
-          "1 onion, diced",
-          "2 cloves garlic, minced",
-          "1 can (400g) diced tomatoes",
-          "1 can (400ml) coconut milk",
-          "2 cups vegetable broth",
-          "2 cups spinach leaves",
-          "2 tbsp curry powder",
-          "1 tsp ground turmeric",
-          "1 tsp ground cumin",
-          "1 tbsp olive oil",
-          "Salt and black pepper to taste",
-        ],
-        instructions: [
-          "In a large pot, heat olive oil over medium heat.",
-          "Add diced onion and minced garlic, cook until softened.",
-          "Stir in curry powder, ground turmeric, and ground cumin, cook for 1 minute until fragrant.",
-          "Add rinsed lentils, diced tomatoes, coconut milk, and vegetable broth.",
-          "Bring to a boil, then reduce heat and simmer for 20-25 minutes until lentils are tender.",
-          "Stir in spinach leaves and cook until wilted.",
-          "Season with salt and black pepper to taste.",
-          "Serve hot over rice or with naan bread.",
-        ],
-      },
+
     ],
   },
 ];
@@ -158,7 +147,7 @@ export const bowlOptions = [
     recipes: [
       {
         recipe_title: "Quinoa Buddha Bowl",
-        src: shellfish,
+        src: quinoa_bowl,
         ingredients: [
           "1 cup cooked quinoa",
           "1 cup mixed greens",
@@ -179,7 +168,7 @@ export const bowlOptions = [
       },
       {
         recipe_title: "Teriyaki Salmon Rice Bowl",
-        src: shellfish,
+        src: salmon_bowl,
         ingredients: [
           "1 cup cooked brown rice",
           "4 oz salmon fillet, grilled or baked",
@@ -200,7 +189,7 @@ export const bowlOptions = [
       },
       {
         recipe_title: "Mediterranean Falafel Bowl",
-        src: shellfish,
+        src: falafel,
         ingredients: [
           "1 cup cooked quinoa",
           "4 falafel patties, baked or fried",
@@ -220,7 +209,7 @@ export const bowlOptions = [
       },
       {
         recipe_title: "Vegetarian Burrito Bowl",
-        src: shellfish,
+        src: vego_bowl,
         ingredients: [
           "1 cup cooked brown rice",
           "1/2 cup black beans, cooked and seasoned",
@@ -251,7 +240,7 @@ export const oatsOptions = [
     recipes: [
       {
         recipe_title: "Classic Maple Cinnamon Oatmeal",
-        src: shellfish,
+        src: oat1,
         ingredients: [
           "2.5 dl rolled oats",
           "4.7 dl water",
@@ -270,7 +259,7 @@ export const oatsOptions = [
       },
       {
         recipe_title: "Savory Spinach and Mushroom Oatmeal",
-        src: shellfish,
+        src: oat2,
         ingredients: [
           "2.5 dl rolled oats",
           "4.7 dl vegetable broth",
@@ -301,7 +290,7 @@ export const smoothieOptions = [
     recipes: [
       {
         recipe_title: "Berry Blast Smoothie",
-        src: shellfish,
+        src: smoothie,
         ingredients: [
           "1 cup mixed berries (strawberries, blueberries, raspberries)",
           "1 ripe banana, peeled and sliced",
@@ -318,7 +307,7 @@ export const smoothieOptions = [
       },
       {
         recipe_title: "Green Goddess Smoothie",
-        src: shellfish,
+        src: smoothie2,
         ingredients: [
           "1 cup spinach leaves",
           "1/2 ripe avocado, peeled and pitted",
@@ -335,7 +324,7 @@ export const smoothieOptions = [
       },
       {
         recipe_title: "Tropical Paradise Smoothie",
-        src: shellfish,
+        src: smoothie3,
         ingredients: [
           "1/2 cup mango chunks",
           "1/2 cup pineapple chunks",
@@ -352,7 +341,7 @@ export const smoothieOptions = [
       },
       {
         recipe_title: "Peanut Butter Banana Smoothie",
-        src: shellfish,
+        src: smoothie4,
         ingredients: [
           "1 ripe banana, peeled and sliced",
           "2 tablespoons peanut butter",
@@ -367,40 +356,8 @@ export const smoothieOptions = [
           "Pour into glasses and enjoy!",
         ],
       },
-      {
-        recipe_title: "Chocolate Protein Smoothie",
-        src: shellfish,
-        ingredients: [
-          "1 scoop chocolate protein powder",
-          "1 cup almond milk",
-          "1/2 ripe banana, peeled and sliced",
-          "1 tablespoon almond butter",
-          "1 tablespoon cocoa powder",
-          "Ice cubes",
-        ],
-        instructions: [
-          "Combine all ingredients in a blender.",
-          "Blend until smooth and creamy.",
-          "Pour into glasses and serve immediately.",
-        ],
-      },
-      {
-        recipe_title: "Cherry Almond Smoothie",
-        src: shellfish,
-        ingredients: [
-          "1 cup frozen cherries",
-          "1/2 cup almond milk",
-          "1/2 cup Greek yogurt",
-          "1 tablespoon honey (optional)",
-          "1/4 teaspoon almond extract",
-          "Ice cubes",
-        ],
-        instructions: [
-          "Add all ingredients to a blender.",
-          "Blend until smooth and creamy.",
-          "Pour into glasses and enjoy!",
-        ],
-      },
+     
+      
     ],
   },
 ];
@@ -413,7 +370,7 @@ export const snackOptions = [
     recipes: [
       {
         recipe_title: "Greek Yogurt Parfait",
-        src: shellfish,
+        src: greekyoghurt,
         ingredients: [
           "1/2 cup Greek yogurt",
           "1/4 cup granola",
@@ -429,7 +386,7 @@ export const snackOptions = [
       },
       {
         recipe_title: "Avocado Toast with Egg",
-        src: shellfish,
+        src: avocadotoast,
         ingredients: [
           "1 slice whole grain bread, toasted",
           "1/2 ripe avocado, mashed",
@@ -445,7 +402,7 @@ export const snackOptions = [
       },
       {
         recipe_title: "Vegetable Sticks with Hummus",
-        src: shellfish,
+        src: hummus,
         ingredients: [
           "Assorted vegetable sticks (carrots, cucumber, bell peppers, celery)",
           "1/4 cup hummus",
@@ -458,7 +415,7 @@ export const snackOptions = [
       },
       {
         recipe_title: "Trail Mix",
-        src: shellfish,
+        src: nuts,
         ingredients: [
           "1/2 cup mixed nuts (almonds, cashews, peanuts)",
           "1/4 cup dried fruits (raisins, cranberries, apricots)",
@@ -484,7 +441,7 @@ export const herbGardenOptions = [
     recipes: [
       {
         recipe_title: "Classic Basil Pesto",
-        src: salad1,
+        src: pesto,
         ingredients: [
           "50g fresh basil leaves",
           "50g grated Parmesan cheese",
@@ -503,7 +460,7 @@ export const herbGardenOptions = [
       },
       {
         recipe_title: "Rosemary Roasted Potatoes",
-        src: salad1,
+        src: potato,
         ingredients: [
           "500g baby potatoes, halved",
           "2 tablespoons olive oil",
@@ -521,7 +478,7 @@ export const herbGardenOptions = [
       },
       {
         recipe_title: "Lemon Thyme Chicken",
-        src: salad1,
+        src: lemon_chicken,
         ingredients: [
           "4 chicken breasts",
           "2 tablespoons fresh thyme leaves",
@@ -552,7 +509,7 @@ export const energyBoostOptions = [
     recipes: [
       {
         recipe_title: "Quinoa Salad with Chickpeas and Avocado",
-        src: salad2,
+        src: energy1,
         ingredients: [
           "150g quinoa",
           "1 can (400g) chickpeas, drained and rinsed",
@@ -572,33 +529,8 @@ export const energyBoostOptions = [
         ],
       },
       {
-        recipe_title: "Vegetable Stir-Fry with Tofu",
-        src: salad2,
-        ingredients: [
-          "300g firm tofu, cubed",
-          "2 tablespoons soy sauce",
-          "1 tablespoon sesame oil",
-          "1 tablespoon vegetable oil",
-          "1 onion, sliced",
-          "2 garlic cloves, minced",
-          "1 red bell pepper, sliced",
-          "1 yellow bell pepper, sliced",
-          "1 carrot, julienned",
-          "150g broccoli florets",
-          "150g sugar snap peas",
-          "Cooked rice or noodles, for serving",
-        ],
-        instructions: [
-          "In a small bowl, marinate cubed tofu in soy sauce and sesame oil for 15-20 minutes.",
-          "Heat vegetable oil in a large pan or wok over medium-high heat. Add sliced onion and minced garlic, and stir-fry until fragrant.",
-          "Add marinated tofu to the pan and cook until lightly browned on all sides.",
-          "Add sliced bell peppers, julienned carrot, broccoli florets, and sugar snap peas to the pan. Stir-fry until vegetables are tender-crisp.",
-          "Serve vegetable stir-fry hot over cooked rice or noodles. Enjoy!",
-        ],
-      },
-      {
         recipe_title: "Banana Oatmeal Breakfast Smoothie",
-        src: salad2,
+        src: energy,
         ingredients: [
           "1 ripe banana",
           "40g rolled oats",
@@ -625,7 +557,7 @@ export const salladOptions = [
     recipes: [
       {
         recipe_title: "Chicken Caesar Salad",
-        src: salad1,
+        src: chicken_salad,
         ingredients: [
           "2 cups cooked chicken breast, diced",
           "4 cups romaine lettuce, chopped",
@@ -641,7 +573,7 @@ export const salladOptions = [
       },
       {
         recipe_title: "Grilled Salmon Salad",
-        src: salad1,
+        src: salmon_salad,
         ingredients: [
           "2 fillets of grilled salmon",
           "4 cups mixed greens",
@@ -659,7 +591,7 @@ export const salladOptions = [
       },
       {
         recipe_title: "Mediterranean Chickpea Salad",
-        src: salad2,
+        src: chickpea_salad,
         ingredients: [
           "2 cups cooked chickpeas",
           "1 cucumber, diced",
@@ -681,7 +613,7 @@ export const salladOptions = [
       },
       {
         recipe_title: "Quinoa Avocado Salad",
-        src: salad2,
+        src: avocado_salad,
         ingredients: [
           "1 cup cooked quinoa",
           "1 avocado, diced",

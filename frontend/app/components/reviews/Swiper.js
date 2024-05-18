@@ -48,7 +48,7 @@ function SwiperReviews() {
             <SwiperSlide key={index}>
               <div className="w-auto flex mx-auto justify-center text-[18px]">
                 <div className="h-auto py-10 w-auto flex mx-auto flex-col justify-center">
-                  <q className="max-w-[200px] w-fit text-center md:max-w-[400px]">
+                  <q className="max-w-[260px] w-fit text-center md:max-w-[400px]">
                     {review.text}
                   </q>
                   <b className="pt-2 text-right">{review.name}</b>

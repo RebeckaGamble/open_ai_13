@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   bowlOptions,
   budgetOptions,
@@ -12,7 +12,7 @@ import {
 } from "../TipsContent";
 import Image from "next/image";
 import { LuPrinter } from "react-icons/lu";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import TooltipCheck from "@/app/components/ai/ToolTip";
 
 //1
 export function Budget() {
@@ -49,17 +49,17 @@ export function Sallad() {
 
 export function RecipeCards({ recipes }) {
   return (
-    <div className="flex flex-col items-center py-10 justify-center">
+    <div className="flex flex-col items-center w-full py-10 ">
       <div className="flex flex-col">
         {recipes.map((recipe, index) => (
-          <div key={index} className="flex flex-col items-center">
+          <div key={index} className="flex flex-col w-full items-center">
             <h1 className="text-[28px] md:text-[34px] font-semibold text-center pb-6">
               {recipe.pageTitle}
             </h1>
             <p className="max-w-[840px] xl:max-w-[1000px] lg:text-[18px] text-left pb-10">
               {recipe.text}
             </p>
-            <div className="flex flex-wrap gap-10 items-center justify-center">
+            <div className="">
               <RecipeCard recipes={recipe} />
             </div>
           </div>
@@ -70,158 +70,80 @@ export function RecipeCards({ recipes }) {
 }
 
 export function RecipeCard({ recipes }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
-  const [saveRecipe, setSaveRecipe] = useState(false);
-  const contentRef = useRef(null);
-
-  useEffect(() => {
-    // Calculate the total height of the content
-    const height = contentRef.current.clientHeight;
-    setContentHeight(height);
-  }, [isExpanded]);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const handlePrint = () => {
     window.print();
   };
 
-  const handleBookmark = async () => {
-    //setSaveRecipe(!saveRecipe); //toggle save
-    //console.log("saved?:", saveRecipe);
-    try {
-      const response = await fetch("http://localhost:4000/bookmarkTips", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ recipe: recipes }), // Send recipes object directly
-      });
-  console.log(response)
-      if (response.ok) {
-        setSaveRecipe(!saveRecipe); // Toggle the save status
-
-        //const data = await response.json(); // Parse response JSON
-       // console.log(data); // Check the response data
-       // setSaveRecipe((prevSaveRecipe) => !prevSaveRecipe); // Toggle the save status
-      } else {
-
- const errorMessage = await response.text();
-      console.error("Error bookmarking recipes:", errorMessage);      }
-    } catch (error) {
-      console.error("Error bookmarking recipes:", error);
-    }
-    /*
-    try {
-      const response = await fetch("http://localhost:4000/bookmarkRecipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          recipe: recipe, // Pass the entire recipe
-        }),
-      });
-      if (response.ok) {
-        setSaveRecipe(!saveRecipe); //toggle save
-      } else {
-        console.error("Failed to toggle save recipe");
-      }
-    } catch (error) {
-      console.error("Error toggling favorite recipe:", error);
-    }*/
-  };
-
   return (
-    <>
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 justify-between w-full ">
       {recipes.recipes &&
         recipes.recipes.map((recipes, index) => (
           <div
             key={index}
-            className={`recipe-card relative ${
-              isExpanded ? "h-auto pb-12" : "h-[800px]"
-            } bg-white w-[360px] sm:w-[520px] xl:w-[600px] px-4 py-6 rounded-[10px]`}
+            className="relative h-auto shadow-xl border-2 border-gray-200 bg-white w-full px-4 xl:px-8 py-8 "
           >
-            <div className="recipe-card ">
-              {/* Your recipe card content here */}
-              <div ref={contentRef} className="sm:px-4 md:px-8">
-                <h3 className="font-semibold text-[24px] sm:text-[28px] text-center pt-2 pb-6">
-                  {recipes.recipe_title}
-                </h3>
-                <div className=" absolute right-4 top-4 flex flex-row gap-2">
-                  <button onClick={() => handleBookmark(recipes.id)}>
-                    {saveRecipe[recipes.id] ? <FaHeart /> : <FaRegHeart />}
-                  </button>
+            <div className="">
+              <h3 className="font-semibold text-[20px] md:text-[24px] xl:text-[28px] text-center pt-2 pb-8">
+                {recipes.recipe_title}
+              </h3>
+              <div className="flex flex-col sm:flex-row w-full">
+                <div className="absolute right-4 top-4 flex flex-row ">
+                  <TooltipCheck text={"Print out your favourite recipes"}>
                   <button onClick={() => handlePrint()}>
                     <LuPrinter />
                   </button>
+                  </TooltipCheck>
                 </div>
-                <div className="w-[70%] mx-auto items-center justify-center pb-6">
+                <div className="w-full sm:w-[50%] h-auto pb-6">
                   <Image
                     src={recipes.src}
                     alt={recipes.recipe_title}
                     width={300}
                     height={300}
-                    className="object-cover w-full h-auto"
+                    className="object-cover border-2 border-gray-600 hover:border-none rounded-xl h-[300px] w-full hover:object-contain hover:h-full "
                   />
                 </div>
-                <h4 className="font-semibold text-[20px] pb-2">Ingredients:</h4>
-                <ul className="pb-6">
-                  {recipes.ingredients.map((ingredient, index) => (
-                    <li
-                      key={index}
-                      className="list-disc list-inside text-[16px]"
-                    >
-                      {ingredient}
-                    </li>
-                  ))}
-                </ul>
-                <h4 className="font-semibold text-[20px] pb-2">
+                <div className="sm:pl-6 h-auto w-full sm:w-[50%]">
+                  <h4 className="font-semibold text-[20px] pb-4">
+                    Ingredients:
+                  </h4>
+                  <ul className="pb-6 flex flex-col gap-2">
+                    {recipes.ingredients.map((ingredient, index) => (
+                      <li
+                        key={index}
+                        className="list-disc list-inside text-[16px]"
+                      >
+                        {ingredient}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="w-full ">
+                <h4 className="font-semibold text-[20px] pb-4">
                   Instructions:
                 </h4>
-                <ol>
-                  {isExpanded
-                    ? recipes.instructions.map((instruction, index) => (
-                        <li
-                          key={index}
-                          className="list-decimal list-inside text-[16px]"
-                        >
-                          {instruction}
-                        </li>
-                      ))
-                    : recipes.instructions
-                        .slice(0, 2)
-                        .map((instruction, index) => (
-                          <li
-                            key={index}
-                            className="list-decimal list-inside text-[16px]"
-                          >
-                            {instruction}
-                          </li>
-                        ))}
+                <ol className="flex flex-col gap-2">
+                  {recipes.instructions.map((instruction, index) => (
+                    <li
+                      key={index}
+                      className="list-decimal list-inside text-[16px]"
+                    >
+                      {instruction}
+                    </li>
+                  ))}
                 </ol>
-                {contentHeight > 700 && (
-                  <button
-                    onClick={toggleExpand}
-                    className="text-blue-500 hover:underline absolute bottom-4"
-                  >
-                    {isExpanded ? "Read Less" : "Read More"}
-                  </button>
-                )}
               </div>
             </div>
           </div>
         ))}
-    </>
+    </div>
   );
 }
 
 export default function Page({ params }) {
   return (
-    <div className="w-full bg-[#E1DAD0] h-auto flex py-10 lg:py-20 px-4 items-center justify-center">
+    <div className="w-full bg-white h-auto flex py-10 lg:py-20 px-4 items-center justify-center">
       <div className="w-full max-w-[90rem] mx-auto">
         {params.id === "1" && <Budget />}
         {params.id === "2" && <Bowl />}

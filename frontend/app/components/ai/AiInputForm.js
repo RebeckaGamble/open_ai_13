@@ -34,6 +34,7 @@ export default function AiInputForm() {
   const [recipeImages, setRecipeImages] = useState([]);
   const [newRecipe, setNewRecipe] = useState(null);
   const [error, setError] = useState("");
+  const [initialButtonClicked, setInitialButtonClicked] = useState("");
 
   //it should be a json format outlined with a title, ingredients, step by step and a short historical review of the dish.
 
@@ -49,16 +50,19 @@ export default function AiInputForm() {
     }
   };
   //remove error msg
+  /*
   const handleChange = () => {
     if (todaysMood && timeToSpend && country && preferences) {
       setError("");
     }
   };
-
+*/
   const fetchNewRecipe = async () => {
     if (!todaysMood || !timeToSpend || !country || !preferences) {
-      setError("Please select all required fields.");
+      setError("Fill in all fields.");
       return;
+    } else {
+      setError("");
     }
 
     setLoading(true);
@@ -82,7 +86,7 @@ export default function AiInputForm() {
 
       Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation personalised as if to a dear friend, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
     `;
-    console.log(prompt);
+    //console.log(prompt);
     setShowRecipe(true);
     // skicka objekt med states
     try {
@@ -118,10 +122,12 @@ export default function AiInputForm() {
       if (!recipes) {
         // If no recipes are currently set, set the new recipe as the initial recipe
         setRecipes([recipeWithImage]);
+        setError("");
       } else {
         // If recipes already exist, add the new recipe to the existing list
         setRecipes([...recipes, recipeWithImage]);
       }
+      setInitialButtonClicked("generate");
 
       setLoading(false);
     } catch (error) {
@@ -129,6 +135,7 @@ export default function AiInputForm() {
       setLoading(false);
     }
   };
+
   const fetchSuprise = async () => {
     setLoading(true);
     const prompt = `I'm looking for recipe, suprise me!
@@ -157,7 +164,7 @@ export default function AiInputForm() {
         },
         body: JSON.stringify({ prompt }),
       });
-      console.log("image: ", recipeImages);
+      //console.log("image: ", recipeImages);
       const data = await response.json();
       const { recipe_title } = data;
 
@@ -186,7 +193,7 @@ export default function AiInputForm() {
         // If recipes already exist, add the new recipe to the existing list
         setRecipes([...recipes, recipeWithImage]);
       }
-
+      setInitialButtonClicked("surprise");
       setLoading(false);
     } catch (error) {
       console.error("Error:", error);
@@ -198,6 +205,13 @@ export default function AiInputForm() {
     event.preventDefault();
     setLoading(true);
     fetchNewRecipe();
+    setLoading(false);
+  };
+
+  const handleSurprise = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    fetchSuprise();
     setLoading(false);
   };
 
@@ -245,7 +259,7 @@ export default function AiInputForm() {
                       onSelect={() => {
                         setTodaysMood(mood);
                         setSelectedMood(mood);
-                        handleChange();
+                        // handleChange();
                       }}
                     >
                       {mood}
@@ -273,7 +287,7 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setTimeToSpend(time);
                       setSelectedTime(time);
-                      handleChange();
+                      //  handleChange();
                     }}
                   >
                     {time}
@@ -300,12 +314,8 @@ export default function AiInputForm() {
                     onSelect={() => {
                       setPreferences(pref);
                       setSelectedPref(pref);
-                      setRecipeImages(pref);
-                      handleChange();
-                      // const images = food.find((item) => item[pref]);
-                      //if (images) {
-                      // setRecipeImages(images[pref]);
-                      //}
+                      // setRecipeImages(pref);
+                      //  handleChange();
                     }}
                   >
                     {pref}
@@ -331,9 +341,9 @@ export default function AiInputForm() {
                   <Dropdown.MenuItem
                     key={index}
                     onSelect={() => {
+                      //  handleChange();
                       setCountry(from);
                       setSelectedCountry(from);
-                      handleChange();
                     }}
                   >
                     {from}
@@ -365,11 +375,6 @@ export default function AiInputForm() {
                 I will not put this into your recipe!
               </p>
             </div>
-            {/** 
-                <div className="rounded-full w-[22px] h-[22px] items-center justify-center flex border-slate-200 border">
-                  <TbInfoSmall size={30} />
-                </div>
-                */}
           </div>
           <form action="" className="flex justify-between mx-auto">
             <div className="flex flex-wrap items-center justify-center w-full h-auto gap-6 mx-auto ">
@@ -386,7 +391,6 @@ export default function AiInputForm() {
                     id={index}
                     label={dont}
                     checkBg={"[#FFFFFF]"}
-                    //borderColor={"black"}
                     checkIcon={<Cross1Icon />}
                     className={
                       "leading-none text-[#000000] text-[18px] pl-2 font-semibold"
@@ -397,20 +401,18 @@ export default function AiInputForm() {
             </div>
           </form>
         </div>
-        <div className="pt-10 flex flex-row gap-6">
-          <div className="flex flex-col gap-2 text-center">
-            <button
-              onClick={fetchNewRecipe}
-              className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
-            >
-              Generate my recipe
-            </button>
-            <div>{error && <p className="text-red-500">{error}</p>}</div>
-          </div>
+        <div className="pt-10 flex flex-col justify-center items-center mx-auto  sm:flex-row gap-6">
+          <button
+            onClick={fetchNewRecipe}
+            className="px-8 py-2 border uppercase bg-[#250D01] text-[#FCFBFA] rounded-full text-lg font-semibold hover:scale-105"
+          >
+            Generate my recipe
+          </button>
+          <div>{error && <p className="text-red-500">{error}</p>}</div>
 
           <button
             onClick={fetchSuprise}
-            className="px-8 max-h-[46px] py-2 border-[1px] border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
+            className="px-8 py-2 border border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] rounded-full text-lg font-semibold hover:scale-105"
           >
             surprise me!
           </button>
@@ -428,8 +430,8 @@ export default function AiInputForm() {
               <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
                 <RecipeCards
                   recipes={recipes}
-                  // imageUrl={imageUrl}
-                  // recipeImages={recipeImages}
+                  initialButtonClicked={initialButtonClicked}
+                  handleSurprise={handleSurprise}
                   onClick={handleRecipeCardClick}
                   handleSubmit={handleSubmit}
                 />
@@ -441,12 +443,12 @@ export default function AiInputForm() {
               <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
                 <RecipeCards
                   recipes={[newRecipe]}
-                  // recipeImages={recipeImages}
                   onClick={handleRecipeCardClick}
                   handleSubmit={fetchNewRecipe}
+                  handleSurprise={handleSurprise}
+                  initialButtonClicked={initialButtonClicked}
                   isLoading={loading}
                 />
-                {loading && <div>tja</div>}
               </div>
             </div>
           )}

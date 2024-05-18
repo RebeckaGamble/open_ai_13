@@ -148,27 +148,6 @@ app.post("/bookmarks", async (req, res) => {
   }
 });
 
-app.post("/bookmarkTips", async (req, res) => {
-  const { recipes } = req.body;
-  try {
-    // Parse the JSON string back into an array of recipes
-    const parsedRecipes = JSON.parse(recipes);
-
-    // Iterate over each recipe and save them individually
-    for (const recipe of parsedRecipes) {
-      const addedRecipe = await query(
-        "INSERT INTO recipes (recipe) VALUES (?)",
-        [JSON.stringify(recipe)] // Save each recipe as a string
-      );
-    }
-
-    res.json({ success: true });
-  } catch (error) {
-    console.error("Error bookmarking recipes:", error);
-    res.status(500).json({ error: "Error bookmarking recipes" });
-  }
-});
-
 app.get("/getbookmarks", async (req, res) => {
   try {
     const bookmarks = await query("SELECT * FROM recipes");

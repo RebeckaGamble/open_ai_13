@@ -1,17 +1,14 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import pasta from "../../public/img/pastarätt.jpg";
-import vego from "../../public/img/vegetarisk.jpg";
-import lax from "../../public/img/citronlax.jpg";
-import kyckling from "../../public/img/kyckling.jpg";
-import chicken from "../../public/img/Chicken.jpg";
-import bowl from "../../public/img/bowl.jpg";
-import shellfish from "../../public/img/shellfish.jpg";
-import salad from "../../public/img/salad.jpg";
-import steak from "../../public/img/steak.png";
-import fish from "../../public/swiper_img/Fish1_bg.png"
-
+import smoothie from "../../public/img/smoothies.png";
+import herbs from "../../public/swiper_img/herbs1.jpg";
+import salad from "../../public/swiper_img/sallad4.jpg";
+import greekyogurt from "../../public/swiper_img/greekyogurt.jpg";
+import salmon_bowl from "../../public/swiper_img/salmon_bowl.jpg";
+import oat1 from "../../public/swiper_img/oat1.jpg";
+import quinoa_bowl from "../../public/swiper_img/quinoa_bowl.jpg";
+import energy from "../../public/swiper_img/energy1.jpg";
 
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,49 +19,49 @@ import "swiper/css/navigation";
 const bannerimg = [
   {
     title: "Budget friendly",
-    src: fish,
+    src: quinoa_bowl,
     alt: "Budget friendly recipes",
     text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes for busy days.",
     id: 1,
   },
   {
     title: "Healthy bowls",
-    src: bowl,
+    src: salmon_bowl,
     alt: "Bowl",
     text: "Nourish your body with a bowl full of goodness. Tap for healthy meal ideas.",
     id: 2,
   },
   {
     title: "Oatmeal",
-    src: shellfish,
+    src: oat1,
     alt: "Oatmeal recipes",
     text: "Start your day with warmth and goodness. Discover hearty oatmeal recipes here.",
     id: 3,
   },
   {
     title: "Smoothies",
-    src: kyckling,
+    src: smoothie,
     alt: "Chciken",
     text: "Blend your way to wellness. Click to discover refreshing smoothie recipes.",
     id: 4,
   },
   {
     title: "Nutritious snack",
-    src: steak,
+    src: greekyogurt,
     alt: "Steak",
     text: "Snack smarter with wholesome bites. Tap for nutritious snack ideas.",
     id: 5,
   },
   {
     title: "Fresh herbs",
-    src: lax,
-    alt: "Salmon",
+    src: herbs,
+    alt: "Herbs",
     text: "Add flavor and freshness to your meals. Click to explore herb garden ideas.",
     id: 6,
   },
   {
     title: "Energy boost",
-    src: vego,
+    src: energy,
     alt: "Vegetarian stew",
     text: "Boost your energy with nature's bounty. Discover easy, affordable recipes.",
     id: 7,
@@ -86,12 +83,12 @@ export default function BannerContent() {
   };
 
   return (
-    <div className="w-full h-auto bg-white flex flex-col items-center justify-center border-b border-t">
-      <div className="max-w-[90rem] w-full justify-center items-center flex mx-auto py-10 ">
+    <div className="w-full h-auto bg-white border-b border-t">
+      <div className="max-w-[90rem] w-full mx-auto items-center justify-center h-full py-10 ">
         <Swiper
           navigation={true}
           direction="horizontal"
-          slidesPerView={1}
+          slidesPerView={2}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
@@ -101,42 +98,43 @@ export default function BannerContent() {
           speed={4000}
           modules={[Navigation, Autoplay]}
           breakpoints={{
-            580: {
-              slidesPerView: 2,
+            640: {
+              slidesPerView: 3,
             },
             // when window width is >= 640px
-            890: {
-              slidesPerView: 3,
+            900: {
+              slidesPerView: 4,
             },
             // when window width is >= 768px
             1300: {
               slidesPerView: 4,
             },
           }}
-          className="h-full w-full max-w-[90rem] mx-auto items-center"
+          className="h-auto w-full mx-auto"
         >
           {bannerimg.map((dish, index) => (
-            <SwiperSlide key={index} className="swiper-slide">
+            <SwiperSlide
+              key={index}
+            >
               <button onClick={() => handleItemClick(dish.id)}>
-                <div className="flex flex-col h-full w-full">
-                  <div className="w-full h-auto flex justify-center items-center">
-                    <div className="overflow-hidden rounded-full bg-white  border border-slate-50">
-                      <div className="group relative w-[240px] h-[240px] items-center justify-center flex bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] ">
+                <div className=" flex flex-col items-center justify-center">
+                  {" "}
+                  <div className="overflow-hidden rounded-full bg-white border border-slate-50">
+                    <div className="group relative w-[230px] h-[230px]">
+                      {/**
                        <p className="p-2 uppercase font-semibold text-[32px] text-center rounded-full h-auto w-full object-cover object-center transition duration-300 transform group-hover:scale-110">{dish.title}</p>
-                       {/**
-                        <Image
-                          src={dish.src}
-                          height={300}
-                          width={300}
-                          alt={dish.alt}
-                          className="rounded-full h-auto w-full object-cover object-center transition duration-300 transform group-hover:scale-110"
-                        />
-                         */}
-                        <div className="absolute h-auto w-full inset-0 opacity-1 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
+                      */}
+                      <Image
+                        src={dish.src}
+                        height={300}
+                        width={300}
+                        alt={dish.alt}
+                        className="rounded-full h-[230px] w-full object-cover object-center transition duration-300 transform group-hover:scale-110"
+                      />
+                      <div className="absolute h-auto w-full inset-0 opacity-1 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                   </div>
-                  <p className="w-[260px] p-t-2 text-[18px] text-center">
+                  <p className="w-[260px] pt-2 text-[18px] text-center">
                     {dish.text}
                   </p>
                 </div>

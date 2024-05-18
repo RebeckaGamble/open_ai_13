@@ -31,7 +31,7 @@ export default function BookmarkedRecipeCard({ title, src, id, alt, content }) {
   return (
     <div
       className={`border relative flex flex-col items-center justify-center gap-6 ${
-        showContent ? "h-auto w-full" : "h-[360px] w-[480px]"
+        showContent ? "h-auto w-full" : "h-[440px] w-[480px]"
       } p-10 rounded-[30px] bg-[#E1DAD0]`}
     >
       <div className=" absolute top-4 right-4">
@@ -42,11 +42,13 @@ export default function BookmarkedRecipeCard({ title, src, id, alt, content }) {
         </button>
         </TooltipCheck>
       </div>
-      <Image src={src} alt={alt} height={200} width={200} />{" "}
       {content.recipe && (
+        <>
+      <Image src={content.recipe.imageUrl} alt={alt} height={200} width={200} className="rounded-[10px] w-auto" />{" "}
         <h3 className="font-semibold text-2xl text-center w-full">
           {content.recipe.recipe_title}
         </h3>
+        </>
       )}
       {showContent && (
         <>
