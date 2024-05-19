@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useContext, useState, useRef, useEffect } from "react";
@@ -10,7 +11,9 @@ import test from "../../../public/img/test_img.jpg";
 export default function UserAccount() {
   const { loggedIn, logout } = useContext(LoginContext);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
+  /*const [showPopup, setShowPopup] = useState(false);*/
+  const [showAvatarPopup, setShowAvatarPopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
   const [avatarBorders, setAvatarBorders] = useState({
     boy: "",
     girl: "",
@@ -18,8 +21,16 @@ export default function UserAccount() {
 
   const [customAvatar, setCustomAvatar] = useState(null);
   const popupRef = useRef(null);
+  const avatarPopupRef = useRef(null);
+  const editPopupRef = useRef(null);
 
   const [bookmarkedRecipes, setBookmarkedRecipes] = useState([]);
+
+  //const användaruppgifter
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchBookmarkedRecipes = async () => {
@@ -66,8 +77,14 @@ export default function UserAccount() {
 */
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setShowPopup(false);
+      if (
+        avatarPopupRef.current &&
+        !avatarPopupRef.current.contains(event.target)
+      ) {
+        setShowAvatarPopup(false);
+      }
+      if (editPopupRef.current && !editPopupRef.current.contains(event.target)) {
+        setShowEditPopup(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -94,6 +111,33 @@ export default function UserAccount() {
     }
   };
 
+  //handle update funktion
+  const handleUpdate = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/updateuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: 1, // använd den inloggade användarens ID
+          email,
+          username,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        setMessage("User details updated successfully");
+      } else {
+        setMessage("Failed to update user details");
+      }
+    } catch (error) {
+      console.error("Error updating user details:", error);
+      setMessage("Error updating user details");
+    }
+  };
+
   return (
     <>
       {/* 
@@ -102,14 +146,12 @@ export default function UserAccount() {
       <>
         <div className="h-auto min-h-[calc(100vh-320px)] py-10 lg:py-20 w-full px-4">
           <div className="w-full max-w-[90rem] mx-auto">
-            <div className="flex flex-row justify-end items-center gap-10 text-xl font-semibold py-4">
-              <h2>Name</h2>
-              <h2>Email</h2>
+            <div className="flex flex-row-reverse items-center gap-10 text-xl font-semibold py-4">
               <div className="relative">
-                {/* popup */}
+                {/*Avatar popup */}
                 <div
                   className="w-20 h-20 rounded-full overflow-hidden border-4 cursor-pointer"
-                  onClick={() => setShowPopup(true)}
+                  onClick={() => setShowAvatarPopup(true)}
                 >
                   {(selectedAvatar || customAvatar) && (
                     <img
@@ -123,10 +165,10 @@ export default function UserAccount() {
                     />
                   )}
                 </div>
-                {/* Popup-container */}
-                {showPopup && (
+                {/*Avatar Popup-container */}
+                {showAvatarPopup && (
                   <div
-                    ref={popupRef}
+                    ref={avatarPopupRef}
                     className="absolute top-0 right-0 mt-24 w-48 pt-4 bg-white border border-gray-200 rounded shadow-lg z-10"
                   >
                     <div
@@ -169,6 +211,16 @@ export default function UserAccount() {
                   </div>
                 )}
               </div>
+              <div className="flex flex-row gap-4 items-center">
+                  <p>{email || "Your Email"}</p>
+                  <p>{username || "Your Username"}</p>
+                  <button
+                    className="bg-black text-white p-2 rounded-lg hover:bg-slate-600"
+                    onClick={() => setShowEditPopup(true)}
+                  >
+                    Redigera
+                  </button>
+                </div>
             </div>
             <hr className=" border-t-4 text-black" />
             <div className="flex flex-row items-center gap-2 pt-10">
@@ -199,8 +251,58 @@ export default function UserAccount() {
                 </div>
               )}
             </div>
+            </div>
+
+              {/* Edit User Details Popup */}
+              {showEditPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+                  <div
+                    ref={editPopupRef}
+                    className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+                  >
+                    <h2 className="font-semibold text-xl mb-4">
+                      Update User Details:
+                    </h2>
+                    <div className="flex flex-col gap-4">
+                      <input
+                        type="email"
+                        placeholder="New Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="border p-2 rounded"
+                      />
+                      <input
+                        type="text"
+                        placeholder="New Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="border p-2 rounded"
+                      />
+                      <input
+                        type="password"
+                        placeholder="New Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="border p-2 rounded"
+                      />
+                      <button
+                        onClick={handleUpdate}
+                        className="bg-blue-500 text-white p-2 rounded"
+                      >
+                        Update Details
+                      </button>
+                      {message && <p>{message}</p>}
+                      <button
+                        onClick={() => setShowEditPopup(false)}
+                        className="text-red-500 mt-2"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
           </div>
-        </div>
       </>
       {/* 
       ) : (

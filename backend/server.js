@@ -57,6 +57,39 @@ app.post("/users", async (req, res) => {
   }
 });
 
+//updatera användare start
+app.post("/updateuser", async (req, res) => {
+  const {userId, email, username, password } = req.body;
+
+  try{
+    const updateData = {};
+    if (email) updateData.email = email;
+    if (username) updateData.username = username;
+    if (password) {
+      const saltRounds = 10;
+      updateData.password = await bcrypt.hash(password, saltRounds);
+    }
+    const updates = [];
+    for (const [key, value] of Object.entries(updateData)) {
+      updates.push(`${key} = ?`);
+    }
+    const sql = `UPDATE users SET ${updates.join(", ")} WHERE id = ?`;
+    const values = [...Object.values(updateData), userId];
+
+    const result = await query(sql, values);
+
+    if (result.affectedRows === 0) {
+      res.status(404).json({ error: "User not found" });
+    } else {
+      res.status(200).json({ message: "User updated successfully" });
+    }
+  } catch (error) {
+    console.error("Error updating user", error);
+    res.status(500).json({ error: "Error updating user" });
+  }
+})
+//updatera användaren end
+
 //Logga in
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
