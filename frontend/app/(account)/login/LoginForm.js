@@ -1,40 +1,38 @@
 "use client";
-import React, { useState, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { IoEye, IoEyeOff } from "react-icons/io5";
+import React, { useState } from "react";
 import Link from "next/link";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
-import { LoginContext } from "@/app/components/LoginContext";
+import { useRouter } from "next/navigation";
+import Checkbox from "@/app/components/ai/Checkbox";
+import { useLoginContext } from "@/app/components/LoginContext";
+import { IoEye, IoEyeOff } from "react-icons/io5";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { setLoggedIn, login } = useContext(LoginContext);
+  const { setSessionToken, setLoggedIn, login } = useLoginContext();
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!username || !password) {
+      setError("Wrong username or password.");
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        router.push("/account");
-        console.log("Login succeded");
-        login();
-        console.log(setLoggedIn, "Du är inloggad!");
-      } else {
-        console.error("Invalid username or password!");
-        setError("Invalid password or username");
-      }
+      const { sessionToken } = await login(username, password);
+      setLoggedIn(true);
+      setSessionToken(sessionToken);
+
+      router.push("/account");
     } catch (error) {
       console.error("Error logging in:", error.message);
       setError("Failed to login");
@@ -52,95 +50,95 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="px-4 bg-gradient-to-t bg-white">
-        <div className="pt-5 flex flex-col mx-auto h-screen">
+      <div className="bg-white">
+        <div className="mt-24 flex flex-col mx-auto">
           <form
             action=""
-            className="flex flex-col gap-2 mx-auto mt-28
-          rounded-lg bg-[#F3F2F2] p-4 mb-5 shadow-md"
+            className="flex flex-col gap-2 mx-auto rounded-lg bg-[#E1DAD0] px-10 py-10 shadow-md"
           >
-            <h3 className="font-semibold pt-5 text-center text-3xl ">Login</h3>
+            <h3 className="font-semibold text-center text-3xl">Login</h3>
 
-            <div className="pt-4 text-center">
-              <p className="pb-3">
-                <span style={{ color: "black" }}>Don't have an account? </span>
-                <Link href="/create" className="text-blue-700">
-                  Register
-                </Link>
-              </p>
+            <div className="flex flex-row py-4 text-center">
+              <p className="text-black pr-1">Don't have an account? </p>
+              <Link href="/create" className="text-blue-700">
+                Register
+              </Link>
             </div>
 
-            <div className="mb-6 flex flex-col gap-1">
+            <div className="flex flex-col gap-4">
               <a
                 href="https://www.facebook.com/?locale=sv_SE"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-700 m-2 flex items-center justify-center  bg-[white] rounded-full shadow-md shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-                style={{ width: "300px", height: "40px" }}
+                className="text-blue-700 flex items-center justify-center bg-[white] rounded-full p-2 cursor-pointer hover:scale-110 ease-in duration-300"
               >
                 <FaFacebook size={24} />
-                <span className="ml-3 text-black">Login With Facebook</span>
+                <span className="ml-3 text-black">Log in with Facebook</span>
               </a>
 
               <a
                 href="https://myaccount.google.com/"
                 target="_blank"
                 rel="noreferrer"
-                className="m-2 flex items-center justify-center bg-white rounded-full shadow-md shadow-gray-400 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-                style={{ width: "300px", height: "40px" }}
+                className="flex items-center justify-center bg-white rounded-full p-2 cursor-pointer hover:scale-110 ease-in duration-300"
               >
-                <FaGoogle size={24} />
-                <span className="ml-3 text-black">Login With Google</span>
+                <FcGoogle size={24} />
+                <span className="ml-3 text-black">Log in with Google</span>
               </a>
             </div>
 
-            <div className="flex justify-center items-center mb-4">
-              <div className="border-b border-white bg-white w-2/6"></div>
+            <div className="flex justify-center items-center my-4">
+              <div className="border-b border-black w-2/6"></div>
               <h3 className="text-center mx-4 ">OR</h3>
-              <div className="border-b border-white w-2/6"></div>
+              <div className="border-b border-black w-2/6"></div>
             </div>
-
-            <input
-              type="text"
-              value={username}
-              required
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              className="bg-white flex justify-center items-center  border-[1px] border-[#E4DED6] 
-                rounded-md pl-[16px] py-2 placeholder-black outline-none"
-            />
-            <div className="flex items-center mt-0 bg-white border border-white justify-between rounded-md px-4">
+            <div className="flex flex-col gap-4">
               <input
-                className="bg-white rounded-md py-2 placeholder-black outline-none"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={handleChangePassword}
+                type="text"
+                value={username}
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                className="bg-white flex justify-center items-center border-[1px] border-[#E4DED6] 
+                rounded-md pl-[16px] py-2 placeholder-black outline-none"
               />
-              {showPassword ? (
-                <IoEyeOff
-                  className="Eye bg-white color-gray-900 cursor-pointer"
-                  onClick={togglePasswordVisibility}
+              <div className="flex items-center mt-0 bg-white border border-white justify-between rounded-md px-4">
+                <input
+                  className="bg-white rounded-md py-2 placeholder-black outline-none"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={handleChangePassword}
                 />
-              ) : (
-                <IoEye
-                  className=" Eye-on color-gray-900 fill-gray-400 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                />
-              )}
+                {showPassword ? (
+                  <IoEyeOff
+                    className="Eye bg-white color-gray-900 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <IoEye
+                    className=" Eye-on color-gray-900 fill-gray-400 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                )}
+              </div>
             </div>
-
             {error && (
               <p className="text-red-500 text-center">
                 Invalid password or username
               </p>
             )}
-            <div className="max-w-full mt-4 flex justify-center items-center">
+            <div className="w-full mt-3 text-[12px] h-auto flex flex-col justify-center">
+              <div className="flex flex-row pb-6 w-full items-center justify-between">
+                <div className="flex flex-row items-center gap-1.5">
+                  <Checkbox checkIcon={<CheckIcon />} label={"Remember me"} />
+                </div>
+                <p>Forgot Password?</p>
+              </div>
               <Link href="/">
                 <button
                   onClick={handleSubmit}
-                  className="bg-white text-black 
-            w-[190px] h-[48px] rounded-xl font-bold font-inter text-[16px]"
+                  className="bg-black text-white w-full h-[48px] tracking-wider rounded-xl font-semibold font-inter text-[16px]"
                 >
                   Log in
                 </button>

@@ -2,29 +2,36 @@
 
 import React from "react";
 import Image from "next/image";
-import testImg from "/public/img/test_img.jpg";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useState } from "react";
+import { useLoginContext } from "@/app/components/LoginContext";
+
 
 export default function RecipeCard({ recipes }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const { loggedIn, username } = useLoginContext();
+
 
   const handleBookmark = async () => {
+    // Check if the user is logged in
+    if (!loggedIn) {
+      alert("Please log in to bookmark recipes.");
+      return;
+    }
+    setIsBookmarked(false)
     try {
-      const response = await fetch("http://localhost:4000/bookmarks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ recipe: recipes }),
-      });
-      console.log(response);
-      console.log(recipes);
-
-      if (response.ok) {
-        setIsBookmarked(true);
-      } else {
-        console.error("Failed to bookmark recipe:", response.statusText);
+        const response = await fetch("http://localhost:4000/bookmarks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ recipe: recipes, username }),
+        });
+  
+        if (response.ok) {
+          setIsBookmarked(true);
+        } else {
+          console.error("Failed to bookmark recipe:", response.statusText);
       }
     } catch (error) {
       console.error("Error bookmarking recipe:", error);
@@ -41,13 +48,14 @@ export default function RecipeCard({ recipes }) {
       className="w-full px-4 max-w-[90rem] flex flex-col mx-auto bg-[#E1DAD0] text-[#250D01] rounded-[10px] p-4 md:p-8 "
     >
       <div className="flex flex-col lg:flex-row">
-        <div className="w-full max-w-[500px] flex flex-col mx-auto lg:w-[30%] pb-10 lg:pb-6">
+        <div className="w-full flex max-w-[480px] flex-col mx-auto h-auto lg:w-[30%] pb-10 lg:pb-6">
+
           <Image
             src={recipes.imageUrl}
             alt={"generat img"}
             height={140}
             width={200}
-            className="rounded-[10px] object-fit bg-[#CBB89D] "
+            className="rounded-[10px] w-full h-auto object-contain "
           />
           <div
             className="flex flex-row items-center pt-1"
@@ -56,7 +64,7 @@ export default function RecipeCard({ recipes }) {
             <span className="pr-2">
               {isBookmarked ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
             </span>
-            Save recipe
+            {isBookmarked ? "" : "Save recipe"}
           </div>
         </div>
         <div className="w-full lg:w-[70%] lg:ml-6 flex flex-col">

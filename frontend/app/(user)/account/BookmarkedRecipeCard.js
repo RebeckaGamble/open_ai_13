@@ -1,53 +1,65 @@
 import TooltipCheck from "@/app/components/ai/ToolTip";
+import { useLoginContext } from "@/app/components/LoginContext";
 import Image from "next/image";
 import React, { useState } from "react";
+import { FaHeart } from "react-icons/fa";
 
-export default function BookmarkedRecipeCard({ title, src, id, alt, content }) {
+export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
   const [showContent, setShowContent] = useState(false);
+  const { username } = useLoginContext();
 
   const toggleContent = () => {
     setShowContent((prevShowContent) => !prevShowContent);
   };
-
-  const removeRecipe = async () => {
+  
+  const handleRemoveBookmark = async () => {
     try {
-      const response = await fetch("http://localhost:4000/removeRecipe", {
+      const response = await fetch("http://localhost:4000/removeBookmark", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id }), 
+        body: JSON.stringify({ id: content.id, username }),
       });
       if (response.ok) {
-        console.log("Recipe removed successfully");
+       // console.log("Bookmark removed successfully");
+        onRemove(content.id) //remove recipe from state
       } else {
         console.error("Failed to remove recipe", response.statusText);
       }
     } catch (error) {
-      console.error("Error removing recipe:", error.message);
+      console.error("Error removing bookmark:", error.message);
     }
   };
 
   return (
     <div
       className={`border relative flex flex-col items-center justify-center gap-6 ${
-        showContent ? "h-auto w-full" : "h-[440px] w-[480px]"
-      } p-10 rounded-[30px] bg-[#E1DAD0]`}
+        showContent ? "h-auto w-full max-w-[910px]" : "h-[440px] w-[400px]"
+      } p-4 rounded-[30px] bg-[#E1DAD0]`}
     >
       <div className=" absolute top-4 right-4">
-        <TooltipCheck text={"Remove saved recipe from your account"} >
-        <button className="flex items-start justify-end w-10 h-10 font-semibold text-[20px] hover:text-red-600" onClick={removeRecipe}>
-          X
-        
-        </button>
+        <TooltipCheck text={"Remove saved recipe from your account"}>
+          <button
+            className="flex items-start justify-end w-10 h-10 font-semibold text-[20px] hover:text-red-600"
+            onClick={handleRemoveBookmark}
+          >
+            <FaHeart />
+          </button>
         </TooltipCheck>
       </div>
       {content.recipe && (
         <>
-      <Image src={content.recipe.imageUrl} alt={alt} height={200} width={200} className="rounded-[10px] w-auto" />{" "}
-        <h3 className="font-semibold text-2xl text-center w-full">
-          {content.recipe.recipe_title}
-        </h3>
+          <Image
+            src={content.recipe.imageUrl}
+            alt={alt}
+            height={200}
+            width={200}
+            className={`rounded-[10px] w-auto ${showContent ? "w-1/2 h-auto" : "w-auto"}`}
+          />{" "}
+          <h3 className="font-semibold text-2xl text-center w-full">
+            {content.recipe.recipe_title}
+          </h3>
         </>
       )}
       {showContent && (

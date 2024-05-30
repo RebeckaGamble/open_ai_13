@@ -3,12 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { FaUser } from "react-icons/fa";
-import { useContext } from "react";
-import { LoginContext } from "./LoginContext";
+import { useLoginContext } from "./LoginContext";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { loggedIn, logout } = useContext(LoginContext);
+  const { loggedIn, logout } = useLoginContext()
   const router = useRouter();
 
   function handleLoggedout() {

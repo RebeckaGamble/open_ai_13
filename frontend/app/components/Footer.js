@@ -9,8 +9,8 @@ export default function Footer() {
   };
 
   return (
-    <div className="w-full h-[328px] bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] relative">
-      <div className="w-full h-full max-w-[90rem] mx-auto flex flex-col p-4 ">
+    <div className="w-full min-h-[328px] h-fit bg-gradient-to-t from-[#F3F2F2] to-[#E4DED6] relative">
+      <div className="w-full h-full max-w-[90rem] mx-auto flex flex-col pt-6 pb-2 px-4 ">
         <div>
           <Link
             href={"/"}
@@ -21,17 +21,17 @@ export default function Footer() {
         </div>
 
         {/**contact info - social media */}
-        <div className="pt-6 flex flex-col gap-4">
-          <div>
+        <div className="pb-6 flex flex-col sm:flex-row gap-10 justify-end">
+          <div className="gap-2">
 
-            <h4 className="text-[20px] font-semibold">Contact</h4>
-            <p> <span className="font-semibold">Address:</span> address here </p>
-            <p><span className="font-semibold">Phone:</span> phone here</p>
+            <h4 className="text-[20px] font-semibold pb-2">Contact</h4>
+            <div> <span className="font-semibold">Address</span> <p>Edagränd 12</p> <p>112 74</p> <p>Stockholm</p> </div>
+            <div><span className="font-semibold">Phone</span><p> 073 435 22 63</p></div>
           </div>
 
           <div className="w-fit">
-          <h4 className="text-[20px] font-semibold">Social media</h4>
-            <ul className="flex flex-row gap-2 justify-center">
+          <h4 className="text-[20px] font-semibold pb-2">Follow us</h4>
+            <ul className="flex flex-row gap-3 justify-center h-fit items-center">
               <li>
               <Link href="https://www.facebook.com" target="blank">
                   <FaFacebook size={30} className="fill-[#4267B2]" />

@@ -2,7 +2,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as RadixDropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
-import { IoIosArrowDown } from "react-icons/io";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";
 

@@ -101,11 +101,9 @@ export default function BannerContent() {
             640: {
               slidesPerView: 3,
             },
-            // when window width is >= 640px
             900: {
               slidesPerView: 4,
             },
-            // when window width is >= 768px
             1300: {
               slidesPerView: 4,
             },
@@ -121,9 +119,6 @@ export default function BannerContent() {
                   {" "}
                   <div className="overflow-hidden rounded-full bg-white border border-slate-50">
                     <div className="group relative w-[230px] h-[230px]">
-                      {/**
-                       <p className="p-2 uppercase font-semibold text-[32px] text-center rounded-full h-auto w-full object-cover object-center transition duration-300 transform group-hover:scale-110">{dish.title}</p>
-                      */}
                       <Image
                         src={dish.src}
                         height={300}
@@ -146,32 +141,3 @@ export default function BannerContent() {
     </div>
   );
 }
-
-/*export function Banner({ src, alt, text }) {
-  return (
-      <div className="flex flex-col items-center"> { Flex container }
-        <div className="w-[240px] h-auto">
-          <div className="overflow-hidden rounded-full">
-            <div className="group relative pt-2">
-              <Image
-                src={src}
-                height={200}
-                width={300}
-                alt={alt}
-                className="rounded-full h-auto w-full object-cover transition duration-300 transform group-hover:scale-110"
-              />
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>
-          </div>
-          <p className="w-[260px] text-[18px] pt-4 text-center">{text}</p>
-        </div>
-      </div>
-  );
-}*/
-
-/*
- <Banner src={pasta} alt={"pasta"} text={"Pasta"} />
-      <Banner src={kyckling} alt={"kyckling"} text={"Kyckling"} />
-      <Banner src={lax} alt={"lax"} text={"Lax"} />
-      <Banner src={vego} alt={"vego"} text={"Vego"} />
- */

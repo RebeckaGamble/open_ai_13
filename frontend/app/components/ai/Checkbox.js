@@ -15,26 +15,20 @@ const Checkbox = ({
 
   const handleCheckedChange = (isChecked) => {
     setIsChecked(isChecked);
-    //console.log(isChecked);
     onCheckedChange && onCheckedChange(isChecked);
   };
 
   return (
     <>
       <RadixCheckbox.Root
-        className={`flex h-[24px] w-[29px] sm:w-[24px] bg-${checkBg} border-2 border-black ${borderColor} appearance-none items-center justify-center text-[#250D01] rounded-[4px] outline-none `}
+        className={`flex h-[22px] w-[25px] sm:w-[24px] bg-${checkBg} border-2 border-black ${borderColor} appearance-none items-center justify-center text-[#250D01] rounded-[4px] outline-none `}
         id={id}
         onCheckedChange={handleCheckedChange}
         checked={isChecked}
       >
-        <RadixCheckbox.Indicator>
-          {checkIcon}
-        </RadixCheckbox.Indicator>
+        <RadixCheckbox.Indicator>{checkIcon}</RadixCheckbox.Indicator>
       </RadixCheckbox.Root>
-      <label
-        className={className}
-        htmlFor={id}
-      >
+      <label className={className} htmlFor={id}>
         {label}
       </label>
     </>

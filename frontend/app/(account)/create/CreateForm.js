@@ -1,9 +1,9 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Checkbox from "@/app/components/ai/Checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { LoginContext } from "@/app/components/LoginContext";
+import { useLoginContext } from "@/app/components/LoginContext";
 import { useRouter } from "next/navigation";
 import { TermsDialog, PrivacyDialog } from "./DialogComp";
 import Link from "next/link";
@@ -16,9 +16,9 @@ export default function CreateUser() {
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State variable to show/hide password
-  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false); // State variable to show/hide confirmed password
-  const [passwordStrength, setPasswordStrength] = useState(0); // Password strength
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false); 
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const [emailError, setEmailError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -26,7 +26,7 @@ export default function CreateUser() {
   const [emailDomainError, setEmailDomainError] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
 
-  const login = useContext(LoginContext);
+  const login = useLoginContext()
   const router = useRouter();
 
   async function handleCreateUser(e) {
@@ -112,7 +112,7 @@ export default function CreateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex flex-col justify-evenly px-4 py-8 font-sans md:rounded-[24px] bg-[#E1DAD0]">
+      <div className="flex flex-col justify-evenly px-8 py-8 font-sans md:rounded-[24px] bg-[#E1DAD0]">
         <div className="flex flex-col pb-6">
           <h2 className="text-[#250D01] text-[32px] font-semibold font-sans">
             Welcome to ChefMate
@@ -190,7 +190,7 @@ export default function CreateUser() {
                     handleChangePassword(e);
                     setPasswordError(false);
                   }}
-                  required // Make password field required
+                  required
                 />
                 {showPassword ? (
                   <IoEyeOff
@@ -236,7 +236,7 @@ export default function CreateUser() {
                 </div>
               )}
             </div>
-            {/* Confirm password/lösenord input */}
+            {/* Confirm password input */}
             <div className="flex-col flex space-y-1">
               <label className="text-[#250D01] font-semibold">
                 Confirm Password
@@ -283,7 +283,6 @@ export default function CreateUser() {
           <div className="py-4 flex flex-col gap-2">
             <label className="inline-flex h-auto items-center">
               <Checkbox
-                // onCheckedChange={handleCheckboxChange}
                 checked={isChecked}
                 checkBg={"[#E1DAD0]"}
                 borderColor={"[#250D01]"}
@@ -311,13 +310,6 @@ export default function CreateUser() {
                 }
                 required
               />
-              {/** 
-
-              <p className="w-full">
-                By creating an account you agree to the <TermsDialog /> and{" "}
-                <PrivacyDialog />
-              </p>
-              */}
             </div>
           </div>
           <button

@@ -17,10 +17,6 @@ export default function RecipeCards({
   const [isLoading, setIsLoading] = useState(false);
   const [tries, setTries] = useState(0);
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const handleTryNew = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -59,7 +55,7 @@ export default function RecipeCards({
   };
 
   return (
-    <div className="w-full max-w-[90rem] h-auto flex flex-col gap-6 lg:gap-2 py-6  px-4 items-center mx-auto">
+    <div className="w-full max-w-[90rem] h-auto flex flex-col gap-6 lg:gap-2 px-4 items-center mx-auto">
       {recipes &&
         recipes.map((recipe, index) => (
           <div

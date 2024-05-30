@@ -24,19 +24,19 @@ const pool = mysql.createPool({
   port: process.env.PORT,
 });
 
-// help function to make code look nicer
 async function query(sql, params) {
   const [results] = await pool.execute(sql, params);
   return results;
 }
 
-//skapa användare
+//create user
 app.post("/users", async (req, res) => {
   const { email, username, password } = req.body;
-  // kryptera lösenordet innan det hamnar i DB
+
+  //encrypt the password before it ends up in the DB
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  console.log("hashedPassword", hashedPassword);
+
   try {
     const result = await query(
       "INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
@@ -49,20 +49,27 @@ app.post("/users", async (req, res) => {
       "INSERT INTO bookmarks (user_id, recipe_id ) VALUES (?, ?)",
       [user.id, 0]
     );
+
     console.log("New user and user account created:", newAccount);
-    res.status(201).json({ message: "User created" });
+    res.status(201).json({ message: "User created"});
   } catch (error) {
     console.error("Error creating user", error);
     res.status(500).json({ error: "Error creating user" });
   }
 });
 
-//updatera användare start
-app.post("/updateuser", async (req, res) => {
-  const {userId, email, username, password } = req.body;
-
-  try{
-    const updateData = {};
+//update user
+app.put("/updateuser", async (req, res) => {
+  const { email, username, password } = req.body;
+     try{ 
+      const [user] = await query("SELECT * FROM users WHERE username = ?", [
+        username,
+      ]);
+      
+      if (!user) {
+        return res.status(401).send("Invalid username or password");
+      }
+      const updateData = {};
     if (email) updateData.email = email;
     if (username) updateData.username = username;
     if (password) {
@@ -73,45 +80,84 @@ app.post("/updateuser", async (req, res) => {
     for (const [key, value] of Object.entries(updateData)) {
       updates.push(`${key} = ?`);
     }
-    const sql = `UPDATE users SET ${updates.join(", ")} WHERE id = ?`;
-    const values = [...Object.values(updateData), userId];
+    const sql = `UPDATE users SET ${updates.join(", ")} WHERE username = ?`;
+    const values = [...Object.values(updateData), username];
 
     const result = await query(sql, values);
 
     if (result.affectedRows === 0) {
       res.status(404).json({ error: "User not found" });
     } else {
-      res.status(200).json({ message: "User updated successfully" });
     }
-  } catch (error) {
-    console.error("Error updating user", error);
-    res.status(500).json({ error: "Error updating user" });
-  }
-})
-//updatera användaren end
 
-//Logga in
+      res.status(200).json({ message: "User details updated successfully" });
+
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//Generate OTP
+async function generateOTP() {
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp.toString();
+}
+
+//Log in
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  // 1. Gör select och hämta raden som matchar username
-  const result = await query("SELECT * FROM users WHERE username = ?", [
+
+ try {
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [
     username,
   ]);
-  console.log("result", result);
-  const user = result[0];
+  
   if (!user) {
     return res.status(401).send("Invalid username or password");
   }
-  // 2. Kolla hash i DB matchar crypterat lösenord
+  // Check hash in DB matches encrypted password
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) {
     return res.status(401).send("invalid usernam or password");
   }
+
+  //generate session token
+  const sessionToken = await generateOTP();
+
+  //insert into sessions
+  const result = await query(
+    "INSERT INTO sessions (user_id, password) VALUES (?, ?)",
+    [user.id, sessionToken]
+  );
+
   // req.session.loggedIn = true;
-  res.status(200).json({ message: "login successful" });
+  res.status(200).json({
+    message: "Login successful",
+    username: user.username,
+    email: user.email,
+    sessionToken: sessionToken
+  });
+} catch (error) {
+  console.error("Error logging in:", error);
+  return res.status(500).json({ error: "Internal server error" });
+}
 });
 
-//recipes
+app.post("/logout", async (req, res) => {
+  const { sessionToken } = req.body;
+
+  try {
+    await query("DELETE FROM sessions WHERE password = ?", [sessionToken]);
+
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error logging out:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//generate recipes
 app.post("/recipes", async (req, res) => {
   const { prompt } = req.body;
   try {
@@ -127,7 +173,6 @@ app.post("/recipes", async (req, res) => {
 
     const result = completion.choices[0].message.content;
 
-    // Försök att parsa resultatet som JSON
     try {
       const parsed = JSON.parse(result);
       console.log("Parsed JSON:", parsed);
@@ -142,7 +187,7 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
-// generera bild
+//generate image
 app.post("/generate-image", async (req, res) => {
   const { foodDescription } = req.body;
   if (!foodDescription) {
@@ -166,45 +211,89 @@ app.post("/generate-image", async (req, res) => {
   }
 });
 
-app.post("/bookmarks", async (req, res) => {
-  const { recipe } = req.body;
+//get bookmarks 
+app.post("/getbookmarks", async (req, res) => {
+  const { username } = req.body;
+
   try {
-    const addedRecipe = await query(
-      "INSERT INTO recipes ( recipe ) VALUES (?)",
-      [recipe]
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [username]);
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const [bookmark] = await query("SELECT * FROM bookmarks WHERE user_id = ?", [user.id]);
+    if (!bookmark) {
+      console.log("Bookmark not found");
+      return res.status(404).json({ message: "Bookmark not found" });
+    }
+
+    const recipes = await query("SELECT * FROM recipes WHERE bookmark_id = ?", [bookmark.id]);
+    res.json(recipes);
+  } catch (error) {
+    console.error("Error getting bookmarks:", error);
+    res.status(500).json({ error: "Error getting bookmarks" });
+  }
+});
+
+//bookmark recipe
+app.post("/bookmarks", async (req, res) => {
+  const { recipe, username } = req.body;
+
+  try {
+   const [user] = await query("SELECT * FROM users WHERE username = ?", [username]);
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const [bookmark] = await query("SELECT * FROM bookmarks WHERE user_id = ?", [user.id]);
+    if (!bookmark) {
+      console.log("Bookmark not found");
+      return res.status(404).json({ message: "Bookmark not found" });
+    }
+
+    // Insert the entire recipe into recipes table
+    const result = await query(
+      "INSERT INTO recipes (recipe, bookmark_id) VALUES (?, ?)",
+      [JSON.stringify(recipe), bookmark.id]
     );
 
-    res.json({ success: true });
+    res.json({ success: true, username });
   } catch (error) {
     console.error("Error bookmarking recipe:", error);
     res.status(500).json({ error: "Error bookmarking recipe" });
   }
 });
 
-app.get("/getbookmarks", async (req, res) => {
-  try {
-    const bookmarks = await query("SELECT * FROM recipes");
-
-    res.status(200).json({ bookmarks, id: bookmarks.id });
-  } catch (error) {
-    console.error("Error fetching bookmarks:", error);
-    res.status(500).json({ error: "Error fetching bookmarks" });
-  }
-});
-
-app.delete("/removeRecipe", async (req, res) => {
-  const { id } = req.body;
+//remove bookmark
+app.delete("/removeBookmark", async (req, res) => {
+  const { id, username } = req.body;
 
   try {
-    const result = await query("DELETE FROM recipes WHERE id = ?", [id]);
-    if (result.affectedRows > 0) {
-      res.status(200).json({ message: "Recipe removed successfully" });
-    } else {
-      res.status(404).json({ error: "Recipe not found" });
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [username]);
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ message: "User not found" });
     }
+
+    const [bookmark] = await query("SELECT * FROM bookmarks WHERE user_id = ?", [user.id]);
+    if (!bookmark) {
+      return res.status(404).json({ message: "Bookmark not found" });
+    }
+
+    const result = await query("DELETE FROM recipes WHERE id = ? AND bookmark_id = ?", [id, bookmark.id]);
+    if (result.affectedRows === 0) {
+      console.log("Recipe not found or not bookmarked by this user");
+      return res.status(404).json({ message: "Recipe not found or not bookmarked by this user" });
+    }
+
+    res.json({ success: true });
   } catch (error) {
-    console.error("Error removing recipe:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error removing bookmark:", error);
+    res.status(500).json({ error: "Error removing bookmark" });
   }
 });
 
