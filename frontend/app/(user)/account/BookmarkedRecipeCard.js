@@ -11,7 +11,7 @@ export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
   const toggleContent = () => {
     setShowContent((prevShowContent) => !prevShowContent);
   };
-  
+
   const handleRemoveBookmark = async () => {
     try {
       const response = await fetch("http://localhost:4000/removeBookmark", {
@@ -22,8 +22,8 @@ export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
         body: JSON.stringify({ id: content.id, username }),
       });
       if (response.ok) {
-       // console.log("Bookmark removed successfully");
-        onRemove(content.id) //remove recipe from state
+        // console.log("Bookmark removed successfully");
+        onRemove(content.id); //remove recipe from state
       } else {
         console.error("Failed to remove recipe", response.statusText);
       }
@@ -55,13 +55,21 @@ export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
             alt={alt}
             height={200}
             width={200}
-            className={`rounded-[10px] w-auto ${showContent ? "w-1/2 h-auto" : "w-auto"}`}
+            className={`rounded-[10px] w-auto ${
+              showContent ? "w-1/2 h-auto" : "w-auto"
+            }`}
           />{" "}
-          <h3 className="font-semibold text-2xl text-center w-full">
-            {content.recipe.recipe_title}
-          </h3>
+          <div>
+            <h3 className="font-semibold text-2xl text-center w-full">
+              {content.recipe.recipe_title}
+            </h3>
+            <p className="pt-1 text-center">
+              {content.recipe.time} {/*- {content.recipe.portions}*/}
+            </p>
+          </div>
         </>
       )}
+      {/**(found: object with keys {ingredient, amount, unit, price}). */}
       {showContent && (
         <>
           <div className="flex flex-col lg:flex-row pb-6">
@@ -71,7 +79,8 @@ export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
                 {content.recipe.ingredients &&
                   content.recipe.ingredients.map((ingredient, index) => (
                     <li key={index} className="pb-1">
-                      {ingredient}
+                      <span className="">{ingredient.ingredient}</span>{" "}
+                      {ingredient.amount} {ingredient.unit}{" "}
                     </li>
                   ))}
               </ul>

@@ -46,8 +46,8 @@ app.post("/users", async (req, res) => {
       username,
     ]);
     const newAccount = await query(
-      "INSERT INTO bookmarks (user_id, recipe_id ) VALUES (?, ?)",
-      [user.id, 0]
+      "INSERT INTO bookmarks (user_id, recipe_id, avatar ) VALUES (?, ?, ?)",
+      [user.id, 0, 0]
     );
 
     console.log("New user and user account created:", newAccount);
@@ -59,6 +59,7 @@ app.post("/users", async (req, res) => {
 });
 
 //update user
+/*
 app.put("/updateuser", async (req, res) => {
   const { email, username, password } = req.body;
      try{ 
@@ -95,6 +96,105 @@ app.put("/updateuser", async (req, res) => {
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+*/
+app.put("/updateuser", async (req, res) => {
+  const { email, username, password, newUsername } = req.body;
+  try {
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
+    
+    if (!user) {
+      return res.status(401).send("Invalid username or password");
+    }
+
+    const updateData = {};
+    if (email) updateData.email = email;
+    if (password) {
+      const saltRounds = 10;
+      updateData.password = await bcrypt.hash(password, saltRounds);
+    }
+
+    // Check if the username is being updated
+    if (newUsername && newUsername !== username) {
+      const [existingUser] = await query("SELECT * FROM users WHERE username = ?", [
+        newUsername,
+      ]);
+
+      // Check if the new username already exists
+      if (existingUser) {
+        return res.status(400).json({ error: "Username already exists" });
+      }
+
+      // Update the username
+      updateData.username = newUsername;
+    }
+
+    const updates = [];
+    for (const [key, value] of Object.entries(updateData)) {
+      updates.push(`${key} = ?`);
+    }
+    const sql = `UPDATE users SET ${updates.join(", ")} WHERE username = ?`;
+    const values = [...Object.values(updateData), username];
+
+    const result = await query(sql, values);
+
+    if (result.affectedRows === 0) {
+      res.status(404).json({ error: "User not found" });
+    } else {
+      res.status(200).json({ message: "User details updated successfully" });
+    }
+
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.put('/updateavatar', async (req, res) => {
+  const { username, avatarUrl } = req.body;
+
+  try {
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [username]);
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const sql =  `UPDATE bookmarks SET avatar = ? WHERE user_id = ?`;
+    const values = [avatarUrl, user.id];
+
+    const result = await query(sql, values);
+
+    res.status(200).send({ message: 'Avatar updated successfully' });
+  } catch (error) {
+    console.error("Error updating avatar:", error);
+    res.status(500).send({ message: 'Error updating avatar' });
+  }
+});
+
+app.get("/fetch-avatar", async (req, res) => {
+  const { username } = req.query; 
+  console.log("get avatar, usernmae", username)
+
+  try {
+    const [user] = await query("SELECT * FROM users WHERE username = ?", [username]);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const getAvatar = await query("SELECT avatar FROM bookmarks WHERE user_id = ?", [user.id]);
+
+    // Return the avatar URL as a JSON response
+    res.json({ getAvatar });
+  } catch (error) {
+    console.error("Error fetching avatar:", error);
+    res.status(500).json({ error: "Error fetching avatar" });
   }
 });
 

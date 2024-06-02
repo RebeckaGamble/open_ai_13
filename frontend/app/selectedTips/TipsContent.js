@@ -1,7 +1,3 @@
-import shellfish from "../../public/img/shellfish.jpg";
-import bowl from "../../public/img/bowl.jpg";
-import salad1 from "../../public/img/salad.jpg";
-import salad2 from "../../public/img/salad2.jpg";
 //budget 1
 import chicken_stir from "../../public/swiper_img/chicken_stir.jpg"
 import tofu_stir from "../../public/swiper_img/tofu_stir.jpg"

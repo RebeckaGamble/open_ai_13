@@ -1,6 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import chef from "../../public/chefbot1.png";
+
 
 export default function Footer() {
   //Copyright
@@ -14,14 +17,16 @@ export default function Footer() {
         <div>
           <Link
             href={"/"}
-            className="text-5xl font-[800] text-[#726654] tracking-tighter"
           >
-            ChefMate
+           <div className="flex flex-row gap-1 items-center">
+              <Image src={chef} alt="chef logo" width={60} height={60} />
+              <span className="text-5xl tracking-tighter bg-gradient-to-t from-[#30cde6] to-[#392fc4] bg-clip-text text-transparent font-bold">ChefMate</span>
+            </div>
           </Link>
         </div>
 
         {/**contact info - social media */}
-        <div className="pb-6 flex flex-col sm:flex-row gap-10 justify-end">
+        <div className="pb-6 pt-4 sm:pt-0 flex flex-col sm:flex-row gap-10 justify-end">
           <div className="gap-2">
 
             <h4 className="text-[20px] font-semibold pb-2">Contact</h4>

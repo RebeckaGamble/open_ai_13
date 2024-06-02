@@ -32,9 +32,13 @@ export const timeOptions = [
 ];
 
 export const countryOptions = [
-  "African",
-  "Asian",
-  "European",
-  "North American",
-  "South American",
+  //"African",
+ // "Asian",
+ // "European",
+ // "North American",
+ // "South American",
+  "0 - 100 kr",
+  "100 - 200 kr", 
+  "200 - 300 kr", 
+  "300 - 400 kr"
 ];

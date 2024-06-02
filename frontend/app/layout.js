@@ -7,8 +7,11 @@ import { LoginProvider } from "./components/LoginContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "ChefMate",
-  description: "Group 13 - Chas Challange",
+  title: {
+    default: "ChefMate - Home",
+    template: "%s - ChefMate"
+  },
+  description: "ChefMate - Chas Challange",
 };
 
 export default function RootLayout({ children }) {

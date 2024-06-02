@@ -40,6 +40,7 @@ export default function UserAccount() {
     if (loggedIn) {
       setLoading(true);
       fetchBookmarkedRecipes()
+      fetchAvatar(username)
         .then(() => setLoading(false))
         .catch((error) => {
           console.error("Error fetching bookmarks:", error);
@@ -103,35 +104,94 @@ export default function UserAccount() {
     };
   }, []);
 
+  const updateAvatarInDB = async (avatarUrl) => {
+    try {
+      const response = await fetch("http://localhost:4000/updateavatar", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, avatarUrl }),
+      });
+
+      if (response.ok) {
+        setMessage("Avatar updated successfully");
+      } else {
+        setMessage("Failed to update avatar");
+        console.error("Failed to update avatar in bookmarked recipes");
+
+      }
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      setMessage("Error updating avatar");
+    }
+  };
+
   const selectAvatar = (avatarIndex) => {
-    setSelectedAvatar(avatarIndex);
-    setShowPopup(false);
+    let avatarUrl;
     if (avatarIndex === "robot.jpg") {
       setAvatarBorders({
         robot: "border-4 border-green-300",
         boy: "",
         girl: "",
       });
+      avatarUrl = "robot.jpg"; 
     } else if (avatarIndex === "profile_boy.png") {
       setAvatarBorders({
         robot: "",
         boy: "border-4 border-blue-500",
         girl: "",
       });
+      avatarUrl = "profile_boy.png"; 
     } else if (avatarIndex === "profile_girl.png") {
       setAvatarBorders({
         robot: "",
         boy: "",
         girl: "border-4 border-pink-500",
       });
+      avatarUrl = "profile_girl.png"; 
+    }
+    setSelectedAvatar(avatarIndex);
+    setShowPopup(false);
+    updateAvatarInDB(avatarUrl); 
+  };
+  
+  const fetchAvatar = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:4000/fetch-avatar?username=${username}`);
+      if (response.ok) {
+        const avatarData = await response.json();
+        //console.log("Avatar data:", avatarData); // Log avatarData to console
+        if (avatarData && avatarData.getAvatar && avatarData.getAvatar.length > 0) {
+          const avatarUrl = avatarData.getAvatar[0].avatar;
+          setSelectedAvatar(avatarUrl);
+        } else {
+          console.error("Avatar data or avatar URL is missing");
+        }
+      } else {
+        console.error("Failed to fetch avatar:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching avatar:", error);
     }
   };
 
+  /*
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedAvatar(null);
       setCustomAvatar(URL.createObjectURL(file));
+    }
+  };*/
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const customAvatarUrl = URL.createObjectURL(file);
+      setSelectedAvatar(null);
+      setCustomAvatar(customAvatarUrl);
+      updateAvatarInDB(customAvatarUrl);
     }
   };
 
@@ -190,7 +250,7 @@ export default function UserAccount() {
 
   if (!loggedIn) {
     return (
-      <div className=" h-[calc(100vh-320px)] pt-20 w-full">
+      <div className=" h-[calc(100vh-440px)] pt-20 w-full">
         <hr className=" border-t-4 text-[#250D01] mx-14" />
         <p className="text-center text-[16px] pt-4">
           You need to{" "}

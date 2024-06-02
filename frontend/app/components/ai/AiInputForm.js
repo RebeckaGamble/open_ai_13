@@ -34,6 +34,15 @@ export default function AiInputForm() {
   const [newRecipe, setNewRecipe] = useState(null);
   const [error, setError] = useState("");
   const [initialButtonClicked, setInitialButtonClicked] = useState("");
+  const [bookmarkedRecipes, setBookmarkedRecipes] = useState({});
+
+  const handleBookmark = (recipeId) => {
+    setBookmarkedRecipes((prevBookmarks) => ({
+      ...prevBookmarks,
+      [recipeId]: !prevBookmarks[recipeId],
+    }));
+  };
+
 
   const handleSelect = (label, isChecked) => {
     if (isChecked) {
@@ -68,20 +77,29 @@ export default function AiInputForm() {
       .join(", ");
 
     // Send selected values to the backend
-    const prompt = `I'm looking for recipes, I am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum of ${timeToSpend} to make the dish. It cannot contain ${checkedItems}. I would prefer food that's ${preferences} from ${country}. Can you give me one recipe based on this?
+    const prompt = `I'm looking for a budgetfriendly recipe, I am feeling ${todaysMood} and would like a recipe to counter that. I have a maximum of ${timeToSpend} to make the dish. It cannot contain ${checkedItems}. I would prefer food that's ${preferences} keep it between the pricerange of ${country}. Can you give me one recipe based on this?
       Please provide the recipe in the following JSON format:
 
       {
         "recipeId": "",
         "recipe_title": "",
-        "ingredients": [],
+        "time",
+        "portions",
+        "budgetMotivation",
+        "ingredients": [
+          {
+            "ingredient", "amount", "unit", "price"
+          }
+        ],
+        "totalPrice: "",
         "steps": [],
+        "budgetExplanation",
         "historic_overview": "",
         "motivation_heading": "",
         "motivation": ""
       }
 
-      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation personalised as if to a dear friend, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+      Make sure to include a recipe_title, time it takes to make the dish, portions of the recipe, a max 13 word budgetMotivation, ingredients with the price for each product in SEK and a total price, steps(don't add a list style to the item), motivation_heading, a small motivation personalised as if to a dear friend, a small "budgetExplanation" on why this dish is affordable for your friends needs, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
     `;
     //console.log(prompt);
 
@@ -146,20 +164,30 @@ export default function AiInputForm() {
 
   const fetchSuprise = async () => {
     setLoading(true);
-    const prompt = `I'm looking for recipe, suprise me!
+    setError("")
+    const prompt = `I'm looking for a recipe, suprise me!
       Please provide the recipe in the following JSON format:
 
       {
         "recipeId": "",
         "recipe_title": "",
-        "ingredients": [],
+        "time",
+        "portions",
+        "budgetMotivation",
+        "ingredients": [
+          {
+            "ingredient", "amount", "unit", "price"
+          }
+        ],
+        "totalPrice: "",
         "steps": [],
+        "budgetExplanation",
         "historic_overview": "",
         "motivation_heading": "",
         "motivation": ""
       }
 
-      Make sure to include a recipe_title, ingredients, steps, motivation_heading, a small motivation personalised as if to a dear friend, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
+      Make sure to include a recipe_title, time it takes to make the dish, portions of the recipe, a max 13 word budgetMotivation, ingredients with the price for each product in SEK and a total price, steps(don't add a list style to the item), motivation_heading, a small motivation personalised as if to a dear friend, a small "budgetExplanation" on why this dish is affordable for your friends needs, and a historic_overview. Use deciliters instead of cups in the measurements and Celsius instead of Fahrenheit. Make sure not to use the same recipe as before.
     `;
 
     setShowRecipe(true);
@@ -238,9 +266,25 @@ export default function AiInputForm() {
     setOpenSingleCard({ ...recipe, image: recipeImages[recipe.imageKey] });
   };
 
+  const handleBackToForm = () => {
+    console.log("clicked back to form")
+    setRecipes(null);
+    setNewRecipe(null);
+    setOpenSingleCard(false);
+    const aiSection = document.getElementById("ai");
+    if (aiSection) {
+      const offset = aiSection.offsetTop - 60; 
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
+
   return (
     <div className="w-full">
-      <div className="flex flex-col text-center text-[#250D01] px-4">
+      <div className="flex flex-col text-center text-[#250D01] ">
         <h3 className="text-center md:leading-[75px] font-semibold text-3xl md:text-[75px]">
           Let me help you!{" "}
         </h3>
@@ -251,7 +295,7 @@ export default function AiInputForm() {
           up and cook something delicious!
         </p>
       </div>
-      <div className="flex flex-col items-center justify-center w-full pb-12 mx-auto px-4">
+      <div className="flex flex-col items-center justify-center w-full pb-12 mx-auto">
         <div className="flex flex-col justify-betweeen ">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full max-w-[90rem]">
             <div className="flex flex-col ">
@@ -339,11 +383,12 @@ export default function AiInputForm() {
               <Dropdown.Button>
                 {selectedCountry ? (
                   <>
-                    <span>Which food culture do you prefer??</span>
+                  <span>What budget do you have?</span>
+                   {/** <span>Which food culture do you prefer??</span>*/} 
                     <span className="pl-2 font-bold">{selectedCountry}</span>
                   </>
                 ) : (
-                  "Which food culture do you prefer??"
+                  "What budget do you have?"
                 )}
               </Dropdown.Button>
               <Dropdown.Menu>
@@ -372,7 +417,7 @@ export default function AiInputForm() {
                 }
               >
                 <div className="w-fit items-center justify-center mx-auto ">
-                  <p className=" relative text-[20px] pr-2 text-center sm:text-[24px] ">
+                  <p className="relative text-[20px] pr-2 text-center sm:text-[24px] ">
                     Do you have any allergies?
                     <span className="rounded-full w-[24px] h-[24px] flex absolute top-[-6px] right-[-7px]">
                       <TbInfoSmall size={20} />
@@ -385,8 +430,8 @@ export default function AiInputForm() {
               </p>
             </div>
           </div>
-          <form action="" className="flex justify-between mx-auto">
-            <div className="flex flex-wrap items-center justify-center w-full h-auto gap-6 mx-auto ">
+          <form action="" className="flex justify-between h-auto mx-auto pt-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 items-center justify-center w-full h-auto gap-6 mx-auto ">
               {dontContain.map((dont, index) => (
                 <div
                   key={index}
@@ -438,21 +483,22 @@ export default function AiInputForm() {
         )}
         <div className="flex flex-col gap-10">
           {recipes && (
-            <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
-              <div className="w-full bg-[#E1DAD0] h-auto py-10 lg-py-20">
+            <div className="bg-[#E1DAD0] w-[calc(100vw-18px)]">
+              <div className="w-full h-auto py-10 lg-py-20">
                 <RecipeCards
                   recipes={recipes}
                   initialButtonClicked={initialButtonClicked}
                   handleSurprise={handleSurprise}
                   onClick={handleRecipeCardClick}
                   handleSubmit={handleSubmit}
+                  onBackToForm={handleBackToForm}
                 />
               </div>
             </div>
           )}
           {newRecipe && (
-            <div className="w-[calc(100vw-18px)] bg-[#E1DAD0]">
-              <div className="w-full bg-[#E1DAD0] h-auto mt-10 lg:mt-20 py-10 lg-py-20">
+            <div className="bg-[#E1DAD0] w-[calc(100vw-18px)]">
+              <div className="w-full h-auto mt-10 lg:mt-20 py-10 lg-py-20">
                 <RecipeCards
                   recipes={[newRecipe]}
                   onClick={handleRecipeCardClick}
@@ -460,6 +506,7 @@ export default function AiInputForm() {
                   handleSurprise={handleSurprise}
                   initialButtonClicked={initialButtonClicked}
                   isLoading={loading}
+                  onBackToForm={handleBackToForm}
                 />
               </div>
             </div>
@@ -468,8 +515,9 @@ export default function AiInputForm() {
       </div>
       <div>
         {openSingleCard && (
-          <div className="w-full bg-[#FFFFFF] h-auto pt-10 lg:pt-20 px-4">
-            <RecipeCard recipes={openSingleCard} image={openSingleCard.image} />
+          <div className="w-[calc(100vw-18px)] bg-[#E1DAD0] border-t-2 h-auto py-10 lg:py-20 px-4">
+            <RecipeCard key={openSingleCard.id} isBookmarked={bookmarkedRecipes[openSingleCard.id] || false}
+              onBookmark={() => handleBookmark(openSingleCard.id)} recipes={openSingleCard} image={openSingleCard.image} />
           </div>
         )}
       </div>

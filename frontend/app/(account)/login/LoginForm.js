@@ -133,7 +133,7 @@ export default function LoginForm() {
                 <div className="flex flex-row items-center gap-1.5">
                   <Checkbox checkIcon={<CheckIcon />} label={"Remember me"} />
                 </div>
-                <p>Forgot Password?</p>
+                <Link href={"/"} className="text-blue-700">Forgot Password?</Link>
               </div>
               <Link href="/">
                 <button

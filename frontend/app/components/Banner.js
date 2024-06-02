@@ -21,7 +21,7 @@ const bannerimg = [
     title: "Budget friendly",
     src: quinoa_bowl,
     alt: "Budget friendly recipes",
-    text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes for busy days.",
+    text: "Quick, delicious, and budget-friendly. Explore stir-fry recipes.",
     id: 1,
   },
   {
@@ -35,14 +35,14 @@ const bannerimg = [
     title: "Oatmeal",
     src: oat1,
     alt: "Oatmeal recipes",
-    text: "Start your day with warmth and goodness. Discover hearty oatmeal recipes here.",
+    text: "Start your day with warmth and goodness. Hearty oatmeal recipes.",
     id: 3,
   },
   {
     title: "Smoothies",
     src: smoothie,
     alt: "Chciken",
-    text: "Blend your way to wellness. Click to discover refreshing smoothie recipes.",
+    text: "Blend your way to wellness. Discover refreshing smoothie recipes.",
     id: 4,
   },
   {
@@ -83,53 +83,58 @@ export default function BannerContent() {
   };
 
   return (
-    <div className="w-full h-auto bg-white border-b border-t">
-      <div className="max-w-[90rem] w-full mx-auto items-center justify-center h-full py-10 ">
+    <div className="w-full h-auto bg-white shadow-xl border-b border-t">
+      <div className="max-w-[90rem] w-full mx-auto h-full py-10 ">
         <Swiper
           navigation={true}
           direction="horizontal"
-          slidesPerView={2}
+          slidesPerView={1}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
           }}
           loop={true}
-          spaceBetween={30}
+         // spaceBetween={30}
           speed={4000}
           modules={[Navigation, Autoplay]}
           breakpoints={{
-            640: {
+            535: {
+              slidesPerView: 2,
+
+            },
+            780: {
               slidesPerView: 3,
             },
-            900: {
+            1000: {
               slidesPerView: 4,
             },
             1300: {
-              slidesPerView: 4,
+              slidesPerView: 5,
             },
           }}
-          className="h-auto w-full mx-auto"
+          className="h-auto w-full"
         >
           {bannerimg.map((dish, index) => (
             <SwiperSlide
               key={index}
+              className="swiper-slide flex items-center justify-center"
             >
               <button onClick={() => handleItemClick(dish.id)}>
                 <div className=" flex flex-col items-center justify-center">
                   {" "}
                   <div className="overflow-hidden rounded-full bg-white border border-slate-50">
-                    <div className="group relative w-[230px] h-[230px]">
+                    <div className="group relative w-[230px] h-[230px] flex items-center justify-center">
                       <Image
                         src={dish.src}
                         height={300}
                         width={300}
                         alt={dish.alt}
-                        className="rounded-full h-[230px] w-full object-cover object-center transition duration-300 transform group-hover:scale-110"
+                        className="rounded-full h-[230px] w-[230px] object-cover object-center transition duration-300 transform group-hover:scale-110"
                       />
                       <div className="absolute h-auto w-full inset-0 opacity-1 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                   </div>
-                  <p className="w-[260px] pt-2 text-[18px] text-center">
+                  <p className="w-full px-[10%] pt-2 text-[18px] mx-auto text-center">
                     {dish.text}
                   </p>
                 </div>
