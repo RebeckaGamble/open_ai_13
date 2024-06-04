@@ -52,7 +52,7 @@ export default function RecipeCard({ recipes, isBookmarked, onBookmark }) {
       id={`recipe-${recipes.id}`}
       className="w-full max-w-[700px] lg:max-w-[1000px] shadow-lg flex flex-col mx-auto bg-[#fff] text-[#250D01] rounded-[10px] p-4 md:p-8 "
     >
-      <div className="flex flex-col ">
+      <div id={"#1"} className="flex flex-col ">
         <div className="w-full flex flex-col lg:flex-row">
           <div className="w-full flex flex-col lg:flex-row mx-auto h-auto lg:pb-6">
             <div className="w-full flex max-w-[380px] flex-col mx-auto lg:w-[50%]">

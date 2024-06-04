@@ -35,16 +35,16 @@ export default function BookmarkedRecipeCard({ id, alt, content, onRemove }) {
   return (
     <div
       className={`border relative flex flex-col items-center justify-center gap-6 ${
-        showContent ? "h-auto w-full max-w-[910px]" : "h-[440px] w-[400px]"
+        showContent ? "h-auto w-full max-w-[910px]" : "h-[460px] w-[400px]"
       } p-4 rounded-[30px] bg-[#E1DAD0]`}
     >
       <div className=" absolute top-4 right-4">
         <TooltipCheck text={"Remove saved recipe from your account"}>
           <button
-            className="flex items-start justify-end w-10 h-10 font-semibold text-[20px] hover:text-red-600"
+            className="flex items-start justify-end w-10 h-10 font-semibold text-[20px] hover:text-black"
             onClick={handleRemoveBookmark}
           >
-            <FaHeart />
+            <FaHeart className="text-red-600 hover:text-black" />
           </button>
         </TooltipCheck>
       </div>

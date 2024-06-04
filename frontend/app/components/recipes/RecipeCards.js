@@ -160,7 +160,7 @@ export default function RecipeCards({
             <div className="flex items-center justify-center w-full ">
               <button
                 onClick={(e) => handleSupriseNew(e)}
-                className="px-8 w-fit max-h-[46px] py-2 border-[1px] border-[#250D01] uppercase bg-[#FCFBFA] text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
+                className="px-8 w-fit max-h-[46px] py-2 border-[1px] border-[#250D01] uppercase text-[#250D01] ml-4 rounded-full text-lg font-semibold hover:scale-105"
               >
                 New Suprise!
               </button>

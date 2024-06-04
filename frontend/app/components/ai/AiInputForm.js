@@ -290,7 +290,7 @@ export default function AiInputForm() {
         </h3>
         <p className="max-w-[838px] mx-auto py-10">
           Ready to dive into the culinary adventure? Simply tell me your mood,
-          how much time you've got, your preferences and a season, and I'll
+          how much time you've got, your preferences and budget, and I'll
           create some personalized recipe suggestions just for you. Let's team
           up and cook something delicious!
         </p>

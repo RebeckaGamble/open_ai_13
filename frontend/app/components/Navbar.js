@@ -16,9 +16,9 @@ export default function Navbar() {
     logout();
     router.push("/login");
   }
-  //#E1DAD0  #D9D8D5 #726654
+  
   return (
-    <nav className="w-full h-[60px] fixed z-[9999] bg-[#E1DAD0] text-[18px] shadow-lg flex flex-row px-4">
+    <nav className="w-full h-[60px] fixed z-[12000] bg-[#E1DAD0] text-[18px] shadow-lg flex flex-row px-4">
       <ul className="w-full max-w-[90rem] mx-auto flex items-center justify-between">
         <li className="hover:scale-105 hover:font-semibold hover:text-[#525151]">
           <Link href={"/"}>
